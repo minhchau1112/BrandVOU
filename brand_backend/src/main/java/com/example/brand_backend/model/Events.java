@@ -7,34 +7,37 @@ import java.time.LocalDateTime;
 public class Events {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int eventID;
-    @Column(name = "brandID")
-    private int brandID;
+    private Long id;
+    @ManyToOne
+    @JoinColumn(name = "brandid", nullable = false)
+    private Brands brand;
     @Column(name = "name")
     private String name;
     @Column(name = "image")
     private String image;
     @Column(name = "voucherCount")
-    private int voucherCount;
+    private Integer voucherCount;
     @Column(name = "startTime")
     private LocalDateTime startTime;
     @Column(name = "endTime")
     private LocalDateTime endTime;
+    @Column(name = "gameType")
+    private String gameType;
 
-    public int getEventID() {
-        return eventID;
+    public Long getId() {
+        return id;
     }
 
-    public void setEventID(int eventID) {
-        this.eventID = eventID;
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public int getBrandID() {
-        return brandID;
+    public Brands getBrand() {
+        return brand;
     }
 
-    public void setBrandID(int brandID) {
-        this.brandID = brandID;
+    public void setBrand(Brands brand) {
+        this.brand = brand;
     }
 
     public String getName() {
@@ -53,11 +56,11 @@ public class Events {
         this.image = image;
     }
 
-    public int getVoucherCount() {
+    public Integer getVoucherCount() {
         return voucherCount;
     }
 
-    public void setVoucherCount(int voucherCount) {
+    public void setVoucherCount(Integer voucherCount) {
         this.voucherCount = voucherCount;
     }
 
@@ -75,5 +78,13 @@ public class Events {
 
     public void setEndTime(LocalDateTime endTime) {
         this.endTime = endTime;
+    }
+
+    public String getGameType() {
+        return gameType;
+    }
+
+    public void setGameType(String gameType) {
+        this.gameType = gameType;
     }
 }

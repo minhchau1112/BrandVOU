@@ -32,16 +32,16 @@ public class VoucherController {
 
     // get voucher by id rest api
     @GetMapping("/vouchers/{id}")
-    public ResponseEntity<Vouchers> getVoucherById(@PathVariable int id) {
-        Vouchers voucher = voucherRepository.findById((long) id)
+    public ResponseEntity<Vouchers> getVoucherById(@PathVariable Long id) {
+        Vouchers voucher = voucherRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Voucher not exist with id :" + id));
         return ResponseEntity.ok(voucher);
     }
 
     // update voucher rest api
     @PutMapping("/vouchers/{id}")
-    public ResponseEntity<Vouchers> updateVoucher(@PathVariable int id, @RequestBody Vouchers voucherDetails){
-        Vouchers voucher = voucherRepository.findById((long) id)
+    public ResponseEntity<Vouchers> updateVoucher(@PathVariable Long id, @RequestBody Vouchers voucherDetails){
+        Vouchers voucher = voucherRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Voucher not exist with id :" + id));
 
         voucher.setCode(voucherDetails.getCode());
@@ -59,8 +59,8 @@ public class VoucherController {
 
     // delete voucher rest api
     @DeleteMapping("/voucher/{id}")
-    public ResponseEntity<Map<String, Boolean>> deleteVoucher(@PathVariable int id){
-        Vouchers voucher = voucherRepository.findById((long) id)
+    public ResponseEntity<Map<String, Boolean>> deleteVoucher(@PathVariable Long id){
+        Vouchers voucher = voucherRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Voucher not exist with id :" + id));
 
         voucherRepository.delete(voucher);

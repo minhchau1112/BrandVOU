@@ -7,9 +7,10 @@ import jakarta.persistence.*;
 public class Brands {
     @Id
     @GeneratedValue(strategy =  GenerationType.IDENTITY)
-    private int brandID;
-    @Column(name = "accountID")
-    private int accountID;
+    private Long id;
+    @ManyToOne
+    @JoinColumn(name = "accountid", nullable = false)
+    private Accounts account;
     @Column(name = "name")
     private String name;
     @Column(name = "field")
@@ -17,26 +18,26 @@ public class Brands {
     @Column(name = "address")
     private String address;
     @Column(name = "GPS_lat")
-    private float GPS_lat;
+    private Float GPS_lat;
     @Column(name = "GPS_long")
-    private float GPS_long;
+    private Float GPS_long;
     @Column(name = "status")
     private String status;
 
-    public int getBrandID() {
-        return brandID;
+    public Long getId() {
+        return id;
     }
 
-    public void setBrandID(int brandID) {
-        this.brandID = brandID;
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public int getAccountID() {
-        return accountID;
+    public Accounts getAccount() {
+        return account;
     }
 
-    public void setAccountID(int accountID) {
-        this.accountID = accountID;
+    public void setAccount(Accounts account) {
+        this.account = account;
     }
 
     public String getName() {
@@ -63,11 +64,11 @@ public class Brands {
         this.address = address;
     }
 
-    public float getGPS_lat() {
+    public Float getGPS_lat() {
         return GPS_lat;
     }
 
-    public void setGPS_lat(float GPS_lat) {
+    public void setGPS_lat(Float GPS_lat) {
         this.GPS_lat = GPS_lat;
     }
 
@@ -75,7 +76,7 @@ public class Brands {
         return GPS_long;
     }
 
-    public void setGPS_long(float GPS_long) {
+    public void setGPS_long(Float GPS_long) {
         this.GPS_long = GPS_long;
     }
 

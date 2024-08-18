@@ -1,68 +1,65 @@
 package com.example.brand_backend.controller;
 
 import com.example.brand_backend.exception.ResourceNotFoundException;
+import com.example.brand_backend.model.Brands;
 import com.example.brand_backend.model.Events;
+import com.example.brand_backend.repository.BrandRepository;
 import com.example.brand_backend.repository.EventRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.util.HashMap;
+import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Map;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
-@RequestMapping("/api/v1/")
+@RequestMapping("/api/v1/events")
 public class EventController {
     @Autowired
     private EventRepository eventRepository;
+    @Autowired
+    private BrandRepository brandRepository;
+    @PostMapping("/{brandId}")
+    public ResponseEntity<Events> createEvent(
+            @PathVariable Long brandId,
+            @RequestParam("name") String name,
+            @RequestParam("image") MultipartFile image,
+            @RequestParam("voucherCount") int voucherCount,
+            @RequestParam("startTime") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime startTime,
+            @RequestParam("endTime") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime endTime) throws IOException {
 
-    // get all events
-    @GetMapping("/events")
-    public List<Events> getAllEvents(){
-        return eventRepository.findAll();
+        Brands brand = brandRepository.findById(brandId)
+                .orElseThrow(() -> new ResourceNotFoundException("Brand not found"));
+
+        Events event = new Events();
+        event.setName(name);
+        event.setImage("123");
+        event.setVoucherCount(voucherCount);
+        event.setStartTime(startTime);
+        event.setEndTime(endTime);
+        event.setBrand(brand);
+
+        Events savedEvent = eventRepository.save(event);
+        return ResponseEntity.ok(savedEvent);
     }
 
-    // create employee rest api
-    @PostMapping("/events")
-    public Events createEvent(@RequestBody Events event) {
-        return eventRepository.save(event);
+    @GetMapping("/{brandId}")
+    public ResponseEntity<List<Events>> getEventsByBrand(@PathVariable Long brandId) {
+        List<Events> events = eventRepository.findByBrandId(brandId);
+        return ResponseEntity.ok(events);
     }
-
-    // get event by id rest api
-    @GetMapping("/events/{id}")
-    public ResponseEntity<Events> getEventById(@PathVariable int id) {
-        Events event = eventRepository.findById((long) id)
-                .orElseThrow(() -> new ResourceNotFoundException("Event not exist with id :" + id));
-        return ResponseEntity.ok(event);
-    }
-
-    // update event rest api
-    @PutMapping("/events/{id}")
-    public ResponseEntity<Events> updateEmployee(@PathVariable int id, @RequestBody Events eventDetails){
-        Events event = eventRepository.findById((long) id)
-                .orElseThrow(() -> new ResourceNotFoundException("Event not exist with id :" + id));
-
+    @PutMapping("/{brandId}")
+    public Events updateEvent(@PathVariable Long id, @RequestBody Events eventDetails) {
+        Events event = eventRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Event not found"));
         event.setName(eventDetails.getName());
         event.setImage(eventDetails.getImage());
         event.setVoucherCount(eventDetails.getVoucherCount());
         event.setStartTime(eventDetails.getStartTime());
         event.setEndTime(eventDetails.getEndTime());
-
-        Events updatedEvent = eventRepository.save(event);
-        return ResponseEntity.ok(updatedEvent);
-    }
-
-    // delete event rest api
-    @DeleteMapping("/event/{id}")
-    public ResponseEntity<Map<String, Boolean>> deleteEvent(@PathVariable int id){
-        Events event = eventRepository.findById((long) id)
-                .orElseThrow(() -> new ResourceNotFoundException("Event not exist with id :" + id));
-
-        eventRepository.delete(event);
-        Map<String, Boolean> response = new HashMap<>();
-        response.put("deleted", Boolean.TRUE);
-        return ResponseEntity.ok(response);
+        return eventRepository.save(event);
     }
 }
