@@ -3,6 +3,7 @@ import { Form, Button, Container, Image, Alert } from 'react-bootstrap';
 import EventService from '../services/EventService';
 import { useNavigate } from 'react-router-dom';
 import axios from "axios";
+import Select from 'react-select';
 
 function AddEventComponent({brandID}) {
     const [event, setEvent] = useState({
@@ -18,6 +19,11 @@ function AddEventComponent({brandID}) {
     const [message, setMessage] = useState(null);
     const navigate = useNavigate();
 
+    const gameOptions = [
+        { value: 'Quiz', label: 'Quiz' },
+        { value: 'ShakeGame', label: 'ShakeGame' }
+    ];
+
     const handleChange = (e) => {
         const { name, value, type, files } = e.target;
         if (type === 'file') {
@@ -32,7 +38,12 @@ function AddEventComponent({brandID}) {
             }
         } else {
             setEvent({ ...event, [name]: value });
-        }
+        } 
+    };
+
+    const handleGameTypeChange = (selectedOptions) => {
+        const gameTypes = selectedOptions.map(option => option.value).join(';');
+        setEvent({ ...event, gameType: gameTypes });
     };
 
     const handleSubmit = async (e) => {
@@ -49,9 +60,11 @@ function AddEventComponent({brandID}) {
         formData.append('voucherCount', event.voucherCount);
         formData.append('startTime', event.startTime);
         formData.append('endTime', event.endTime);
+        formData.append('gameType', event.gameType); 
 
         try {
             await EventService.createEvent(formData, brandID);
+            setMessage("Event created successfully!");
             navigate('/add-events');
         } catch (err) {
             setError('There was an error creating the event. Please try again.');
@@ -138,6 +151,18 @@ function AddEventComponent({brandID}) {
                     />
                 </Form.Group>
 
+                <Form.Group controlId="formGameType">
+                    <Form.Label>Game Type</Form.Label>
+                    <Select
+                        isMulti
+                        name="gameType"
+                        options={gameOptions}
+                        className="basic-multi-select"
+                        classNamePrefix="select"
+                        onChange={handleGameTypeChange}
+                    />
+                </Form.Group>
+                
                 <Button variant="primary" type="submit">
                     Submit
                 </Button>

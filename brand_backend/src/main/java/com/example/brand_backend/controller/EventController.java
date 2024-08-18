@@ -30,7 +30,8 @@ public class EventController {
             @RequestParam("image") MultipartFile image,
             @RequestParam("voucherCount") int voucherCount,
             @RequestParam("startTime") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime startTime,
-            @RequestParam("endTime") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime endTime) throws IOException {
+            @RequestParam("endTime") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime endTime,
+            @RequestParam("gameType") String gameType){
 
         Brands brand = brandRepository.findById(brandId)
                 .orElseThrow(() -> new ResourceNotFoundException("Brand not found"));
@@ -42,6 +43,7 @@ public class EventController {
         event.setStartTime(startTime);
         event.setEndTime(endTime);
         event.setBrand(brand);
+        event.setGameType(gameType);
 
         Events savedEvent = eventRepository.save(event);
         return ResponseEntity.ok(savedEvent);
