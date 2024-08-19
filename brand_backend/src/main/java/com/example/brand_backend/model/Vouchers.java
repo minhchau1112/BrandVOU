@@ -9,9 +9,10 @@ import java.time.LocalDateTime;
 public class Vouchers {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int voucherID;
-    @Column(name = "eventID")
-    private int eventID;
+    private Long id;
+    @ManyToOne
+    @JoinColumn(name = "eventID", nullable = false)
+    private Events event;
     @Column(name = "code")
     private String code;
     @Column(name = "QRCode")
@@ -27,20 +28,20 @@ public class Vouchers {
     @Column(name = "status")
     private String status;
 
-    public int getVoucherID() {
-        return voucherID;
+    public Long getId() {
+        return id;
     }
 
-    public void setVoucherID(int voucherID) {
-        this.voucherID = voucherID;
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public int getEventID() {
-        return eventID;
+    public Events getEvent() {
+        return event;
     }
 
-    public void setEventID(int eventID) {
-        this.eventID = eventID;
+    public void setEvent(Events event) {
+        this.event = event;
     }
 
     public String getCode() {

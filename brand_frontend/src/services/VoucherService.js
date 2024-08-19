@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const VOUCHER_API_BASE_URL = "http://localhost:8080/api/v1/vouchers";
+const VOUCHER_API_BASE_URL = "http://localhost:9090/api/v1/vouchers";
 
 class VoucherService {
 
