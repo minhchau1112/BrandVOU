@@ -52,6 +52,9 @@ public class EventController {
     @GetMapping("/{brandId}")
     public ResponseEntity<List<Events>> getEventsByBrand(@PathVariable Long brandId) {
         List<Events> events = eventRepository.findByBrandId(brandId);
+        if (events.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
         return ResponseEntity.ok(events);
     }
     @PutMapping("/{brandId}")

@@ -6,6 +6,7 @@ import HeaderComponent from './components/HeaderComponent';
 import FooterComponent from './components/FooterComponent';
 import ListEventComponent from './components/ListEventComponent';
 import AddEventComponent from './components/AddEventComponent';
+import AddVoucherComponent from './components/AddVoucherComponent';
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
             <Route path="/" element={<ListEventComponent />} />
             <Route path="/events" element={<ListEventComponent />} />
             <Route path="/add-events" element={<AddEventComponent brandID={1} />} />
+            <Route path="/add-vouchers" element={<AddVoucherComponent brandID={1} />} />
           </Routes>
         </div>
       </Router>
