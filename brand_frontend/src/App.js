@@ -1,23 +1,21 @@
-import logo from './logo.svg';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import HeaderComponent from './components/HeaderComponent';
-import FooterComponent from './components/FooterComponent';
-import ListEventComponent from './components/ListEventComponent';
+import BrandNavbar from './components/BrandNavbar';
 import AddEventComponent from './components/AddEventComponent';
 import AddVoucherComponent from './components/AddVoucherComponent';
+import EventList from './components/EventList';
 
 function App() {
   return (
     <div>
       <Router>
+        <BrandNavbar />
         <div className="container">
           <Routes>
-            <Route path="/" element={<ListEventComponent />} />
-            <Route path="/events" element={<ListEventComponent />} />
-            <Route path="/add-events" element={<AddEventComponent brandID={1} />} />
-            <Route path="/add-vouchers" element={<AddVoucherComponent brandID={1} />} />
+            <Route path='/' element={<EventList brandID={1} />} />
+            <Route path="/add-event" element={<AddEventComponent brandID={1} />} />
+            <Route path="/add-voucher" element={<AddVoucherComponent brandID={1} />} />
           </Routes>
         </div>
       </Router>

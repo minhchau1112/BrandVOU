@@ -23,7 +23,6 @@ public class Events {
     private LocalDateTime endTime;
     @Column(name = "gameType")
     private String gameType;
-
     public Long getId() {
         return id;
     }

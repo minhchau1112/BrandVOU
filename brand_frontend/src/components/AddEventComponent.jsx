@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { Form, Button, Container, Image, Alert } from 'react-bootstrap';
 import EventService from '../services/EventService';
 import { useNavigate } from 'react-router-dom';
-import axios from "axios";
 import Select from 'react-select';
 
 function AddEventComponent({brandID}) {
@@ -16,7 +15,7 @@ function AddEventComponent({brandID}) {
     });
     const [previewImage, setPreviewImage] = useState(null);
     const [error, setError] = useState(null);
-    const [message, setMessage] = useState(null);
+    const [setMessage] = useState(null);
     const navigate = useNavigate();
 
     const gameOptions = [
@@ -65,28 +64,13 @@ function AddEventComponent({brandID}) {
         try {
             await EventService.createEvent(formData, brandID);
             setMessage("Event created successfully!");
-            navigate('/add-events');
+            navigate('/');
         } catch (err) {
             setError('There was an error creating the event. Please try again.');
         };
-        // try {
-        //     const response = await axios.post(
-        //       `http://localhost:9090/api/v1/events/${brandID}`,
-        //       formData,
-        //       {
-        //         headers: {
-        //           "Content-Type": "multipart/form-data",
-        //         },
-        //       }
-        //     );
-        //     setMessage("Event created successfully!");
-        //   } catch (error) {
-        //     setMessage("Error creating event. Please try again.");
-        //   }
-        // };
     }
     return (
-        <Container>
+        <Container className='mt-5'>
             <h2 className="text-center">Add New Event</h2>
             {error && <Alert variant="danger">{error}</Alert>}
             <Form onSubmit={handleSubmit}>
@@ -163,7 +147,7 @@ function AddEventComponent({brandID}) {
                     />
                 </Form.Group>
                 
-                <Button variant="primary" type="submit">
+                <Button variant="primary" type="submit" className='mt-3'>
                     Submit
                 </Button>
             </Form>

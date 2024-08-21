@@ -19,8 +19,8 @@ function AddVoucherComponent({ brandID }) {
     const [message, setMessage] = useState(null);
     const [events, setEvents] = useState([]);
     const [selectedEvent, setSelectedEvent] = useState(null);
-    const [eventDetails, setEventDetails] = useState(null);
-    const [loading, setLoading] = useState(false);
+    const [eventDetails] = useState(null);
+    const [loading] = useState(false);
     const navigate = useNavigate();
 
     // Lấy danh sách sự kiện của thương hiệu
