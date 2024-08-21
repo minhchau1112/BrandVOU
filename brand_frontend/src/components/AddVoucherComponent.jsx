@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { Form, Button, Container, Alert, Spinner } from 'react-bootstrap';
-import axios from 'axios';
+import EventService from '../services/EventService';
+import VoucherService from '../services/VoucherService';
 import { useNavigate } from 'react-router-dom';
 import Select from 'react-select';
 
 function AddVoucherComponent({ brandID }) {
     const [voucher, setVoucher] = useState({
         code: '',
-        qrCode: '',
+        qrCode: null,
         image: null,
         value: '',
         description: '',
@@ -15,6 +16,7 @@ function AddVoucherComponent({ brandID }) {
         status: ''
     });
     const [previewImage, setPreviewImage] = useState(null);
+    const [previewQrCode, setPreviewQrCode] = useState(null);
     const [error, setError] = useState(null);
     const [message, setMessage] = useState(null);
     const [events, setEvents] = useState([]);
@@ -23,11 +25,10 @@ function AddVoucherComponent({ brandID }) {
     const [loading] = useState(false);
     const navigate = useNavigate();
 
-    // Lấy danh sách sự kiện của thương hiệu
     useEffect(() => {
         const fetchEvents = async () => {
             try {
-                const response = await axios.get(`http://localhost:9090/api/v1/events/${brandID}`);
+                const response = await EventService.getEventsByBrandId(brandID);
                 const eventOptions = response.data.map(event => ({
                     value: event.id,
                     label: event.name
@@ -48,7 +49,11 @@ function AddVoucherComponent({ brandID }) {
             setVoucher({ ...voucher, [name]: file });
             const reader = new FileReader();
             reader.onloadend = () => {
-                setPreviewImage(reader.result);
+                if (name === 'image') {
+                    setPreviewImage(reader.result);
+                } else if (name === 'qrCode') {
+                    setPreviewQrCode(reader.result);
+                }
             };
             if (file) {
                 reader.readAsDataURL(file);
@@ -75,11 +80,7 @@ function AddVoucherComponent({ brandID }) {
         formData.append('status', voucher.status);
 
         try {
-            await axios.post(`http://localhost:9090/api/v1/vouchers/${selectedEvent}`, formData, {
-                headers: {
-                    'Content-Type': 'multipart/form-data'
-                }
-            });
+            await VoucherService.createVoucher(formData, selectedEvent);
             setMessage('Voucher added successfully!');
             navigate('/vouchers');
         } catch (err) {
@@ -88,7 +89,7 @@ function AddVoucherComponent({ brandID }) {
     };
 
     return (
-        <Container>
+        <Container className='mt-5'>
             <h2 className="text-center">Add New Voucher</h2>
             {error && <Alert variant="danger">{error}</Alert>}
             {message && <Alert variant="success">{message}</Alert>}
@@ -112,7 +113,6 @@ function AddVoucherComponent({ brandID }) {
                         <p><strong>Start Time:</strong> {eventDetails.startTime}</p>
                         <p><strong>End Time:</strong> {eventDetails.endTime}</p>
                         <p><strong>Number of Vouchers:</strong> {eventDetails.voucherCount}</p>
-                        {/* Display more details if needed */}
                     </div>
                 )}
 
@@ -131,13 +131,16 @@ function AddVoucherComponent({ brandID }) {
                 <Form.Group controlId="formQrCode">
                     <Form.Label>QR Code</Form.Label>
                     <Form.Control 
-                        type="text" 
+                        type="file" 
                         name="qrCode" 
-                        value={voucher.qrCode} 
                         onChange={handleChange} 
-                        placeholder="Enter QR code" 
                         required 
                     />
+                    {previewQrCode && (
+                        <div className="mt-3">
+                            <img src={previewQrCode} alt="QR Code Preview" style={{ maxWidth: '200px' }} />
+                        </div>
+                    )}
                 </Form.Group>
 
                 <Form.Group controlId="formImage">
@@ -202,7 +205,7 @@ function AddVoucherComponent({ brandID }) {
                     />
                 </Form.Group>
 
-                <Button variant="primary" type="submit">
+                <Button variant="primary" type="submit" className='mt-3'>
                     Submit
                 </Button>
             </Form>

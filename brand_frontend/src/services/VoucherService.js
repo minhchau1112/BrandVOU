@@ -8,8 +8,12 @@ class VoucherService {
         return axios.get(VOUCHER_API_BASE_URL);
     }
 
-    createVoucher(voucher){
-        return axios.post(VOUCHER_API_BASE_URL, voucher);
+    createVoucher(voucher, eventID){
+        return axios.post(`${VOUCHER_API_BASE_URL}/${eventID}`, voucher, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        });
     }
 
     getVoucherById(voucherId){
