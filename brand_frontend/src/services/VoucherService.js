@@ -3,20 +3,24 @@ import axios from 'axios';
 const VOUCHER_API_BASE_URL = "http://localhost:9090/api/v1/vouchers";
 
 class VoucherService {
-    createVoucher(voucher, eventID) {
-        return axios.post(`${VOUCHER_API_BASE_URL}/${eventID}`, voucher, {
+    createVoucher(voucher, eventId) {
+        return axios.post(`${VOUCHER_API_BASE_URL}/${eventId}`, voucher, {
             headers: {
                 'Content-Type': 'multipart/form-data'
             }
         });
     }
 
-    getVoucherByBrandId(brandID) {
-        return axios.get(`${VOUCHER_API_BASE_URL}/${brandID}`);
+    getVoucherByBrandId(brandId) {
+        return axios.get(`${VOUCHER_API_BASE_URL}/${brandId}`);
     }
 
     getVoucherByVoucherId(voucherId) {
         return axios.get(`${VOUCHER_API_BASE_URL}/view-detail/${voucherId}`);
+    }
+
+    getVoucherByEventId(eventId) {
+        return axios.get(`${VOUCHER_API_BASE_URL}/event/${eventId}`);
     }
 
     updateVoucher(voucher, voucherId) {

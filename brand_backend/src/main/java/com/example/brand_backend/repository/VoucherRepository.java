@@ -12,4 +12,5 @@ public interface VoucherRepository extends JpaRepository<Vouchers, Long> {
     @Query("SELECT v, e FROM Vouchers v JOIN Events e ON v.event.id = e.id WHERE e.brand.id = :brandID")
     List<Vouchers> findVouchersByBrandId(@Param("brandID") Long brandID);
     Optional<Vouchers> findById(Long id);
+    List<Vouchers> findVouchersByEventId(Long eventID);
 }

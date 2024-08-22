@@ -5,6 +5,7 @@ import com.cloudinary.utils.ObjectUtils;
 import com.example.brand_backend.exception.ResourceNotFoundException;
 import com.example.brand_backend.model.Brands;
 import com.example.brand_backend.model.Events;
+import com.example.brand_backend.model.Vouchers;
 import com.example.brand_backend.repository.BrandRepository;
 import com.example.brand_backend.repository.EventRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,7 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
@@ -64,7 +66,6 @@ public class EventController {
         Events savedEvent = eventRepository.save(event);
         return ResponseEntity.ok(savedEvent);
     }
-
     @GetMapping("/{brandId}")
     public ResponseEntity<List<Events>> getEventsByBrand(@PathVariable Long brandId) {
         try {
@@ -83,15 +84,49 @@ public class EventController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
+    @GetMapping("/view-detail/{eventId}")
+    public ResponseEntity<Events> getEventByEventId(@PathVariable Long eventId) {
+        Optional<Events> event = eventRepository.findById(eventId);
+        if (event.isPresent()) {
+            Events result = event.get();
+            return ResponseEntity.ok(result);
+        } else {
+            throw new ResourceNotFoundException("Event not found with id " + eventId);
+        }
+    }
+    @PutMapping("/update/{eventId}")
+    public ResponseEntity<Events> updateEvent(
+            @PathVariable Long eventId,
+            @RequestParam("name") String name,
+            @RequestParam("image") MultipartFile image,
+            @RequestParam("voucherCount") int voucherCount,
+            @RequestParam("startTime") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime startTime,
+            @RequestParam("endTime") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime endTime,
+            @RequestParam("gameType") String gameType) {
 
-    @PutMapping("/{brandId}")
-    public Events updateEvent(@PathVariable Long id, @RequestBody Events eventDetails) {
-        Events event = eventRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Event not found"));
-        event.setName(eventDetails.getName());
-        event.setImage(eventDetails.getImage());
-        event.setVoucherCount(eventDetails.getVoucherCount());
-        event.setStartTime(eventDetails.getStartTime());
-        event.setEndTime(eventDetails.getEndTime());
-        return eventRepository.save(event);
+        String imageUrl = null;
+        if (image != null && !image.isEmpty()) {
+            try {
+                Map<String, Object> uploadResult = cloudinary.uploader().upload(image.getBytes(), ObjectUtils.emptyMap());
+                imageUrl = (String) uploadResult.get("secure_url");
+            } catch (IOException e) {
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+            }
+        }
+
+        Events event = eventRepository.findById(eventId)
+                .orElseThrow(() -> new ResourceNotFoundException("Event not found"));
+
+        event.setName(name);
+        if (imageUrl != null) {
+            event.setImage(imageUrl);
+        }
+        event.setVoucherCount(voucherCount);
+        event.setStartTime(startTime);
+        event.setEndTime(endTime);
+        event.setGameType(gameType);
+
+        Events savedEvent = eventRepository.save(event);
+        return ResponseEntity.ok(savedEvent);
     }
 }

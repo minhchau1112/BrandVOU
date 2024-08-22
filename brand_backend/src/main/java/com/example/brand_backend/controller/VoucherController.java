@@ -108,7 +108,23 @@ public class VoucherController {
             throw new ResourceNotFoundException("Voucher not found with id " + voucherId);
         }
     }
-
+    @GetMapping("/event/{eventId}")
+    public ResponseEntity<List<Vouchers>> getVoucherByEventId(@PathVariable Long eventId) {
+        try {
+            List<Vouchers> vouchers = voucherRepository.findVouchersByEventId(eventId);
+            System.out.println("Found vouchers: " + vouchers.size());
+            for(int i = 0; i < vouchers.size(); i++) {
+                System.out.println(vouchers.get(i).getCode());
+            }
+            if (vouchers.isEmpty()) {
+                return ResponseEntity.noContent().build();
+            }
+            return ResponseEntity.ok(vouchers);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
     @PutMapping("/update/{voucherId}")
     public ResponseEntity<Vouchers> updateVoucher(
             @PathVariable Long voucherId,
