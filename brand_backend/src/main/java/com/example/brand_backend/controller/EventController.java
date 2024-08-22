@@ -79,9 +79,8 @@ public class EventController {
             }
             return ResponseEntity.ok(events);
         } catch (Exception e) {
-            // In trường hợp có lỗi xảy ra
-            e.printStackTrace();  // In lỗi đầy đủ ra log
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();  // Trả về lỗi 500 với thông điệp tương ứng
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
 

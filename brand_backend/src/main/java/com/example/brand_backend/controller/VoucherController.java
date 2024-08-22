@@ -16,7 +16,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
@@ -76,5 +78,34 @@ public class VoucherController {
 
         Vouchers savedVoucher = voucherRepository.save(voucher);
         return ResponseEntity.ok(savedVoucher);
+    }
+    @GetMapping("/{brandId}")
+    public ResponseEntity<List<Vouchers>> getVouchersByBrand(@PathVariable Long brandId) {
+        try {
+            System.out.println("Brand ID: " + brandId);
+            List<Vouchers> vouchers = voucherRepository.findVouchersByBrandId(brandId);
+            System.out.println("Found vouchers: " + vouchers.size());
+            for(int i = 0; i < vouchers.size(); i++) {
+                System.out.println(vouchers.get(i).getCode());
+            }
+            if (vouchers.isEmpty()) {
+                return ResponseEntity.noContent().build();
+            }
+            return ResponseEntity.ok(vouchers);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
+    @GetMapping("/view-detail/{voucherId}")
+    public ResponseEntity<Vouchers> getVoucherByVoucherId(@PathVariable Long voucherId) {
+        Optional<Vouchers> voucher = voucherRepository.findById(voucherId);
+        if (voucher.isPresent()) {
+            Vouchers result = voucher.get();
+            return ResponseEntity.ok(result);
+        } else {
+            throw new ResourceNotFoundException("Voucher not found with id " + voucherId);
+        }
     }
 }

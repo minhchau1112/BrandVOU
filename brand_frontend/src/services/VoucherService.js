@@ -4,11 +4,11 @@ const VOUCHER_API_BASE_URL = "http://localhost:9090/api/v1/vouchers";
 
 class VoucherService {
 
-    getVoucher(){
+    getVoucher() {
         return axios.get(VOUCHER_API_BASE_URL);
     }
 
-    createVoucher(voucher, eventID){
+    createVoucher(voucher, eventID) {
         return axios.post(`${VOUCHER_API_BASE_URL}/${eventID}`, voucher, {
             headers: {
                 'Content-Type': 'multipart/form-data'
@@ -16,17 +16,22 @@ class VoucherService {
         });
     }
 
-    getVoucherById(voucherId){
-        return axios.get(VOUCHER_API_BASE_URL + '/' + voucherId);
+    getVoucherByBrandId(brandID) {
+        return axios.get(`${VOUCHER_API_BASE_URL}/${brandID}`);
     }
 
-    updateVoucher(voucher, voucherId){
+    getVoucherByVoucherId(voucherId) {
+        return axios.get(`${VOUCHER_API_BASE_URL}/view-detail/${voucherId}`);
+    }
+
+    updateVoucher(voucher, voucherId) {
         return axios.put(VOUCHER_API_BASE_URL + '/' + voucherId, voucher);
     }
 
-    deleteVoucher(voucherId){
+    deleteVoucher(voucherId) {
         return axios.delete(VOUCHER_API_BASE_URL + '/' + voucherId);
     }
 }
 
-export default new VoucherService()
+const voucherServiceInstance = new VoucherService();
+export default voucherServiceInstance; 
