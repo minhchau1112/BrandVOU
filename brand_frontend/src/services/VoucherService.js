@@ -25,7 +25,11 @@ class VoucherService {
     }
 
     updateVoucher(voucher, voucherId) {
-        return axios.put(VOUCHER_API_BASE_URL + '/' + voucherId, voucher);
+        return axios.put(`${VOUCHER_API_BASE_URL}/update/${voucherId}`, voucher, {
+            headers: {
+              'Content-Type': 'multipart/form-data',
+            },
+        });
     }
 
     deleteVoucher(voucherId) {

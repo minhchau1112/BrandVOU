@@ -48,7 +48,7 @@ function VoucherDetail() {
 
     return (
         <Container className='mt-5'>
-            <h2 className="text-center">Voucher Details</h2>
+            <h2 className="text-center">Voucher Detail</h2>
             {voucher ? (
                 <Form>
                     <Form.Group>
@@ -95,8 +95,8 @@ function VoucherDetail() {
                     </Form.Group>
 
                     <Form.Group>
-                        <Form.Label>Event ID</Form.Label>
-                        <Form.Control type="text" value={voucher.eventid} disabled />
+                        <Form.Label>Event Name</Form.Label>
+                        <Form.Control type="text" value={voucher.event.name} disabled />
                     </Form.Group>
 
                     <div className="d-flex justify-content-end mt-4" 

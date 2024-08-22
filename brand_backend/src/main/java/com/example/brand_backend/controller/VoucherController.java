@@ -108,4 +108,54 @@ public class VoucherController {
             throw new ResourceNotFoundException("Voucher not found with id " + voucherId);
         }
     }
+
+    @PutMapping("/update/{voucherId}")
+    public ResponseEntity<Vouchers> updateVoucher(
+            @PathVariable Long voucherId,
+            @RequestParam("eventId") Long eventId,
+            @RequestParam("code") String code,
+            @RequestParam(value = "qrCode") MultipartFile qrCode,
+            @RequestParam(value = "image") MultipartFile image,
+            @RequestParam("value") Float value,
+            @RequestParam("description") String description,
+            @RequestParam("expirationDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime expirationDate,
+            @RequestParam("status") String status
+            ) {
+
+        Events event = eventRepository.findById(eventId)
+                .orElseThrow(() -> new ResourceNotFoundException("Event not found"));
+
+        Vouchers voucher = voucherRepository.findById(voucherId)
+                .orElseThrow(() -> new ResourceNotFoundException("Voucher not found"));
+
+        voucher.setCode(code);
+        voucher.setValue(value);
+        voucher.setDescription(description);
+        voucher.setExpirationDate(expirationDate);
+        voucher.setStatus(status);
+        voucher.setEvent(event);
+
+        if (qrCode != null && !qrCode.isEmpty()) {
+            try {
+                Map<String, Object> uploadResult = cloudinary.uploader().upload(qrCode.getBytes(), ObjectUtils.emptyMap());
+                String qrCodeUrl = (String) uploadResult.get("secure_url");
+                voucher.setQRCode(qrCodeUrl);
+            } catch (IOException e) {
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+            }
+        }
+
+        if (image != null && !image.isEmpty()) {
+            try {
+                Map<String, Object> uploadResult = cloudinary.uploader().upload(image.getBytes(), ObjectUtils.emptyMap());
+                String imageUrl = (String) uploadResult.get("secure_url");
+                voucher.setImage(imageUrl);
+            } catch (IOException e) {
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+            }
+        }
+
+        Vouchers updatedVoucher = voucherRepository.save(voucher);
+        return ResponseEntity.ok(updatedVoucher);
+    }
 }

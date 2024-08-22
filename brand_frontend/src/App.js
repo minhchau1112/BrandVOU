@@ -7,6 +7,7 @@ import AddVoucherComponent from './components/AddVoucherComponent';
 import EventList from './components/EventList';
 import VouchersTable from './components/VouchersTable';
 import VoucherDetail from './components/VoucherDetail';
+import VoucherEdit from './components/VoucherEdit';
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
             <Route path="/add-event" element={<AddEventComponent brandID={1} />} />
             <Route path="/add-voucher" element={<AddVoucherComponent brandID={1} />} />
             <Route path="/vouchers/view-detail/:id" element={<VoucherDetail />} />
+            <Route path="/vouchers/edit/:id" element={<VoucherEdit />} />
           </Routes>
         </div>
       </Router>

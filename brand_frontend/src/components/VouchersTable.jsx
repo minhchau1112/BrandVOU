@@ -3,8 +3,10 @@ import { Table, Container, Alert, Spinner } from 'react-bootstrap';
 import VoucherService from '../services/VoucherService';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
+import { useNavigate } from 'react-router-dom';
 
 function VouchersTable({ brandID }) {
+    const navigate = useNavigate();
     const [vouchers, setVouchers] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -42,7 +44,7 @@ function VouchersTable({ brandID }) {
     };
 
     const handleViewDetails = (voucherId) => {
-        window.location.href = `/vouchers/view-detail/${voucherId}`;
+        navigate(`/vouchers/view-detail/${voucherId}`);
     };
 
     const handleDelete = async (voucherId) => {
@@ -56,7 +58,7 @@ function VouchersTable({ brandID }) {
     };
 
     const handleEdit = async (voucherId) => {
-
+        navigate(`/vouchers/edit/${voucherId}`);
     };
 
     return (
