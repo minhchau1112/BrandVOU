@@ -158,4 +158,13 @@ public class VoucherController {
         Vouchers updatedVoucher = voucherRepository.save(voucher);
         return ResponseEntity.ok(updatedVoucher);
     }
+
+    @DeleteMapping("/delete/{voucherId}")
+    public ResponseEntity<Void> deleteVoucher(@PathVariable Long voucherId) {
+        if (!voucherRepository.existsById(voucherId)) {
+            return ResponseEntity.notFound().build();
+        }
+        voucherRepository.deleteById(voucherId);
+        return ResponseEntity.noContent().build();
+    }
 }

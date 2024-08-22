@@ -3,11 +3,6 @@ import axios from 'axios';
 const VOUCHER_API_BASE_URL = "http://localhost:9090/api/v1/vouchers";
 
 class VoucherService {
-
-    getVoucher() {
-        return axios.get(VOUCHER_API_BASE_URL);
-    }
-
     createVoucher(voucher, eventID) {
         return axios.post(`${VOUCHER_API_BASE_URL}/${eventID}`, voucher, {
             headers: {
@@ -33,7 +28,7 @@ class VoucherService {
     }
 
     deleteVoucher(voucherId) {
-        return axios.delete(VOUCHER_API_BASE_URL + '/' + voucherId);
+        return axios.delete(`${VOUCHER_API_BASE_URL}/delete/${voucherId}`);
     }
 }
 
