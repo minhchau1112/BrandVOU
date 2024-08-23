@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Form, Button, Container, Row, Col, Alert } from 'react-bootstrap';
+import { Form, Button, Container, Row, Col, Image } from 'react-bootstrap';
 import EventService from '../services/EventService';
 import VoucherService from '../services/VoucherService';
 import { useNavigate } from 'react-router-dom';
@@ -167,7 +167,7 @@ function AddVoucherComponent({ brandID }) {
                         onClick={() => imageInputRef.current.click()}
                     >
                         {previewImage && (
-                            <img 
+                            <Image 
                                 src={previewImage} 
                                 alt="Voucher Image Preview" 
                                 style={{ 

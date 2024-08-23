@@ -11,8 +11,8 @@ class EventService {
         });
     }
 
-    getEventsByBrandId(brandID) {
-        return axios.get(`${EVENT_API_BASE_URL}/${brandID}`);
+    getEventsByBrandId(brandID, page = 0, size = 10) {
+        return axios.get(`${EVENT_API_BASE_URL}/${brandID}?page=${page}&size=${size}`);
     }
 
     getEventByEventId(eventID) {
@@ -25,6 +25,10 @@ class EventService {
                 'Content-Type': 'multipart/form-data'
             }
         });
+    }
+
+    checkDuplicate(name, brandID) {
+        return axios.get(`${EVENT_API_BASE_URL}/check-duplicate?name=${name}&brandID=${brandID}`);
     }
 }
 

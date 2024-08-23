@@ -7,6 +7,8 @@
     cursor: pointer;
     padding: 16px;
     background-color: #fff;
+    text-align: start;
+    max-width: 300px;
 }
 
 .event-card:hover {
@@ -20,6 +22,7 @@
     max-width: 300px; 
     border-bottom: 1px solid #ddd;
     object-fit: cover;
+    border-radius: 4px;
 }
 
 .event-card h3 {
@@ -28,5 +31,12 @@
 }
 
 .event-card p {
-    margin: 4px 0;
+    font-style: italic;
+}
+  
+.event-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: left;
+    gap: 16px;
 }

@@ -117,17 +117,21 @@ public class VoucherController {
         }
     }
     @GetMapping("/event/{eventId}")
-    public ResponseEntity<List<Vouchers>> getVoucherByEventId(@PathVariable Long eventId) {
+    public ResponseEntity<Page<Vouchers>> getVoucherByEventId(
+            @PathVariable Long eventId,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
         try {
-            List<Vouchers> vouchers = voucherRepository.findVouchersByEventId(eventId);
-            System.out.println("Found vouchers: " + vouchers.size());
-            for(int i = 0; i < vouchers.size(); i++) {
-                System.out.println(vouchers.get(i).getCode());
+            Pageable pageable = PageRequest.of(page, size);
+            Page<Vouchers> vouchersPage = voucherRepository.findVouchersByEventId(eventId, pageable);
+            System.out.println("Found vouchers: " + vouchersPage.getNumberOfElements());
+            for (Vouchers voucher : vouchersPage.getContent()) {
+                System.out.println(voucher.getCode());
             }
-            if (vouchers.isEmpty()) {
+            if (vouchersPage.isEmpty()) {
                 return ResponseEntity.noContent().build();
             }
-            return ResponseEntity.ok(vouchers);
+            return ResponseEntity.ok(vouchersPage);
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();

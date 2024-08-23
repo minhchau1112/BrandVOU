@@ -3,9 +3,6 @@
 }
 
 .search-bar {
-	display: flex;
-	flex-wrap: wrap;
-	justify-content: left;
 	width: 500px;
 }
 

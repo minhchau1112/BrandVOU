@@ -11,7 +11,7 @@ import { styled } from '@mui/material/styles';
 import { tableCellClasses } from '@mui/material/TableCell';
 import VoucherService from '../services/VoucherService';
 import { useNavigate } from 'react-router-dom';
-import { Alert, Spinner, Modal, Button } from 'react-bootstrap';
+import { Alert, Spinner } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 
@@ -55,12 +55,9 @@ function VouchersTable({ brandID }) {
     const [error, setError] = useState(null);
     const [searchQuery, setSearchQuery] = useState('');
     const [filteredVouchers, setFilteredVouchers] = useState([]);
-    const [page, setPage] = useState(0);
+    const [page, setPage] = useState(0); 
     const [rowsPerPage, setRowsPerPage] = useState(10);
     const [totalElements, setTotalElements] = useState(0);
-
-    const [showDeleteModal, setShowDeleteModal] = useState(false);
-    const [voucherToDelete, setVoucherToDelete] = useState(null);
 
     useEffect(() => {
         const fetchVouchers = async () => {
@@ -107,16 +104,13 @@ function VouchersTable({ brandID }) {
         navigate(`/vouchers/view-detail/${voucherId}`);
     };
 
-    const handleDelete = async () => {
-        if (voucherToDelete) {
-            try {
-                await VoucherService.deleteVoucher(voucherToDelete);
-                setVouchers(vouchers.filter(voucher => voucher.id !== voucherToDelete));
-                setFilteredVouchers(filteredVouchers.filter(voucher => voucher.id !== voucherToDelete));
-                setShowDeleteModal(false);
-            } catch (error) {
-                setError('Error deleting voucher.');
-            }
+    const handleDelete = async (voucherId) => {
+        try {
+            await VoucherService.deleteVoucher(voucherId);
+            setVouchers(vouchers.filter(voucher => voucher.id !== voucherId));
+            setFilteredVouchers(filteredVouchers.filter(voucher => voucher.id !== voucherId));
+        } catch (error) {
+            setError('Error deleting voucher.');
         }
     };
 
@@ -211,10 +205,7 @@ function VouchersTable({ brandID }) {
                                                     <i
                                                         className="bi bi-trash3"
                                                         style={{ color: 'red' }}
-                                                        onClick={() => {
-                                                            setVoucherToDelete(voucher.id);
-                                                            setShowDeleteModal(true);
-                                                        }}
+                                                        onClick={() => handleDelete(voucher.id)}
                                                     ></i>
                                                 </div>
                                             </StyledTableCell>
@@ -236,21 +227,6 @@ function VouchersTable({ brandID }) {
                     onRowsPerPageChange={handleChangeRowsPerPage}
                 />
             </Paper>
-
-            <Modal show={showDeleteModal} onHide={() => setShowDeleteModal(false)}>
-                <Modal.Header closeButton>
-                    <Modal.Title>Confirm Deletion</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>Are you sure you want to delete this voucher?</Modal.Body>
-                <Modal.Footer>
-                    <Button variant="secondary" onClick={() => setShowDeleteModal(false)}>
-                        Cancel
-                    </Button>
-                    <Button variant="danger" onClick={handleDelete}>
-                        Delete
-                    </Button>
-                </Modal.Footer>
-            </Modal>
         </>
     );
 }

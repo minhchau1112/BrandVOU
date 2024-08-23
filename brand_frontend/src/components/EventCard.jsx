@@ -12,10 +12,11 @@ const EventCard = ({ event }) => {
     return (
         <div className="event-card" onClick={handleCardClick}>
             <img src={event.image} alt={event.name} className="event-image" />
-            <h3>{event.name}</h3>
-            <p>Number of voucher: {event.voucherCount}</p>
-            <p>Start: {new Date(event.startTime).toLocaleString()}</p>
-            <p>End: {new Date(event.endTime).toLocaleString()}</p>
+            <div className='d-flex flex-column justify-content-start'>
+                <h3>{event.name}</h3>
+                <p>Time: {new Date(event.startTime).toLocaleDateString('vi-VN', { year: 'numeric', month: '2-digit', day: '2-digit' })} - {new Date(event.endTime).toLocaleDateString('vi-VN', { year: 'numeric', month: '2-digit', day: '2-digit' })}</p>
+
+            </div>
         </div>
     );
 };

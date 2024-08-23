@@ -5,10 +5,12 @@ import com.cloudinary.utils.ObjectUtils;
 import com.example.brand_backend.exception.ResourceNotFoundException;
 import com.example.brand_backend.model.Brands;
 import com.example.brand_backend.model.Events;
-import com.example.brand_backend.model.Vouchers;
 import com.example.brand_backend.repository.BrandRepository;
 import com.example.brand_backend.repository.EventRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -67,18 +69,22 @@ public class EventController {
         return ResponseEntity.ok(savedEvent);
     }
     @GetMapping("/{brandId}")
-    public ResponseEntity<List<Events>> getEventsByBrand(@PathVariable Long brandId) {
+    public ResponseEntity<Page<Events>> getEventsByBrand(
+            @PathVariable Long brandId,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
         try {
             System.out.println("Brand ID: " + brandId);
-            List<Events> events = eventRepository.findByBrandId(brandId);
-            System.out.println("Found events: " + events.size());
-            for(int i = 0; i < events.size(); i++) {
-                System.out.println(events.get(i).getName());
+            Pageable pageable = PageRequest.of(page, size);
+            Page<Events> eventsPage = eventRepository.findByBrandId(brandId, pageable);
+            System.out.println("Found events: " + eventsPage.getNumberOfElements());
+            for (Events event : eventsPage.getContent()) {
+                System.out.println(event.getName());
             }
-            if (events.isEmpty()) {
+            if (eventsPage.isEmpty()) {
                 return ResponseEntity.noContent().build();
             }
-            return ResponseEntity.ok(events);
+            return ResponseEntity.ok(eventsPage);
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
@@ -98,7 +104,7 @@ public class EventController {
     public ResponseEntity<Events> updateEvent(
             @PathVariable Long eventId,
             @RequestParam("name") String name,
-            @RequestParam("image") MultipartFile image,
+            @RequestParam(value = "image", required = false) MultipartFile image,
             @RequestParam("voucherCount") int voucherCount,
             @RequestParam("startTime") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime startTime,
             @RequestParam("endTime") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime endTime,
@@ -128,5 +134,12 @@ public class EventController {
 
         Events savedEvent = eventRepository.save(event);
         return ResponseEntity.ok(savedEvent);
+    }
+    @GetMapping("/check-duplicate")
+    public ResponseEntity<Boolean> checkDuplicateCode(
+            @RequestParam String name,
+            @RequestParam Long brandID) {
+        boolean isDuplicate = eventRepository.existsByNameAndBrandId(name, brandID);
+        return new ResponseEntity<>(isDuplicate, HttpStatus.OK);
     }
 }

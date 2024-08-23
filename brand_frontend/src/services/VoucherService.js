@@ -19,8 +19,8 @@ class VoucherService {
         return axios.get(`${VOUCHER_API_BASE_URL}/view-detail/${voucherId}`);
     }
 
-    getVoucherByEventId(eventId) {
-        return axios.get(`${VOUCHER_API_BASE_URL}/event/${eventId}`);
+    getVoucherByEventId(eventId, page = 0, size = 10) {
+        return axios.get(`${VOUCHER_API_BASE_URL}/event/${eventId}?page=${page}&size=${size}`);
     }
 
     updateVoucher(voucher, voucherId) {
