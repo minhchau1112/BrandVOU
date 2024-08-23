@@ -3,26 +3,42 @@ import axios from 'axios';
 const VOUCHER_API_BASE_URL = "http://localhost:9090/api/v1/vouchers";
 
 class VoucherService {
-
-    getVoucher(){
-        return axios.get(VOUCHER_API_BASE_URL);
+    createVoucher(voucher, eventId) {
+        return axios.post(`${VOUCHER_API_BASE_URL}/${eventId}`, voucher, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        });
     }
 
-    createVoucher(voucher){
-        return axios.post(VOUCHER_API_BASE_URL, voucher);
+    getVoucherByBrandId(brandId, page = 0, size = 10) {
+        return axios.get(`${VOUCHER_API_BASE_URL}/${brandId}?page=${page}&size=${size}`);
     }
 
-    getVoucherById(voucherId){
-        return axios.get(VOUCHER_API_BASE_URL + '/' + voucherId);
+    getVoucherByVoucherId(voucherId) {
+        return axios.get(`${VOUCHER_API_BASE_URL}/view-detail/${voucherId}`);
     }
 
-    updateVoucher(voucher, voucherId){
-        return axios.put(VOUCHER_API_BASE_URL + '/' + voucherId, voucher);
+    getVoucherByEventId(eventId, page = 0, size = 10) {
+        return axios.get(`${VOUCHER_API_BASE_URL}/event/${eventId}?page=${page}&size=${size}`);
     }
 
-    deleteVoucher(voucherId){
-        return axios.delete(VOUCHER_API_BASE_URL + '/' + voucherId);
+    updateVoucher(voucher, voucherId) {
+        return axios.put(`${VOUCHER_API_BASE_URL}/update/${voucherId}`, voucher, {
+            headers: {
+              'Content-Type': 'multipart/form-data',
+            },
+        });
+    }
+
+    deleteVoucher(voucherId) {
+        return axios.delete(`${VOUCHER_API_BASE_URL}/delete/${voucherId}`);
+    }
+
+    checkDuplicate(code, eventId) {
+        return axios.get(`${VOUCHER_API_BASE_URL}/check-duplicate?code=${code}&eventId=${eventId}`);
     }
 }
 
-export default new VoucherService()
+const voucherServiceInstance = new VoucherService();
+export default voucherServiceInstance; 
