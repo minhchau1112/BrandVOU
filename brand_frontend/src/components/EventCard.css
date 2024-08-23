@@ -1,0 +1,42 @@
+.event-card {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    padding: 16px;
+    background-color: #fff;
+    text-align: start;
+    max-width: 300px;
+}
+
+.event-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.event-image {
+    width: 250px;
+    height: 150px;
+    max-width: 300px; 
+    border-bottom: 1px solid #ddd;
+    object-fit: cover;
+    border-radius: 4px;
+}
+
+.event-card h3 {
+    font-size: 1.2rem;
+    margin: 16px 0 8px;
+}
+
+.event-card p {
+    font-style: italic;
+}
+  
+.event-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: left;
+    gap: 16px;
+}
