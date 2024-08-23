@@ -11,8 +11,8 @@ class VoucherService {
         });
     }
 
-    getVoucherByBrandId(brandId) {
-        return axios.get(`${VOUCHER_API_BASE_URL}/${brandId}`);
+    getVoucherByBrandId(brandId, page = 0, size = 10) {
+        return axios.get(`${VOUCHER_API_BASE_URL}/${brandId}?page=${page}&size=${size}`);
     }
 
     getVoucherByVoucherId(voucherId) {
@@ -33,6 +33,10 @@ class VoucherService {
 
     deleteVoucher(voucherId) {
         return axios.delete(`${VOUCHER_API_BASE_URL}/delete/${voucherId}`);
+    }
+
+    checkDuplicate(code, eventId) {
+        return axios.get(`${VOUCHER_API_BASE_URL}/check-duplicate?code=${code}&eventId=${eventId}`);
     }
 }
 
