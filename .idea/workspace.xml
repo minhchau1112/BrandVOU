@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="6bb27ad0-fb00-4a05-8d33-0c9167e99d74" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/brand_frontend/src/components/AddVoucherComponent.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/brand_frontend/src/components/BrandNavbar.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/brand_frontend/src/components/BrandNavbar.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/brand_frontend/src/components/EventCard.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/brand_frontend/src/components/EventCard.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/brand_frontend/src/components/EventDetail.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/brand_frontend/src/components/EventEdit.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/brand_frontend/src/components/EventList.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/brand_frontend/src/components/EventList.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/brand_frontend/src/components/VoucherDetail.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/brand_frontend/src/components/VoucherEdit.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/brand_frontend/src/components/VouchersTable.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/brand_frontend/src/default.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/brand_frontend/src/sk1.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/brand_backend/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/brand_backend/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/brand_backend/src/main/java/com/example/brand_backend/BrandBackendApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/brand_backend/src/main/java/com/example/brand_backend/BrandBackendApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/brand_backend/src/main/java/com/example/brand_backend/controller/EventController.java" beforeDir="false" afterPath="$PROJECT_DIR$/brand_backend/src/main/java/com/example/brand_backend/controller/EventController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/brand_backend/src/main/java/com/example/brand_backend/controller/VoucherController.java" beforeDir="false" afterPath="$PROJECT_DIR$/brand_backend/src/main/java/com/example/brand_backend/controller/VoucherController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/brand_backend/src/main/java/com/example/brand_backend/model/Events.java" beforeDir="false" afterPath="$PROJECT_DIR$/brand_backend/src/main/java/com/example/brand_backend/model/Events.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/brand_backend/src/main/java/com/example/brand_backend/model/Vouchers.java" beforeDir="false" afterPath="$PROJECT_DIR$/brand_backend/src/main/java/com/example/brand_backend/model/Vouchers.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/brand_backend/src/main/java/com/example/brand_backend/repository/EventRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/brand_backend/src/main/java/com/example/brand_backend/repository/EventRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/brand_backend/src/main/java/com/example/brand_backend/repository/VoucherRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/brand_backend/src/main/java/com/example/brand_backend/repository/VoucherRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/brand_backend/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/brand_backend/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/brand_frontend/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/brand_frontend/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/brand_frontend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/brand_frontend/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/brand_frontend/public/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/brand_frontend/public/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/brand_frontend/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/brand_frontend/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/brand_frontend/src/components/AddEventComponent.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/brand_frontend/src/components/AddEventComponent.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/brand_frontend/src/components/AddVoucherComponent.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/brand_frontend/src/components/AddVoucherComponent.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/brand_frontend/src/index.css" beforeDir="false" afterPath="$PROJECT_DIR$/brand_frontend/src/index.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/brand_frontend/src/services/EventService.js" beforeDir="false" afterPath="$PROJECT_DIR$/brand_frontend/src/services/EventService.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/brand_frontend/src/services/VoucherService.js" beforeDir="false" afterPath="$PROJECT_DIR$/brand_frontend/src/services/VoucherService.js" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+        <option value="Interface" />
+        <option value="JSX File" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="main" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;N2TS-Dolphin&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/minhchau1112/BrandVOU.git&quot;,
+    &quot;accountId&quot;: &quot;a8306807-508a-4140-9c15-563db466d649&quot;
+  }
+}</component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 7
+}</component>
+  <component name="ProjectId" id="2l0A3WbU10iAEKBSHlKOPAwWxH7" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "JUnit.BrandBackendApplicationTests.executor": "Run",
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "Spring Boot.BrandBackendApplication.executor": "Run",
+    "git-widget-placeholder": "Merging dolphintest",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/sonsu/Desktop/KienTruc",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "reference.settings.project.maven.importing",
+    "ts.external.directory.path": "D:\\IntelliJ IDEA 2024.2.0.2\\plugins\\javascript-plugin\\jsLanguageServicesImpl\\external",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RunManager" selected="Spring Boot.BrandBackendApplication">
+    <configuration name="BrandBackendApplicationTests" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="brand_backend" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.example.brand_backend.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.example.brand_backend" />
+      <option name="MAIN_CLASS_NAME" value="com.example.brand_backend.BrandBackendApplicationTests" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="BrandBackendApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="brand_backend" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.example.brand_backend.BrandBackendApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JUnit.BrandBackendApplicationTests" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9823dce3aa75-b114ca120d71-intellij.indexing.shared.core-IU-242.20224.419" />
+        <option value="bundled-js-predefined-d6986cc7102b-410509235cf1-JavaScript-IU-242.20224.419" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="6bb27ad0-fb00-4a05-8d33-0c9167e99d74" name="Changes" comment="" />
+      <created>1724306420206</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1724306420206</updated>
+      <workItem from="1724306421347" duration="1037000" />
+      <workItem from="1724384916381" duration="20000" />
+      <workItem from="1724384942791" duration="858000" />
+      <workItem from="1724424356079" duration="3023000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>

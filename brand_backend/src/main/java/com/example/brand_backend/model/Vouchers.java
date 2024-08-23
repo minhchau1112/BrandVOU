@@ -20,14 +20,15 @@ public class Vouchers {
     @Column(name = "image")
     private String image;
     @Column(name = "value")
-    private float value;
+    private Float value;
     @Column(name = "description")
     private String description;
     @Column(name = "expirationDate")
     private LocalDateTime expirationDate;
     @Column(name = "status")
     private String status;
-
+    @Column(name = "count")
+    private Integer count;
     public Long getId() {
         return id;
     }
@@ -68,14 +69,6 @@ public class Vouchers {
         this.image = image;
     }
 
-    public float getValue() {
-        return value;
-    }
-
-    public void setValue(float value) {
-        this.value = value;
-    }
-
     public String getDescription() {
         return description;
     }
@@ -98,5 +91,20 @@ public class Vouchers {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public Float getValue() {
+        return value;
+    }
+    public void setValue(Float value) {
+        this.value = value;
+    }
+
+    public Integer getCount() {
+        return count;
+    }
+
+    public void setCount(Integer count) {
+        this.count = count;
     }
 }

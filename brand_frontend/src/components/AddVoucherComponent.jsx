@@ -1,33 +1,36 @@
-import React, { useState, useEffect } from 'react';
-import { Form, Button, Container, Alert, Spinner } from 'react-bootstrap';
-import axios from 'axios';
+import React, { useState, useEffect, useRef } from 'react';
+import { Form, Button, Container, Row, Col, Image } from 'react-bootstrap';
+import EventService from '../services/EventService';
+import VoucherService from '../services/VoucherService';
 import { useNavigate } from 'react-router-dom';
 import Select from 'react-select';
+import './AddVoucherComponent.css';
 
 function AddVoucherComponent({ brandID }) {
     const [voucher, setVoucher] = useState({
         code: '',
-        qrCode: '',
+        qrCode: null,
         image: null,
         value: '',
         description: '',
         expirationDate: '',
-        status: ''
+        status: 'Active'
     });
     const [previewImage, setPreviewImage] = useState(null);
+    const [previewQrCode, setPreviewQrCode] = useState(null);
     const [error, setError] = useState(null);
     const [message, setMessage] = useState(null);
     const [events, setEvents] = useState([]);
     const [selectedEvent, setSelectedEvent] = useState(null);
-    const [eventDetails, setEventDetails] = useState(null);
-    const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
 
-    // Lấy danh sách sự kiện của thương hiệu
+    const imageInputRef = useRef(null);
+    const qrCodeInputRef = useRef(null);
+
     useEffect(() => {
         const fetchEvents = async () => {
             try {
-                const response = await axios.get(`http://localhost:9090/api/v1/events/${brandID}`);
+                const response = await EventService.getEventsByBrandId(brandID);
                 const eventOptions = response.data.map(event => ({
                     value: event.id,
                     label: event.name
@@ -42,21 +45,26 @@ function AddVoucherComponent({ brandID }) {
     }, [brandID]);
 
     const handleChange = (e) => {
-        const { name, value, type, files } = e.target;
-        if (type === 'file') {
-            const file = files[0];
-            setVoucher({ ...voucher, [name]: file });
-            const reader = new FileReader();
-            reader.onloadend = () => {
-                setPreviewImage(reader.result);
-            };
-            if (file) {
-                reader.readAsDataURL(file);
-            }
-        } else {
-            setVoucher({ ...voucher, [name]: value });
-        }
-    };
+		const { name, value, type, files } = e.target;
+
+		if (type === 'file') {
+			const file = files[0];
+			setVoucher({ ...voucher, [name]: file });
+			const reader = new FileReader();
+			reader.onloadend = () => {
+				if (name === 'image') {
+					setPreviewImage(reader.result);
+				} else if (name === 'qrCode') {
+					setPreviewQrCode(reader.result);
+				}
+			};
+			if (file) {
+				reader.readAsDataURL(file);
+			}
+		} else {
+			setVoucher({ ...voucher, [name]: value });
+		}
+	};
 
     const handleEventChange = (selectedOption) => {
         setSelectedEvent(selectedOption ? selectedOption.value : null);
@@ -65,7 +73,24 @@ function AddVoucherComponent({ brandID }) {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        const formData = new FormData();
+		console.log("selectedEvent: ", selectedEvent);
+		console.log("voucher code: ", voucher.code);
+		let isDuplicate = await VoucherService.checkDuplicate(voucher.code, selectedEvent);
+		console.log("isDuplicate: ", isDuplicate.data);
+		
+		if (isDuplicate.data) {
+			setError('Code already exists for this event! Please enter another code');
+			return;
+		}
+
+		if (!voucher.qrCode || !voucher.image) {
+            setError('Please add both QR Code and Image before submitting.');
+            return;
+        }
+
+        console.log('Voucher data before submit:', voucher);
+
+		const formData = new FormData();
         formData.append('code', voucher.code);
         formData.append('qrCode', voucher.qrCode);
         formData.append('image', voucher.image);
@@ -75,11 +100,7 @@ function AddVoucherComponent({ brandID }) {
         formData.append('status', voucher.status);
 
         try {
-            await axios.post(`http://localhost:9090/api/v1/vouchers/${selectedEvent}`, formData, {
-                headers: {
-                    'Content-Type': 'multipart/form-data'
-                }
-            });
+            await VoucherService.createVoucher(formData, selectedEvent);
             setMessage('Voucher added successfully!');
             navigate('/vouchers');
         } catch (err) {
@@ -89,123 +110,163 @@ function AddVoucherComponent({ brandID }) {
 
     return (
         <Container>
-            <h2 className="text-center">Add New Voucher</h2>
-            {error && <Alert variant="danger">{error}</Alert>}
-            {message && <Alert variant="success">{message}</Alert>}
-            <Form onSubmit={handleSubmit}>
-                <Form.Group controlId="formEvent">
-                    <Form.Label>Event</Form.Label>
-                    <Select
-                        name="event"
-                        options={events}
-                        className="basic-single"
-                        classNamePrefix="select"
-                        onChange={handleEventChange}
-                        placeholder="Select an event"
-                    />
-                </Form.Group>
-                {loading && <Spinner animation="border" />}
-                {eventDetails && (
-                    <div className="mt-3">
-                        <h5>Event Details</h5>
-                        <p><strong>Name:</strong> {eventDetails.name}</p>
-                        <p><strong>Start Time:</strong> {eventDetails.startTime}</p>
-                        <p><strong>End Time:</strong> {eventDetails.endTime}</p>
-                        <p><strong>Number of Vouchers:</strong> {eventDetails.voucherCount}</p>
-                        {/* Display more details if needed */}
-                    </div>
-                )}
+			{error && <div className="alert alert-danger">{error}</div>}
+			{message && <div className="alert alert-success">{message}</div>}
 
-                <Form.Group controlId="formCode">
-                    <Form.Label>Code</Form.Label>
-                    <Form.Control 
-                        type="text" 
-                        name="code" 
-                        value={voucher.code} 
-                        onChange={handleChange} 
-                        placeholder="Enter voucher code" 
-                        required 
-                    />
-                </Form.Group>
-
-                <Form.Group controlId="formQrCode">
-                    <Form.Label>QR Code</Form.Label>
-                    <Form.Control 
-                        type="text" 
-                        name="qrCode" 
-                        value={voucher.qrCode} 
-                        onChange={handleChange} 
-                        placeholder="Enter QR code" 
-                        required 
-                    />
-                </Form.Group>
-
-                <Form.Group controlId="formImage">
-                    <Form.Label>Image</Form.Label>
-                    <Form.Control 
-                        type="file" 
-                        name="image" 
-                        onChange={handleChange} 
-                        required 
-                    />
-                    {previewImage && (
-                        <div className="mt-3">
-                            <img src={previewImage} alt="Voucher Preview" style={{ maxWidth: '200px' }} />
+            <Row className="mt-5">
+                <Col md={6} className="d-flex flex-column align-items-left" style={{ paddingTop: '100px' }}>
+                    <h2>Add a New Voucher</h2>
+                    <p>Enter the details for the new voucher</p>
+					<Form.Group controlId="formDescription">
+						<Form.Control 
+							type="text" 
+							name="description" 
+							value={voucher.description} 
+							onChange={handleChange} 
+							placeholder="Enter voucher description" 
+						/>
+					</Form.Group>
+                </Col>
+                <Col md={6} className="d-flex flex-column align-items-center">
+                    <div
+                        style={{ width: '100%', height: '300px', backgroundColor: '#F0F0F0', cursor: 'pointer', position: 'relative', overflow: 'hidden' }}
+                        className="image-container mb-3"
+                        onClick={() => qrCodeInputRef.current.click()}
+                    >
+                        {previewQrCode && (
+                            <img 
+                                src={previewQrCode} 
+                                alt="Voucher QR Code Preview" 
+                                style={{ 
+                                    width: '100%', 
+                                    height: '100%', 
+                                    objectFit: 'contain' 
+                                }} 
+                            />
+                        )}
+                        <div className="overlay">
+                            <div className="overlay-text">Add QR Code +</div>
                         </div>
-                    )}
-                </Form.Group>
+                    </div>
+                    <Form.Group controlId="formFile" className="d-none">
+                        <Form.Control
+                            type="file"
+                            name="qrCode"
+                            onChange={handleChange}
+                            ref={qrCodeInputRef}
+                            required
+                        />
+                    </Form.Group>
+                </Col>
+            </Row>
+            <Row className="mt-5">
+                <Col md={6}>
+                    <div
+                        style={{ width: '100%', height: '320px', backgroundColor: '#F0F0F0', cursor: 'pointer', position: 'relative', overflow: 'hidden' }}
+                        className="image-container mb-3"
+                        onClick={() => imageInputRef.current.click()}
+                    >
+                        {previewImage && (
+                            <Image 
+                                src={previewImage} 
+                                alt="Voucher Image Preview" 
+                                style={{ 
+                                    width: '100%', 
+                                    height: '100%', 
+                                    objectFit: 'contain' 
+                                }} 
+                            />
+                        )}
+                        <div className="overlay">
+                            <div className="overlay-text">Add Image +</div>
+                        </div>
+                    </div>
+                    <Form.Group controlId="formFile" className="d-none">
+                        <Form.Control
+                            type="file"
+                            name="image"
+                            onChange={handleChange}
+                            ref={imageInputRef} 
+                            required
+                        />
+                    </Form.Group>
+                </Col>
+                <Col md={6}>
+                    <h3>Voucher Details</h3>
+                    <Form onSubmit={handleSubmit}>
+                        <Form.Group controlId="formEvent">
+                            <Form.Label className='label'l>Event</Form.Label>
+                            <Select
+                                name="event"
+                                options={events}
+                                className="basic-single"
+                                classNamePrefix="select"
+                                onChange={handleEventChange}
+                                placeholder="Select an event"
+								required
+                            />
+                        </Form.Group>
+                        <div className='d-flex justify-content-between mt-1'>
+							<Form.Group as={Col} md={5} controlId="formCode">
+								<Form.Label className='label'>Code</Form.Label>
+								<Form.Control 
+									type="text" 
+									name="code" 
+									value={voucher.code} 
+									onChange={handleChange} 
+									placeholder="Enter voucher code" 
+									required 
+								/>
+							</Form.Group>
 
-                <Form.Group controlId="formValue">
-                    <Form.Label>Value</Form.Label>
-                    <Form.Control 
-                        type="number" 
-                        name="value" 
-                        value={voucher.value} 
-                        onChange={handleChange} 
-                        placeholder="Enter voucher value" 
-                        required 
-                    />
-                </Form.Group>
+							<Form.Group as={Col} md={6} controlId="formValue">
+								<Form.Label className='label'>Value</Form.Label>
+								<Form.Control 
+									type="text" 
+									name="value" 
+									value={voucher.value} 
+									onChange={handleChange} 
+									placeholder="Enter voucher value" 
+									required 
+								/>
+							</Form.Group>
+						</div>
+						
 
-                <Form.Group controlId="formDescription">
-                    <Form.Label>Description</Form.Label>
-                    <Form.Control 
-                        type="text" 
-                        name="description" 
-                        value={voucher.description} 
-                        onChange={handleChange} 
-                        placeholder="Enter voucher description" 
-                        required 
-                    />
-                </Form.Group>
+                        <div className='d-flex justify-content-between mt-1'>
+							<Form.Group as={Col} md={5} controlId="formExpirationDate">
+								<Form.Label className='label'>Expiration Date</Form.Label>
+								<Form.Control 
+									type="datetime-local" 
+									name="expirationDate" 
+									value={voucher.expirationDate} 
+									onChange={handleChange} 
+									required 
+								/>
+							</Form.Group>
 
-                <Form.Group controlId="formExpirationDate">
-                    <Form.Label>Expiration Date</Form.Label>
-                    <Form.Control 
-                        type="datetime-local" 
-                        name="expirationDate" 
-                        value={voucher.expirationDate} 
-                        onChange={handleChange} 
-                        required 
-                    />
-                </Form.Group>
+							<Form.Group as={Col} md={6} controlId="formStatus">
+								<Form.Label className='label'>Status</Form.Label>
+								<Form.Control 
+									as="select" 
+									name="status" 
+									value={voucher.status} 
+									onChange={handleChange} 
+									required
+								>
+									<option value="Active">Active</option>
+									<option value="Inactive">Inactive</option>
+								</Form.Control>
+							</Form.Group>
 
-                <Form.Group controlId="formStatus">
-                    <Form.Label>Status</Form.Label>
-                    <Form.Control 
-                        type="text" 
-                        name="status" 
-                        value={voucher.status} 
-                        onChange={handleChange} 
-                        placeholder="Enter voucher status" 
-                        required 
-                    />
-                </Form.Group>
+						</div>
 
-                <Button variant="primary" type="submit">
-                    Submit
-                </Button>
-            </Form>
+                        <Button variant="primary" type="submit" className="mt-4">
+                            Save Voucher
+                        </Button>
+                    </Form>
+                </Col>
+            </Row>
         </Container>
     );
 }
