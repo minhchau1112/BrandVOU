@@ -13,12 +13,10 @@ function App() {
         <Router>
           <div className="container">
             <Routes>
-              <Route path="/" element={<ListEventComponent />} />
-              <Route path="/events" element={<ListEventComponent />} />
               <Route path="/add-events" element={<AddEventComponent brandID={1} />} />
               <Route path="/add-vouchers" element={<AddVoucherComponent brandID={1} />} />
-              <Route path="/login" component={Login} />
-              <Route path="/register" component={Register} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/register" element={<Register />} />
             </Routes>
           </div>
         </Router>
