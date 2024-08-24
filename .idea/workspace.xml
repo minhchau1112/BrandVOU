@@ -5,39 +5,22 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6bb27ad0-fb00-4a05-8d33-0c9167e99d74" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/brand_frontend/src/components/AddVoucherComponent.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/brand_frontend/src/components/BrandNavbar.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/brand_frontend/src/components/BrandNavbar.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/brand_frontend/src/components/EventCard.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/brand_frontend/src/components/EventCard.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/brand_frontend/src/components/EventDetail.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/brand_frontend/src/components/EventEdit.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/brand_frontend/src/components/EventList.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/brand_frontend/src/components/EventList.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/brand_frontend/src/components/VoucherDetail.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/brand_frontend/src/components/VoucherEdit.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/brand_frontend/src/components/VouchersTable.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/brand_frontend/src/default.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/brand_frontend/src/sk1.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/brand_backend/src/main/java/com/example/brand_backend/config/SecurityConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/brand_backend/src/main/java/com/example/brand_backend/repository/AccountsRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/brand_frontend/src/components/LoginComponent.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/brand_frontend/src/components/RegisterComponent.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/brand_frontend/src/services/AuthService.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/brand_backend/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/brand_backend/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/brand_backend/src/main/java/com/example/brand_backend/BrandBackendApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/brand_backend/src/main/java/com/example/brand_backend/BrandBackendApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/brand_backend/src/main/java/com/example/brand_backend/controller/EventController.java" beforeDir="false" afterPath="$PROJECT_DIR$/brand_backend/src/main/java/com/example/brand_backend/controller/EventController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/brand_backend/src/main/java/com/example/brand_backend/controller/VoucherController.java" beforeDir="false" afterPath="$PROJECT_DIR$/brand_backend/src/main/java/com/example/brand_backend/controller/VoucherController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/brand_backend/src/main/java/com/example/brand_backend/model/Events.java" beforeDir="false" afterPath="$PROJECT_DIR$/brand_backend/src/main/java/com/example/brand_backend/model/Events.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/brand_backend/src/main/java/com/example/brand_backend/model/Vouchers.java" beforeDir="false" afterPath="$PROJECT_DIR$/brand_backend/src/main/java/com/example/brand_backend/model/Vouchers.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/brand_backend/src/main/java/com/example/brand_backend/repository/EventRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/brand_backend/src/main/java/com/example/brand_backend/repository/EventRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/brand_backend/src/main/java/com/example/brand_backend/repository/VoucherRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/brand_backend/src/main/java/com/example/brand_backend/repository/VoucherRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/brand_backend/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/brand_backend/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/brand_frontend/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/brand_frontend/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/brand_frontend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/brand_frontend/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/brand_frontend/public/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/brand_frontend/public/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/brand_backend/src/main/java/com/example/brand_backend/controller/AuthController.java" beforeDir="false" afterPath="$PROJECT_DIR$/brand_backend/src/main/java/com/example/brand_backend/controller/AuthController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/brand_backend/src/main/java/com/example/brand_backend/repository/AccountRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/brand_backend/src/main/java/com/example/brand_backend/service/AccountService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/brand_frontend/src/App.css" beforeDir="false" afterPath="$PROJECT_DIR$/brand_frontend/src/App.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/brand_frontend/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/brand_frontend/src/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/brand_frontend/src/components/AddEventComponent.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/brand_frontend/src/components/AddEventComponent.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/brand_frontend/src/components/AddVoucherComponent.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/brand_frontend/src/components/AddVoucherComponent.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/brand_frontend/src/index.css" beforeDir="false" afterPath="$PROJECT_DIR$/brand_frontend/src/index.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/brand_frontend/src/services/EventService.js" beforeDir="false" afterPath="$PROJECT_DIR$/brand_frontend/src/services/EventService.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/brand_frontend/src/services/VoucherService.js" beforeDir="false" afterPath="$PROJECT_DIR$/brand_frontend/src/services/VoucherService.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/brand_frontend/src/components/BrandNavbar.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/brand_frontend/src/components/BrandNavbar.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/brand_frontend/src/components/LoginFormComponent.jsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/brand_frontend/src/components/RegisterFormComponent.jsx" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -47,9 +30,9 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Class" />
         <option value="Interface" />
         <option value="JSX File" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -73,6 +56,10 @@
     &quot;accountId&quot;: &quot;a8306807-508a-4140-9c15-563db466d649&quot;
   }
 }</component>
+  <component name="KubernetesApiPersistence"><![CDATA[{}]]></component>
+  <component name="KubernetesApiProvider"><![CDATA[{
+  "isMigrated": true
+}]]></component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 7
 }</component>
@@ -90,8 +77,9 @@
     "RequestMappingsPanelWidth0": "75",
     "RequestMappingsPanelWidth1": "75",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "Spring Boot.BrandBackendApplication.executor": "Run",
-    "git-widget-placeholder": "Merging dolphintest",
+    "git-widget-placeholder": "dolphintest",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Users/sonsu/Desktop/KienTruc",
     "node.js.detected.package.eslint": "true",
@@ -152,7 +140,7 @@
       <workItem from="1724306421347" duration="1037000" />
       <workItem from="1724384916381" duration="20000" />
       <workItem from="1724384942791" duration="858000" />
-      <workItem from="1724424356079" duration="3023000" />
+      <workItem from="1724424356079" duration="20138000" />
     </task>
     <servers />
   </component>

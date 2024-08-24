@@ -10,8 +10,8 @@ import VoucherDetail from './components/VoucherDetail';
 import VoucherEdit from './components/VoucherEdit';
 import EventDetail from './components/EventDetail';
 import EventEdit from './components/EventEdit';
-import Login from './components/LoginFormComponent';
-import Register from './components/RegisterFormComponent';
+import Login from './components/LoginComponent';
+import Register from './components/RegisterComponent';
 
 function App() {
   return (
