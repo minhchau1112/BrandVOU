@@ -45,7 +45,7 @@ function VoucherEdit() {
                 }));
                 setEvents(eventOptions);
             } catch (error) {
-                setError('Error fetching voucher details or events.');
+                // setError('Error fetching voucher details or events.');
                 setLoading(false);
             }
         };
