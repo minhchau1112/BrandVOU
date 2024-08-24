@@ -63,14 +63,14 @@ const BrandNavbar = () => {
             </ul>
             <div className="navbar-buttons">
                 {isLoggedIn ? (
-                    <div>
+                    <div className='d-flex' style={{gap: '12px'}}>
                         <span>{username}</span>
                         <button className="logout-btn" onClick={handleLogout}>
                             Logout
                         </button>
                     </div>
                 ) : (
-                    <div>
+                    <div className='d-flex' style={{gap: '12px'}}>
                         <button className="login-btn" onClick={handleLogin}>Login</button>
                         <button className="signup-btn" onClick={handleRegister}>Register</button>
                     </div>
