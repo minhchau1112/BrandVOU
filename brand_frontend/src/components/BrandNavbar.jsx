@@ -3,14 +3,17 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import './BrandNavbar.css'; 
 
 const BrandNavbar = () => {
-    const [username, setUsername] = useState('');
+    const [brandName, setName] = useState('');
+    const [brandId, setId] = useState(null);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const navigate = useNavigate();
 
     useEffect(() => {
-        const storedUsername = localStorage.getItem('username');
-        if (storedUsername) {
-            setUsername(storedUsername);
+        const storedBrandName = localStorage.getItem('brandName');
+        const storedBrandId = localStorage.getItem('brandId');
+        if (storedBrandName && storedBrandId) {
+            setName(storedBrandName);
+            setId(storedBrandId);
             setIsLoggedIn(true);
         }
     }, []);
@@ -64,7 +67,7 @@ const BrandNavbar = () => {
             <div className="navbar-buttons">
                 {isLoggedIn ? (
                     <div>
-                        <span>{username}</span>
+                        <span>{brandName}</span>
                         <button className="logout-btn" onClick={handleLogout}>
                             Logout
                         </button>

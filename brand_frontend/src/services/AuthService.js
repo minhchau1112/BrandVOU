@@ -2,25 +2,37 @@ import axios from 'axios';
 
 const API_URL = "http://localhost:9090/api/auth/";
 
-const register = (username, password, email, phoneNumber) => {
+const register = (username, password, email, phoneNumber, name, field, address) => {
     return axios.post(API_URL + "register", {
         username,
         password,
         email,
-        phoneNumber
+        phoneNumber,
+        name,
+        field,
+        address
     });
 };
 
 const login = async (username, password) => {
-    const response = await axios.post(API_URL + "login", {
-        username,
-        password
-    });
+    try {
+        const response = await axios.post(API_URL + "login", {
+            username,
+            password
+        });
 
-    if(response.data.token) {
-        localStorage.setItem('user', JSON.stringify(response.data));
+        console.log('Login response:', response.data); // Log response data
+
+        if (response.data) {
+            localStorage.setItem('user', JSON.stringify(response.data));
+            localStorage.setItem('brandName', response.data.brandName); // Store brand name
+            localStorage.setItem('brandId', response.data.brandId); // Store brand ID
+        }
+        return response.data;
+    } catch (error) {
+        console.error('Login error:', error);
+        throw error;
     }
-    return response.data;
 };
 
 export default {
