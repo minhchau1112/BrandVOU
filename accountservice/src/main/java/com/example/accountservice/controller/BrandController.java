@@ -33,4 +33,12 @@ public class BrandController {
         BrandEntity brand = brandLoginService.getBrandInfo(accountId);
         return ResponseEntity.ok(brand);
     }
+
+    @GetMapping("/brands")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'BRAND')")
+    public ResponseEntity<BrandEntity> findBrandById(@RequestParam Long brandId) {
+        log.info("BrandController | findBrandById");
+        BrandEntity brand = brandLoginService.findBrandById(brandId);
+        return ResponseEntity.ok(brand);
+    }
 }

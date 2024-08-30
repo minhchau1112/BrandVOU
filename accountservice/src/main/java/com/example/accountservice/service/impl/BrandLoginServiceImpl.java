@@ -21,4 +21,13 @@ public class BrandLoginServiceImpl implements BrandLoginService {
         }
         return brand.get();
     }
+
+    @Override
+    public BrandEntity findBrandById(Long brandId) {
+        final Optional<BrandEntity> brand = brandRepository.findById(brandId);
+        if (brand.isEmpty()) {
+            throw new BrandNotFoundException("Brand with brandId= " + brandId + " not found!");
+        }
+        return brand.get();
+    }
 }

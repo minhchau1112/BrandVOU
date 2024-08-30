@@ -26,7 +26,7 @@ public class GatewayConfig {
     @Bean
     public RouteLocator routes(RouteLocatorBuilder builder) {
         return builder.routes()
-                .route("eventservice", r -> r.path("/api/v1/products/**")
+                .route("eventservice", r -> r.path("/api/v1/events/**")
                         .filters(f -> f.filter(jwtAuthFilter.apply(new JwtAuthenticationFilter.Config()
                                 .setPublicEndpoints(PUBLIC_ENDPOINTS))))
                         .uri("lb://eventservice"))
