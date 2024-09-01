@@ -9,7 +9,7 @@ import org.mapstruct.Named;
 import org.mapstruct.factory.Mappers;
 @Mapper
 public interface RegisterBrandRequestToBrandEntityMapper extends BaseMapper<RegisterBrandRequest, BrandEntity> {
-    @Named("mapForSaving")
+    @Named("mapBrandForSaving")
     default BrandEntity mapForSaving(RegisterBrandRequest brandRegisterRequest, AccountEntity account) {
 
         return BrandEntity.builder()

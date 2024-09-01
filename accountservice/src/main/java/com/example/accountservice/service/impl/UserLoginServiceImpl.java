@@ -9,6 +9,7 @@ import com.example.accountservice.repository.AccountRepository;
 import com.example.accountservice.service.TokenService;
 import com.example.accountservice.service.UserLoginService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -27,6 +28,7 @@ public class UserLoginServiceImpl implements UserLoginService {
     public Token login(LoginRequest loginRequest) {
 
         final AccountEntity AccountEntityFromDB = loadUserByUsername(loginRequest.getUsername());
+
 
         if (Boolean.FALSE.equals(passwordEncoder.matches(
                 loginRequest.getPassword(), AccountEntityFromDB.getPassword()))) {

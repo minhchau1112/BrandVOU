@@ -16,6 +16,8 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Objects;
+
 @RestController
 @RequestMapping("/api/v1/accounts")
 @RequiredArgsConstructor
@@ -32,10 +34,10 @@ public class AccountController {
     private final LogoutService logoutService;
 
     @PostMapping("/register")
-    public ResponseEntity<Void> registerUser(@RequestBody @Validated final RegisterRequest registerRequest) {
+    public ResponseEntity<?> registerUser(@RequestBody @Validated final RegisterRequest registerRequest) {
         log.info("UserController | registerUser");
-        registerService.registerUser(registerRequest);
-        return ResponseEntity.ok().build();
+        ResponseEntity<?> user = registerService.registerUser(registerRequest);
+        return user;
     }
 
     @PostMapping("/validate-token")

@@ -1,6 +1,5 @@
 package com.example.authservice.client;
 
-import com.example.authservice.model.auth.Account;
 import com.example.authservice.model.auth.dto.request.LoginRequest;
 import com.example.authservice.model.auth.dto.request.RegisterRequest;
 import com.example.authservice.model.auth.dto.request.TokenInvalidateRequest;
@@ -19,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 public interface UserServiceClient {
     // Register a new user by calling the /register endpoint of the user service.
     @PostMapping("/register")
-    ResponseEntity<Account> register(@RequestBody @Valid final RegisterRequest request);
+    ResponseEntity<?> register(@RequestBody @Valid final RegisterRequest request);
     // Validate the given token by calling the /validate-token endpoint.
     @PostMapping("/validate-token")
     void validateToken(@RequestParam String token);

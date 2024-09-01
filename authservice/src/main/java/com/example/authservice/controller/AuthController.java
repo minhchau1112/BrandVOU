@@ -32,9 +32,9 @@ public class AuthController {
     private final LogoutService logoutService;
 
     @PostMapping("/register")
-    public ResponseEntity<Void> registerAdmin(@RequestBody @Valid final RegisterRequest registerRequest) {
-        registerService.registerUser(registerRequest);
-        return ResponseEntity.ok().build();
+    public ResponseEntity<?> registerAdmin(@RequestBody @Valid final RegisterRequest registerRequest) {
+        ResponseEntity<?> account = registerService.registerUser(registerRequest);
+        return account;
     }
 
     @PostMapping("/login")

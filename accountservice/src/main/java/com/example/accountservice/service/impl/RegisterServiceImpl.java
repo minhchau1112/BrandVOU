@@ -7,6 +7,8 @@ import com.example.accountservice.model.account.mapper.RegisterRequestToAccountE
 import com.example.accountservice.repository.AccountRepository;
 import com.example.accountservice.service.RegisterService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -17,19 +19,20 @@ import java.time.LocalDateTime;
 public class RegisterServiceImpl implements RegisterService {
 
     private final AccountRepository accountRepository;
-
     private final RegisterRequestToAccountEntityMapper registerRequestToAccountEntityMapper = RegisterRequestToAccountEntityMapper.initialize();
 
     private final PasswordEncoder passwordEncoder;
     @Override
-    public AccountEntity registerUser(RegisterRequest registerRequest) {
+    public ResponseEntity<?> registerUser(RegisterRequest registerRequest) {
 
         if (accountRepository.existsAccountEntityByEmail(registerRequest.getEmail())) {
-            throw new UserAlreadyExistException("The email is already used for another account: " + registerRequest.getEmail());
+            return ResponseEntity
+                    .ok(new UserAlreadyExistException("The email is already used for another account"));
         }
 
         if (accountRepository.existsAccountEntityByUsername(registerRequest.getUsername())) {
-            throw new UserAlreadyExistException("The username is already used for another account: " + registerRequest.getUsername());
+            return ResponseEntity
+                    .ok(new UserAlreadyExistException("The username is already used for another account"));
         }
 
         final AccountEntity AccountEntityToBeSave = registerRequestToAccountEntityMapper.mapForSaving(registerRequest);
@@ -39,7 +42,7 @@ public class RegisterServiceImpl implements RegisterService {
 
         AccountEntity savedAccountEntity = accountRepository.save(AccountEntityToBeSave);
 
-        return savedAccountEntity;
+        return ResponseEntity.status(HttpStatus.CREATED).body(savedAccountEntity);
 
     }
 
