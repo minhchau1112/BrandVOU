@@ -4,16 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6bb27ad0-fb00-4a05-8d33-0c9167e99d74" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/brand_backend/src/main/java/com/example/brand_backend/utils/JwtUtils.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/brand_backend/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/brand_backend/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/brand_backend/src/main/java/com/example/brand_backend/controller/AuthController.java" beforeDir="false" afterPath="$PROJECT_DIR$/brand_backend/src/main/java/com/example/brand_backend/controller/AuthController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/brand_backend/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/brand_backend/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/brand_frontend/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/brand_frontend/src/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/brand_frontend/src/components/EventList.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/brand_frontend/src/components/EventList.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/brand_frontend/src/services/AuthService.js" beforeDir="false" afterPath="$PROJECT_DIR$/brand_frontend/src/services/AuthService.js" afterDir="false" />
-    </list>
+    <list default="true" id="6bb27ad0-fb00-4a05-8d33-0c9167e99d74" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -57,28 +48,28 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "JUnit.BrandBackendApplicationTests.executor": "Run",
-    "RequestMappingsPanelOrder0": "0",
-    "RequestMappingsPanelOrder1": "1",
-    "RequestMappingsPanelWidth0": "75",
-    "RequestMappingsPanelWidth1": "75",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "Spring Boot.BrandBackendApplication.executor": "Run",
-    "git-widget-placeholder": "dolphintest",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/sonsu/Desktop/KienTruc",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "reference.settings.project.maven.repository.indices",
-    "ts.external.directory.path": "D:\\IntelliJ IDEA 2024.2.0.2\\plugins\\javascript-plugin\\jsLanguageServicesImpl\\external",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;JUnit.BrandBackendApplicationTests.executor&quot;: &quot;Run&quot;,
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;Spring Boot.BrandBackendApplication.executor&quot;: &quot;Run&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;dolphintest&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/sonsu/Desktop/KienTruc&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settings.project.maven.repository.indices&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;D:\\IntelliJ IDEA 2024.2.0.2\\plugins\\javascript-plugin\\jsLanguageServicesImpl\\external&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager" selected="Spring Boot.BrandBackendApplication">
     <configuration name="BrandBackendApplicationTests" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="brand_backend" />
@@ -131,6 +122,7 @@
       <workItem from="1724483084721" duration="8668000" />
       <workItem from="1724500184140" duration="2353000" />
       <workItem from="1724502894792" duration="4077000" />
+      <workItem from="1725285598148" duration="437000" />
     </task>
     <servers />
   </component>
