@@ -20,14 +20,14 @@ function App() {
         <BrandNavbar />
         <div className="container">
           <Routes>
-            <Route path='/' element={<EventList brandID={1} />} />
-            <Route path='/vouchers' element={<VouchersTable brandID={1} />} />
-            <Route path="/add-event" element={<AddEventComponent brandID={1} />} />
-            <Route path="/add-voucher" element={<AddVoucherComponent brandID={1} />} />
-            <Route path="/vouchers/view-detail/:id" element={<VoucherDetail />} />
-            <Route path="/vouchers/edit/:id" element={<VoucherEdit />} />
-            <Route path="/events/view-detail/:id" element={<EventDetail />} />
-            <Route path="/events/edit/:id" element={<EventEdit />} />
+            <Route path='/' element={<EventList/>} />
+            <Route path='/vouchers' element={<VouchersTable/>} />
+            <Route path="/add-event" element={<AddEventComponent/>} />
+            <Route path="/add-voucher" element={<AddVoucherComponent/>} />
+            <Route path="/vouchers/view-detail/:id" element={<VoucherDetail/>} />
+            <Route path="/vouchers/edit/:id" element={<VoucherEdit/>} />
+            <Route path="/events/view-detail/:id" element={<EventDetail/>} />
+            <Route path="/events/edit/:id" element={<EventEdit/>} />
             <Route path="/login" element={<Login/>} />
             <Route path="/register" element={<Register/>} />
           </Routes>

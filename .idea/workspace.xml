@@ -5,14 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6bb27ad0-fb00-4a05-8d33-0c9167e99d74" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/brand_backend/src/main/java/com/example/brand_backend/utils/JwtUtils.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/brand_backend/src/main/java/com/example/brand_backend/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/brand_backend/src/main/java/com/example/brand_backend/config/SecurityConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/brand_backend/src/main/java/com/example/brand_backend/config/WebConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/brand_backend/src/main/java/com/example/brand_backend/config/WebConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/brand_backend/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/brand_backend/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/brand_backend/src/main/java/com/example/brand_backend/controller/AuthController.java" beforeDir="false" afterPath="$PROJECT_DIR$/brand_backend/src/main/java/com/example/brand_backend/controller/AuthController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/brand_backend/src/main/java/com/example/brand_backend/repository/BrandRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/brand_backend/src/main/java/com/example/brand_backend/repository/BrandRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/brand_frontend/src/components/BrandNavbar.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/brand_frontend/src/components/BrandNavbar.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/brand_frontend/src/components/LoginComponent.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/brand_frontend/src/components/LoginComponent.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/brand_frontend/src/components/RegisterComponent.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/brand_frontend/src/components/RegisterComponent.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/brand_backend/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/brand_backend/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/brand_frontend/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/brand_frontend/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/brand_frontend/src/components/EventList.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/brand_frontend/src/components/EventList.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/brand_frontend/src/services/AuthService.js" beforeDir="false" afterPath="$PROJECT_DIR$/brand_frontend/src/services/AuthService.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -23,9 +22,9 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Class" />
         <option value="Interface" />
         <option value="JSX File" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -75,7 +74,7 @@
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "reference.settings.project.maven.importing",
+    "settings.editor.selected.configurable": "reference.settings.project.maven.repository.indices",
     "ts.external.directory.path": "D:\\IntelliJ IDEA 2024.2.0.2\\plugins\\javascript-plugin\\jsLanguageServicesImpl\\external",
     "vue.rearranger.settings.migration": "true"
   }
@@ -130,6 +129,8 @@
       <workItem from="1724384942791" duration="858000" />
       <workItem from="1724424356079" duration="1635000" />
       <workItem from="1724483084721" duration="8668000" />
+      <workItem from="1724500184140" duration="2353000" />
+      <workItem from="1724502894792" duration="4077000" />
     </task>
     <servers />
   </component>

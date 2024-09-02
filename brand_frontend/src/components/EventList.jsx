@@ -17,11 +17,13 @@ const EventList = ({ brandID }) => {
     const [totalElements, setTotalElements] = useState(0);
 
     useEffect(() => {
+        const storedBrandId = localStorage.getItem('brandId');
+
         const fetchEvents = async () => {
             setLoading(true);
             setError(null);
             try {
-                const response = await EventService.getEventsByBrandId(brandID, page, rowsPerPage);
+                const response = await EventService.getEventsByBrandId(storedBrandId, page, rowsPerPage);
                 setEvents(response.data.content);
                 setTotalElements(response.data.totalElements);
                 setFilteredEvents(response.data.content); 

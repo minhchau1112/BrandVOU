@@ -4,6 +4,7 @@ import com.example.brand_backend.model.Accounts;
 import com.example.brand_backend.model.Brands;
 import com.example.brand_backend.repository.AccountsRepository;
 import com.example.brand_backend.repository.BrandRepository;
+import com.example.brand_backend.utils.JwtUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -26,6 +27,9 @@ public class AuthController {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private JwtUtils jwtUtils;
 
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody Map<String, Object> payload) {
@@ -60,11 +64,14 @@ public class AuthController {
         if (existingAccount != null && passwordEncoder.matches(account.getPassword(), existingAccount.getPassword())) {
             Brands brand = brandRepository.findByAccountId(existingAccount.getId());
 
+            String jwtToken = jwtUtils.generateJwtToken(existingAccount.getUsername());
+
             Map<String, Object> response = new HashMap<>();
             response.put("id", existingAccount.getId());
             response.put("username", existingAccount.getUsername());
             response.put("brandName", brand != null ? brand.getName() : null); // Include brand name in the response
             response.put("brandId", brand != null ? brand.getId() : null); // Include brand ID in the response
+            response.put("token", jwtToken);
 
             return ResponseEntity.ok(response);
         }

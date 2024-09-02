@@ -24,9 +24,9 @@ const login = async (username, password) => {
         console.log('Login response:', response.data); // Log response data
 
         if (response.data) {
-            localStorage.setItem('user', JSON.stringify(response.data));
             localStorage.setItem('brandName', response.data.brandName); // Store brand name
             localStorage.setItem('brandId', response.data.brandId); // Store brand ID
+            localStorage.setItem('token', response.data.token);
         }
         return response.data;
     } catch (error) {
