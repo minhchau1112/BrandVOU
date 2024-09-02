@@ -1,27 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import './BrandNavbar.css'; 
+import {useAuth} from "../AuthProvider";
 
 const BrandNavbar = () => {
-    const [brandName, setName] = useState('');
-    const [brandId, setId] = useState(null);
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
     const navigate = useNavigate();
 
-    useEffect(() => {
-        const storedBrandName = localStorage.getItem('brandName');
-        const storedBrandId = localStorage.getItem('brandId');
-        if (storedBrandName && storedBrandId) {
-            setName(storedBrandName);
-            setId(storedBrandId);
-            setIsLoggedIn(true);
-        }
-    }, []);
-
-    const handleLogout = () => {
-        localStorage.clear();
-        setIsLoggedIn(false);
-    };
+    const auth = useAuth();
 
     const handleLogin = () => {
         navigate('/login');
@@ -65,15 +50,15 @@ const BrandNavbar = () => {
                 </li>
             </ul>
             <div className="navbar-buttons">
-                {isLoggedIn ? (
-                    <div>
-                        <span>{brandName}</span>
-                        <button className="logout-btn" onClick={handleLogout}>
+                {auth.token.accessToken ? (
+                    <div className="d-flex align-items-center" style={{ gap: '12px' }}>
+                        <span>{auth.brand.name}</span>
+                        <button className="logout-btn" onClick={() => auth.logOut(auth.token)}>
                             Logout
                         </button>
                     </div>
                 ) : (
-                    <div>
+                    <div className="d-flex" style={{ gap: '12px' }}>
                         <button className="login-btn" onClick={handleLogin}>Login</button>
                         <button className="signup-btn" onClick={handleRegister}>Register</button>
                     </div>

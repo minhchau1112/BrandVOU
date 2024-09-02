@@ -1,6 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { Container, Alert, Spinner, Form, Image, Button, Modal, Col, Row } from 'react-bootstrap';
+import {
+    Container,
+    Alert,
+    Spinner,
+    Form,
+    Image,
+    Button,
+    Modal,
+    Col,
+    Row,
+    FormControl,
+    InputGroup
+} from 'react-bootstrap';
 import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -13,6 +25,8 @@ import { styled } from '@mui/material/styles';
 import { tableCellClasses } from '@mui/material/TableCell';
 import EventService from '../services/EventService';
 import VoucherService from '../services/VoucherService';
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faSearch} from "@fortawesome/free-solid-svg-icons";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -40,61 +54,65 @@ function EventDetail() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [vouchers, setVouchers] = useState([]);
-    const [page, setPage] = useState(0);
-    const [rowsPerPage, setRowsPerPage] = useState(10);
+    const [searchTerm, setSearchTerm] = useState('');
+    const [pageNumber, setPageNumber] = useState(0);
+    const [pageSize, setPageSize] = useState(10);
     const [totalElements, setTotalElements] = useState(0);
     const [showDeleteModal, setShowDeleteModal] = useState(false);
     const [voucherToDelete, setVoucherToDelete] = useState(null);
 
-    useEffect(() => {
-        const fetchEventDetail = async () => {
-            try {
-                const response = await EventService.getEventByEventId(id);
-                setEvent(response.data);
-                setLoading(false);
-            } catch (error) {
-                setError('Error fetching event details.');
-                setLoading(false);
-            }
-        };
+    const fetchEventDetail = async () => {
+        try {
+            const response = await EventService.getEventByEventId(id);
+            console.log("event detail: ", response);
+            setEvent(response.data);
+            setLoading(false);
+        } catch (error) {
+            setError('Error fetching event details.');
+            setLoading(false);
+        }
+    };
 
+    const fetchVouchers = async () => {
+        try {
+            const response = await VoucherService.getVoucherByEventId(id, searchTerm, pageNumber, pageSize);
+            setVouchers(response.data.content);
+            setTotalElements(response.data.totalElements);
+            setLoading(false);
+        } catch (error) {
+            setError('Error fetching vouchers.');
+            setLoading(false);
+        }
+    };
+
+    useEffect(() => {
         fetchEventDetail();
 
-        const fetchVouchers = async () => {
-            try {
-                const response = await VoucherService.getVoucherByEventId(id, page, rowsPerPage);
-                setVouchers(response.data.content);
-                setTotalElements(response.data.totalElements);
-                setLoading(false);
-            } catch (error) {
-                setError('Error fetching vouchers.');
-                setLoading(false);
-            }
-        };
-
         fetchVouchers();
-    }, [id, page, rowsPerPage]);
+    }, [id, pageNumber, pageSize, searchTerm]);
+
+    const handleSearch = () => {
+        setPageNumber(0); // Reset to the first page on new search
+        fetchVouchers();
+    };
+
+    const handleKeyDown = (event) => {
+        if (event.key === 'Enter') {
+            handleSearch();
+        }
+    };
 
     const handleChangePage = (event, newPage) => {
-        setPage(newPage);
+        setPageNumber(newPage);
     };
 
     const handleChangeRowsPerPage = (event) => {
-        setRowsPerPage(+event.target.value);
-        setPage(0);
+        setPageSize(+event.target.value);
+        setPageNumber(0);
     };
 
     const handleViewDetailVoucher = (voucherId) => {
         navigate(`/vouchers/view-detail/${voucherId}`);
-    };
-
-    const handleEditVoucher = async (voucherId) => {
-        navigate(`/vouchers/edit/${voucherId}`);
-    };
-
-    const handleDeleteVoucher = (voucherId) => {
-        setVoucherToDelete(voucherId);
-        setShowDeleteModal(true);
     };
 
     const handleEdit = () => {
@@ -205,7 +223,20 @@ function EventDetail() {
                     </div>
                 </Col>
             </Row>
-            <h3 className="mt-5">Vouchers</h3>
+
+            <InputGroup className="search-bar mt-5">
+                <FormControl
+                    placeholder="Search voucher by code ..."
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    onKeyDown={handleKeyDown}
+                />
+                <Button variant="outline-secondary" onClick={handleSearch}>
+                    <FontAwesomeIcon icon={faSearch} />
+                </Button>
+            </InputGroup>
+
+            <h3 className="mt-3">Vouchers</h3>
             {vouchers && vouchers.length > 0 ? (
                 <TableContainer component={Paper}>
                     <Table>
@@ -226,7 +257,7 @@ function EventDetail() {
                         <TableBody>
                             {vouchers.map((voucher, index) => (
                                 <StyledTableRow key={voucher.id}>
-                                    <StyledTableCell>{page * rowsPerPage + index + 1}</StyledTableCell>
+                                    <StyledTableCell>{pageNumber * pageSize + index + 1}</StyledTableCell>
                                     <StyledTableCell>{voucher.code}</StyledTableCell>
                                     <StyledTableCell>
                                         <a href={voucher.qrcode} target="_blank" rel="noopener noreferrer">
@@ -246,21 +277,11 @@ function EventDetail() {
                                     <StyledTableCell>{voucher.status}</StyledTableCell>
                                     <StyledTableCell>{voucher.event.name}</StyledTableCell>
                                     <StyledTableCell>
-                                        <div className="icon-container d-flex" style={{ gap: '10px' }}>
+                                        <div className="icon-container justify-content-center d-flex" style={{ gap: '10px' }}>
                                             <i
                                                 className="bi bi-eye"
                                                 style={{ color: 'blue', cursor: 'pointer' }}
                                                 onClick={() => handleViewDetailVoucher(voucher.id)}
-                                            ></i>
-                                            <i
-                                                className="bi bi-pencil"
-                                                style={{ color: 'green', cursor: 'pointer' }}
-                                                onClick={() => handleEditVoucher(voucher.id)}
-                                            ></i>
-                                            <i
-                                                className="bi bi-trash3"
-                                                style={{ color: 'red', cursor: 'pointer' }}
-                                                onClick={() => handleDeleteVoucher(voucher.id)}
                                             ></i>
                                         </div>
                                     </StyledTableCell>
@@ -272,8 +293,8 @@ function EventDetail() {
                         rowsPerPageOptions={[5, 10, 25]}
                         component="div"
                         count={totalElements}
-                        rowsPerPage={rowsPerPage}
-                        page={page}
+                        rowsPerPage={pageSize}
+                        page={pageNumber}
                         onPageChange={handleChangePage}
                         onRowsPerPageChange={handleChangeRowsPerPage}
                     />

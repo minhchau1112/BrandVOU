@@ -1,41 +1,31 @@
 import axios from 'axios';
 
-const API_URL = "http://localhost:9090/api/auth/";
-
-const register = (username, password, email, phoneNumber, name, field, address) => {
-    return axios.post(API_URL + "register", {
-        username,
-        password,
-        email,
-        phoneNumber,
-        name,
-        field,
-        address
-    });
+const API_URL = "http://localhost:1110/api/v1";
+const config = {
+    headers: {
+        'Content-Type': 'application/json',
+    },
+    withCredentials: true
 };
 
-const login = async (username, password) => {
-    try {
-        const response = await axios.post(API_URL + "login", {
-            username,
-            password
-        });
-
-        console.log('Login response:', response.data); // Log response data
-
-        if (response.data) {
-            localStorage.setItem('user', JSON.stringify(response.data));
-            localStorage.setItem('brandName', response.data.brandName); // Store brand name
-            localStorage.setItem('brandId', response.data.brandId); // Store brand ID
-        }
-        return response.data;
-    } catch (error) {
-        console.error('Login error:', error);
-        throw error;
+class AuthService {
+    registerBrand(requestBody) {
+        return axios.post(`${API_URL}/accounts/register-brand`, requestBody, config);
     }
-};
 
-export default {
-    register,
-    login,
-};
+    login(requestBody) {
+        return axios.post(`${API_URL}/accounts/login-brand`, requestBody, config);
+    }
+
+    logout(requestBody) {
+        return axios.post(`${API_URL}/authentication/accounts/logout`, requestBody, config);
+    }
+
+    refreshToken(requestBody) {
+        return axios.post(`${API_URL}/authentication/accounts/refresh-token`, requestBody, config);
+    }
+}
+
+const authServiceInstance = new AuthService();
+
+export default authServiceInstance;

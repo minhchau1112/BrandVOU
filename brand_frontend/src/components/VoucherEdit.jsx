@@ -4,14 +4,15 @@ import { Form, Button, Container, Row, Col, Spinner, Modal, Image } from 'react-
 import VoucherService from '../services/VoucherService';
 import EventService from '../services/EventService';
 import Select from 'react-select';
-import './AddVoucherComponent.css'; 
+import './AddVoucherComponent.css';
+import { useAuth } from "../AuthProvider";
 
 function VoucherEdit() {
     const { id } = useParams();
     const navigate = useNavigate();
     const [voucher, setVoucher] = useState({
         code: '',
-        qrCode: null,
+        qrcode: null,
         image: null,
         value: '',
         description: '',
@@ -28,6 +29,8 @@ function VoucherEdit() {
     const [message, setMessage] = useState(null);
     const [showDeleteModal, setShowDeleteModal] = useState(false);
 
+    const auth = useAuth();
+
     useEffect(() => {
         const fetchVoucherDetails = async () => {
             try {
@@ -38,7 +41,7 @@ function VoucherEdit() {
                 setSelectedEvent(response.data.event.id);
                 setLoading(false);
 
-                const eventResponse = await EventService.getEventsByBrandId(response.data.event.brand.id);
+                const eventResponse = await EventService.getAllEventsByBrandId(auth.brand.id);
                 const eventOptions = eventResponse.data.map(event => ({
                     value: event.id,
                     label: event.name
@@ -82,12 +85,29 @@ function VoucherEdit() {
         navigate(-1);
     };
 
+    async function createFileFromUrl(imageUrl) {
+        try {
+            const response = await fetch(imageUrl);
+
+            const blob = await response.blob();
+
+            const imageName = imageUrl.split('/').pop() || 'image.jpg';
+
+            const file = new File([blob], imageName, { type: blob.type });
+
+            return file;
+        } catch (error) {
+            console.error('Error creating file from URL:', error);
+        }
+    }
+
     const handleSubmit = async (e) => {
         e.preventDefault();
-    
+
+        console.log("voucher: ", voucher);
+
         const formData = new FormData();
     
-        // Append form data fields
         formData.append('code', voucher.code);
         formData.append('value', voucher.value);
         formData.append('description', voucher.description);
@@ -95,16 +115,25 @@ function VoucherEdit() {
         formData.append('status', voucher.status);
         formData.append('eventId', selectedEvent);
         formData.append('count', voucher.count);
-    
-        // Append image and QR code only if they have been changed
-        if (voucher.qrCode instanceof File) {
-            formData.append('qrCode', voucher.qrCode);
+
+        if (typeof voucher.qrcode === 'string') {
+            const file = await createFileFromUrl(voucher.qrcode);
+            formData.append('QRCode', file);
+        } else {
+            formData.append('QRCode', voucher.qrcode);
         }
-    
-        if (voucher.image instanceof File) {
+
+        if (typeof voucher.image === 'string') {
+            const file = await createFileFromUrl(voucher.image);
+            formData.append('image', file);
+        } else {
             formData.append('image', voucher.image);
         }
-    
+
+        for (let [key, value] of formData.entries()) {
+            console.log(key, value);
+        }
+
         try {
             await VoucherService.updateVoucher(formData, id);
             setMessage('Voucher updated successfully!');

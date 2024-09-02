@@ -5,6 +5,7 @@ import VoucherService from '../services/VoucherService';
 import { useNavigate } from 'react-router-dom';
 import Select from 'react-select';
 import './AddVoucherComponent.css';
+import { useAuth } from "../AuthProvider";
 
 function AddVoucherComponent({ brandID }) {
     const [voucher, setVoucher] = useState({
@@ -27,10 +28,15 @@ function AddVoucherComponent({ brandID }) {
     const imageInputRef = useRef(null);
     const qrCodeInputRef = useRef(null);
 
+    const auth = useAuth();
+    brandID = auth.brand.id;
+
     useEffect(() => {
         const fetchEvents = async () => {
             try {
-                const response = await EventService.getEventsByBrandId(brandID);
+                console.log("brandID: ", brandID);
+
+                const response = await EventService.getAllEventsByBrandId(brandID);
                 const eventOptions = response.data.map(event => ({
                     value: event.id,
                     label: event.name
@@ -75,13 +81,6 @@ function AddVoucherComponent({ brandID }) {
 
 		console.log("selectedEvent: ", selectedEvent);
 		console.log("voucher code: ", voucher.code);
-		let isDuplicate = await VoucherService.checkDuplicate(voucher.code, selectedEvent);
-		console.log("isDuplicate: ", isDuplicate.data);
-		
-		if (isDuplicate.data) {
-			setError('Code already exists for this event! Please enter another code');
-			return;
-		}
 
 		if (!voucher.qrCode || !voucher.image) {
             setError('Please add both QR Code and Image before submitting.');
@@ -92,15 +91,16 @@ function AddVoucherComponent({ brandID }) {
 
 		const formData = new FormData();
         formData.append('code', voucher.code);
-        formData.append('qrCode', voucher.qrCode);
+        formData.append('QRCode', voucher.qrCode);
         formData.append('image', voucher.image);
         formData.append('value', voucher.value);
         formData.append('description', voucher.description);
         formData.append('expirationDate', voucher.expirationDate);
         formData.append('status', voucher.status);
+        formData.append('eventId', selectedEvent);
 
         try {
-            await VoucherService.createVoucher(formData, selectedEvent);
+            await VoucherService.createVoucher(formData);
             setMessage('Voucher added successfully!');
             navigate('/vouchers');
         } catch (err) {

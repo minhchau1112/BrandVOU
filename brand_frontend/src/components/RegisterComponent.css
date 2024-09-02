@@ -1,0 +1,25 @@
+.gradient-custom-background {
+    background: linear-gradient(to right, rgba(161, 196, 253, 1), rgba(194, 233, 251, 1));
+}
+
+.border {
+    border-radius: .5rem;
+}
+
+.left-backgroud {
+    background: white;
+}
+
+.left-form {
+    border-top-left-radius: .5rem;
+    border-bottom-left-radius: .5rem;
+}
+
+.right-background {
+    background: #4835d4;
+}
+
+.right-form {
+    border-top-right-radius: .5rem;
+    border-bottom-right-radius: .5rem;
+}

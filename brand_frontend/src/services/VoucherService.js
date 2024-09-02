@@ -1,38 +1,82 @@
 import axios from 'axios';
 
-const VOUCHER_API_BASE_URL = "http://localhost:9090/api/v1/vouchers";
+const VOUCHER_API_BASE_URL = "http://localhost:1110/api/v1/events/vouchers";
 
 class VoucherService {
-    createVoucher(voucher, eventId) {
-        return axios.post(`${VOUCHER_API_BASE_URL}/${eventId}`, voucher, {
+    createVoucher(voucher) {
+        const token = JSON.parse(localStorage.getItem('token'));
+        const accessToken = token.accessToken;
+
+        return axios.post(`${VOUCHER_API_BASE_URL}`, voucher, {
             headers: {
-                'Content-Type': 'multipart/form-data'
-            }
+                'Content-Type': 'multipart/form-data',
+                'Authorization': `Bearer ${accessToken}}`
+            },
+            withCredentials: true
         });
     }
 
-    getVoucherByBrandId(brandId, page = 0, size = 10) {
-        return axios.get(`${VOUCHER_API_BASE_URL}/${brandId}?page=${page}&size=${size}`);
+    getVoucherByBrandId(brandId, searchTerm, page = 0, size = 10) {
+        const token = JSON.parse(localStorage.getItem('token'));
+        const accessToken = token.accessToken;
+
+        return axios.get(`${VOUCHER_API_BASE_URL}/brand/${brandId}?pageNumber=${page}&pageSize=${size}&searchTerm=${searchTerm}`, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${accessToken}}`
+            },
+            withCredentials: true
+        });
     }
 
     getVoucherByVoucherId(voucherId) {
-        return axios.get(`${VOUCHER_API_BASE_URL}/view-detail/${voucherId}`);
+        const token = JSON.parse(localStorage.getItem('token'));
+        const accessToken = token.accessToken;
+
+        return axios.get(`${VOUCHER_API_BASE_URL}/${voucherId}`, {
+            headers: {
+                'Authorization': `Bearer ${accessToken}}`
+            },
+            withCredentials: true
+        });
     }
 
-    getVoucherByEventId(eventId, page = 0, size = 10) {
-        return axios.get(`${VOUCHER_API_BASE_URL}/event/${eventId}?page=${page}&size=${size}`);
+    getVoucherByEventId(eventId, searchTerm, page = 0, size = 10) {
+        const token = JSON.parse(localStorage.getItem('token'));
+        const accessToken = token.accessToken;
+
+        return axios.get(`${VOUCHER_API_BASE_URL}/event/${eventId}?pageNumber=${page}&pageSize=${size}&searchTerm=${searchTerm}`, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${accessToken}}`
+            },
+            withCredentials: true
+        });
     }
 
     updateVoucher(voucher, voucherId) {
-        return axios.put(`${VOUCHER_API_BASE_URL}/update/${voucherId}`, voucher, {
+        const token = JSON.parse(localStorage.getItem('token'));
+        const accessToken = token.accessToken;
+
+        return axios.put(`${VOUCHER_API_BASE_URL}/${voucherId}`, voucher, {
             headers: {
-              'Content-Type': 'multipart/form-data',
+                'Content-Type': 'multipart/form-data',
+                'Authorization': `Bearer ${accessToken}}`
             },
+            withCredentials: true
         });
     }
 
     deleteVoucher(voucherId) {
-        return axios.delete(`${VOUCHER_API_BASE_URL}/delete/${voucherId}`);
+        const token = JSON.parse(localStorage.getItem('token'));
+        const accessToken = token.accessToken;
+
+        return axios.delete(`${VOUCHER_API_BASE_URL}/${voucherId}`, {
+            headers: {
+                'Authorization': `Bearer ${accessToken}}`
+            },
+            withCredentials: true
+        });
     }
 
     checkDuplicate(code, eventId) {
