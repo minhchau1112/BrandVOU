@@ -1,6 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { Form, Container, Button, Spinner, Alert, Image, Row, Col, Modal } from 'react-bootstrap';
+import {
+    Form,
+    Container,
+    Button,
+    Spinner,
+    Alert,
+    Image,
+    Row,
+    Col,
+    Modal,
+    InputGroup,
+    FormControl
+} from 'react-bootstrap';
 import Select from 'react-select';
 import EventService from '../services/EventService';
 import VoucherService from '../services/VoucherService';
@@ -14,6 +26,9 @@ import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 import { styled } from '@mui/material/styles';
 import { tableCellClasses } from '@mui/material/TableCell';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSearch } from "@fortawesome/free-solid-svg-icons";
+import { useAuth } from "../AuthProvider";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -39,7 +54,7 @@ function EditEvent() {
     const navigate = useNavigate();
     const [event, setEvent] = useState({
         name: '',
-        image: '',
+        image: null,
         startTime: '',
         endTime: '',
         gameType: '',
@@ -49,8 +64,9 @@ function EditEvent() {
     const [error, setError] = useState(null);
     const [previewImage, setPreviewImage] = useState(null);
     const [vouchers, setVouchers] = useState([]);
-    const [page, setPage] = useState(0);
-    const [rowsPerPage, setRowsPerPage] = useState(10);
+    const [searchTerm, setSearchTerm] = useState('');
+    const [pageNumber, setPageNumber] = useState(0);
+    const [pageSize, setPageSize] = useState(10);
     const [totalElements, setTotalElements] = useState(0);
     const [showDeleteModal, setShowDeleteModal] = useState(false);
     const [voucherToDelete, setVoucherToDelete] = useState(null);
@@ -60,47 +76,60 @@ function EditEvent() {
         { value: 'ShakeGame', label: 'ShakeGame' }
     ];
 
+    const auth = useAuth();
+    const fetchEventDetail = async () => {
+        try {
+            const response = await EventService.getEventByEventId(id);
+            const eventData = response.data;
+
+            const selectedGameTypes = eventData.gameType
+                ? eventData.gameType.split(';').map(type => ({
+                    value: type,
+                    label: type
+                }))
+                : [];
+
+            setEvent({
+                ...eventData,
+                gameType: selectedGameTypes
+            });
+            setPreviewImage(eventData.image);
+            setLoading(false);
+        } catch (error) {
+            setError('Error fetching event details.');
+            setLoading(false);
+        }
+    };
+
+    const fetchVouchers = async () => {
+        try {
+            const response = await VoucherService.getVoucherByEventId(id, searchTerm, pageNumber, pageSize);
+            console.log('voucher: ', response);
+            setVouchers(response.data.content);
+            setTotalElements(response.data.totalElements);
+            setLoading(false);
+        } catch (error) {
+            setError('Error fetching vouchers.');
+            setLoading(false);
+        }
+    };
+
     useEffect(() => {
-        const fetchEventDetail = async () => {
-            try {
-                const response = await EventService.getEventByEventId(id);
-                const eventData = response.data;
-
-                const selectedGameTypes = eventData.gameType
-                    ? eventData.gameType.split(';').map(type => ({
-                          value: type,
-                          label: type
-                      }))
-                    : [];
-
-                setEvent({
-                    ...eventData,
-                    gameType: selectedGameTypes
-                });
-                setPreviewImage(eventData.image);
-                setLoading(false);
-            } catch (error) {
-                setError('Error fetching event details.');
-                setLoading(false);
-            }
-        };
         fetchEventDetail();
 
-        const fetchVouchers = async () => {
-            try {
-                const response = await VoucherService.getVoucherByEventId(id, page, rowsPerPage);
-                console.log('voucher: ', response);
-                setVouchers(response.data.content);
-                setTotalElements(response.data.totalElements);
-                setLoading(false);
-            } catch (error) {
-                setError('Error fetching vouchers.');
-                setLoading(false);
-            }
-        };
-
         fetchVouchers();
-    }, [id, page, rowsPerPage]);
+    }, [id, pageNumber, pageSize, searchTerm]);
+
+    const handleSearch = () => {
+        setPageNumber(0); // Reset to the first page on new search
+        fetchVouchers();
+    };
+
+    const handleKeyDown = (event) => {
+        if (event.key === 'Enter') {
+            handleSearch();
+        }
+    };
 
     const handleChange = (e) => {
         const { name, value, type, files } = e.target;
@@ -152,15 +181,42 @@ function EditEvent() {
         }
     };
 
+    async function createFileFromUrl(imageUrl) {
+        try {
+            const response = await fetch(imageUrl);
+
+            const blob = await response.blob();
+
+            const imageName = imageUrl.split('/').pop() || 'image.jpg';
+
+            const file = new File([blob], imageName, { type: blob.type });
+
+            return file;
+        } catch (error) {
+            console.error('Error creating file from URL:', error);
+        }
+    }
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const updatedEvent = {
-                ...event,
-                gameType: event.gameType.map(option => option.value).join(';')
-            };
+            const formData = new FormData();
+            formData.append('brandId', auth.brand.id);
+            formData.append('name', event.name);
 
-            await EventService.updateEvent(updatedEvent, id);
+            if (typeof event.image === 'string') {
+                const file = await createFileFromUrl(event.image);
+                formData.append('image', file);
+            } else {
+                formData.append('image', event.image);
+            }
+
+            formData.append('voucherCount', event.voucherCount);
+            formData.append('startTime', event.startTime);
+            formData.append('endTime', event.endTime);
+            formData.append('gameType', event.gameType.map(option => option.value).join(';'));
+
+            await EventService.updateEvent(id, formData);
             navigate(`/events/view-detail/${id}`);
         } catch (error) {
             setError('Error updating event.');
@@ -168,12 +224,12 @@ function EditEvent() {
     };
 
     const handleChangePage = (event, newPage) => {
-        setPage(newPage);
+        setPageNumber(newPage);
     };
 
     const handleChangeRowsPerPage = (event) => {
-        setRowsPerPage(+event.target.value);
-        setPage(0);
+        setPageSize(+event.target.value);
+        setPageNumber(0);
     };
 
     const columns = [
@@ -309,7 +365,19 @@ function EditEvent() {
                 </Col>
             </Row>
 
-            <h3 className="mt-5">Vouchers</h3>
+            <InputGroup className="search-bar mt-5">
+                <FormControl
+                    placeholder="Search voucher by code ..."
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    onKeyDown={handleKeyDown}
+                />
+                <Button variant="outline-secondary" onClick={handleSearch}>
+                    <FontAwesomeIcon icon={faSearch} />
+                </Button>
+            </InputGroup>
+
+            <h3 className="mt-3">Vouchers</h3>
             {vouchers && vouchers.length > 0 ? (
                 <TableContainer component={Paper}>
                 <Table>
@@ -329,7 +397,7 @@ function EditEvent() {
                     <TableBody>
                         {vouchers.map((voucher, index) => (
                             <StyledTableRow hover role="checkbox" tabIndex={-1} key={voucher.id}>
-                                <StyledTableCell>{page * rowsPerPage + index + 1}</StyledTableCell>
+                                <StyledTableCell>{pageNumber * pageSize + index + 1}</StyledTableCell>
                                 <StyledTableCell>{voucher.code}</StyledTableCell>
                                 <StyledTableCell>
                                     <a href={voucher.qrcode} target="_blank" rel="noopener noreferrer">
@@ -383,8 +451,8 @@ function EditEvent() {
                     rowsPerPageOptions={[5, 10, 25]}
                     component="div"
                     count={totalElements}
-                    rowsPerPage={rowsPerPage}
-                    page={page}
+                    rowsPerPage={pageSize}
+                    page={pageNumber}
                     onPageChange={handleChangePage}
                     onRowsPerPageChange={handleChangeRowsPerPage}
                 />

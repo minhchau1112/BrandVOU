@@ -51,7 +51,7 @@ const BrandNavbar = () => {
             </ul>
             <div className="navbar-buttons">
                 {auth.token.accessToken ? (
-                    <div>
+                    <div className="d-flex align-items-center" style={{ gap: '12px' }}>
                         <span>{auth.brand.name}</span>
                         <button className="logout-btn" onClick={() => auth.logOut(auth.token)}>
                             Logout

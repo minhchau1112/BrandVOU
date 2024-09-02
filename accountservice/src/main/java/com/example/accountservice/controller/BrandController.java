@@ -40,6 +40,7 @@ public class BrandController {
 
         final BrandEntity brand = brandLoginService.getBrandInfo(account.getId());
 
+        log.info("brandID: " + brand.getId());
         LoginResponse response = new LoginResponse(
                 token.getAccessToken(),
                 token.getAccessTokenExpiresAt(),

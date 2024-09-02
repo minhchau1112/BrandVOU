@@ -84,7 +84,7 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(EventAlreadyExistException.class)
-    public ResponseEntity<CustomError> handleProductAlreadyExistException(final EventAlreadyExistException ex) {
+    public ResponseEntity<CustomError> handleEventAlreadyExistException(final EventAlreadyExistException ex) {
         CustomError error = CustomError.builder()
                 .httpStatus(HttpStatus.CONFLICT)
                 .header(CustomError.Header.ALREADY_EXIST.getName())
@@ -95,7 +95,7 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(EventNotFoundException.class)
-    public ResponseEntity<CustomError> handleProductNotFoundException(final EventNotFoundException ex) {
+    public ResponseEntity<CustomError> handleEventNotFoundException(final EventNotFoundException ex) {
         CustomError error = CustomError.builder()
                 .httpStatus(HttpStatus.NOT_FOUND)
                 .header(CustomError.Header.NOT_FOUND.getName())
@@ -105,4 +105,25 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
     }
 
+    @ExceptionHandler(VoucherAlreadyExistException.class)
+    public ResponseEntity<CustomError> handleVoucherAlreadyExistException(final VoucherAlreadyExistException ex) {
+        CustomError error = CustomError.builder()
+                .httpStatus(HttpStatus.CONFLICT)
+                .header(CustomError.Header.ALREADY_EXIST.getName())
+                .message(ex.getMessage())
+                .isSuccess(false)
+                .build();
+        return new ResponseEntity<>(error, HttpStatus.CONFLICT);
+    }
+
+    @ExceptionHandler(VoucherNotFoundException.class)
+    public ResponseEntity<CustomError> handleVoucherNotFoundException(final VoucherNotFoundException ex) {
+        CustomError error = CustomError.builder()
+                .httpStatus(HttpStatus.NOT_FOUND)
+                .header(CustomError.Header.NOT_FOUND.getName())
+                .message(ex.getMessage())
+                .isSuccess(false)
+                .build();
+        return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+    }
 }

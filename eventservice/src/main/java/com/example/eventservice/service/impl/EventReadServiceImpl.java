@@ -9,6 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -27,9 +28,18 @@ public class EventReadServiceImpl implements EventReadService {
     }
 
     @Override
-    public Page<EventEntity> getEventsByBrandId(Long brandId, Pageable pageable) {
-        Page<EventEntity> eventsPage = eventRepository.findByBrandId(brandId, pageable);
-
-        return eventsPage;
+    public Page<EventEntity> getEventsByBrandId(Long brandId, String search, Pageable pageable) {
+        if (search == null || search.trim().isEmpty()) {
+            return eventRepository.findByBrandId(brandId, pageable);
+        } else {
+            return eventRepository.findByBrandIdAndSearch(brandId, search, pageable);
+        }
     }
+
+    @Override
+    public List<EventEntity> getAllEventsByBrandId(Long brandId) {
+        return eventRepository.findAllByBrandId(brandId);
+    }
+
+
 }

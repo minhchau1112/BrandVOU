@@ -14,6 +14,7 @@ import { useNavigate } from 'react-router-dom';
 import { Alert, Spinner } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
+import { useAuth } from "../AuthProvider";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -55,34 +56,36 @@ function VouchersTable({ brandID }) {
     const [error, setError] = useState(null);
     const [searchQuery, setSearchQuery] = useState('');
     const [filteredVouchers, setFilteredVouchers] = useState([]);
-    const [page, setPage] = useState(0); 
-    const [rowsPerPage, setRowsPerPage] = useState(10);
+    const [searchTerm, setSearchTerm] = useState('');
+    const [pageNumber, setPageNumber] = useState(0);
+    const [pageSize, setPageSize] = useState(10);
     const [totalElements, setTotalElements] = useState(0);
 
-    useEffect(() => {
-        const fetchVouchers = async () => {
-            setLoading(true);
-            setError(null);
-            try {
-                const response = await VoucherService.getVoucherByBrandId(brandID, page, rowsPerPage);
-                setVouchers(response.data.content);
-                setFilteredVouchers(response.data.content);
-                setTotalElements(response.data.totalElements);
-                setLoading(false);
-            } catch (error) {
-                setError('Error fetching vouchers.');
-                setLoading(false);
-            }
-        };
+    const auth = useAuth();
+    brandID = auth.brand.id;
 
+    const fetchVouchers = async () => {
+        setLoading(true);
+        setError(null);
+        try {
+            const response = await VoucherService.getVoucherByBrandId(brandID, searchTerm, pageNumber, pageSize);
+            setVouchers(response.data.content);
+            setFilteredVouchers(response.data.content);
+            setTotalElements(response.data.totalElements);
+            setLoading(false);
+        } catch (error) {
+            setError('Error fetching vouchers.');
+            setLoading(false);
+        }
+    };
+
+    useEffect(() => {
         fetchVouchers();
-    }, [brandID, page, rowsPerPage]);
+    }, [brandID, pageNumber, pageSize, searchTerm]);
 
     const handleSearch = () => {
-        const results = vouchers.filter(voucher =>
-            voucher.event.name.toLowerCase().trim() === searchQuery.toLowerCase().trim()
-        );
-        setFilteredVouchers(results);
+        setPageNumber(0); // Reset to the first page on new search
+        fetchVouchers();
     };
     
     const handleKeyDown = (event) => {
@@ -92,12 +95,12 @@ function VouchersTable({ brandID }) {
     };
 
     const handleChangePage = (event, newPage) => {
-        setPage(newPage);
+        setPageNumber(newPage);
     };
 
     const handleChangeRowsPerPage = (event) => {
-        setRowsPerPage(+event.target.value);
-        setPage(0);
+        setPageSize(+event.target.value);
+        setPageNumber(0);
     };
 
     const handleViewDetails = (voucherId) => {
@@ -126,8 +129,8 @@ function VouchersTable({ brandID }) {
                         type="text"
                         className="form-control"
                         placeholder="Search by event name..."
-                        value={searchQuery}
-                        onChange={(e) => setSearchQuery(e.target.value)}
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
                         onKeyDown={handleKeyDown}
                     />
                     <button className="btn btn-outline-secondary" type="button" onClick={handleSearch}>
@@ -163,7 +166,7 @@ function VouchersTable({ brandID }) {
                                 {filteredVouchers
                                     .map((voucher, index) => (
                                         <StyledTableRow hover role="checkbox" tabIndex={-1} key={voucher.id}>
-                                            <StyledTableCell>{page * rowsPerPage + index + 1}</StyledTableCell>
+                                            <StyledTableCell>{pageNumber * pageSize + index + 1}</StyledTableCell>
                                             <StyledTableCell>{voucher.code}</StyledTableCell>
                                             <StyledTableCell>
                                                 <a href={voucher.qrcode} target="_blank" rel="noopener noreferrer">
@@ -221,8 +224,8 @@ function VouchersTable({ brandID }) {
                     rowsPerPageOptions={[10, 25, 100]}
                     component="div"
                     count={totalElements}
-                    rowsPerPage={rowsPerPage}
-                    page={page}
+                    rowsPerPage={pageSize}
+                    page={pageNumber}
                     onPageChange={handleChangePage}
                     onRowsPerPageChange={handleChangeRowsPerPage}
                 />

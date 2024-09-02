@@ -1,6 +1,7 @@
 package com.example.eventservice.model.event.dto.request;
 
 import lombok.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
 @Getter
@@ -11,7 +12,7 @@ import java.time.LocalDateTime;
 public class EventUpdateRequest {
     private Long brandId;
     private String name;
-    private String image;
+    private MultipartFile image;
     private Integer voucherCount;
     private LocalDateTime startTime;
     private LocalDateTime endTime;

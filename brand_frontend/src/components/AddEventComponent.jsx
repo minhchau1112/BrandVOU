@@ -3,6 +3,7 @@ import { Form, Button, Container, Image, Alert, Row, Col } from 'react-bootstrap
 import EventService from '../services/EventService';
 import { useNavigate } from 'react-router-dom';
 import Select from 'react-select';
+import {useAuth} from "../AuthProvider";
 
 function AddEventComponent({brandID}) {
     const [event, setEvent] = useState({
@@ -24,7 +25,8 @@ function AddEventComponent({brandID}) {
     ];
 
     const imageInputRef = useRef(null);
-
+    const auth = useAuth();
+    brandID = auth.brand.id;
     const handleChange = (e) => {
         const { name, value, type, files } = e.target;
         if (type === 'file') {
@@ -50,13 +52,13 @@ function AddEventComponent({brandID}) {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-		let isDuplicate = await EventService.checkDuplicate(event.name, brandID);
-		console.log("isDuplicate: ", isDuplicate.data);
+		// let isDuplicate = await EventService.checkDuplicate(event.name, brandID);
+		// console.log("isDuplicate: ", isDuplicate.data);
 		
-		if (isDuplicate.data) {
-			setError('Event Name already exists for this brand! Please enter another event name');
-			return;
-		}
+		// if (isDuplicate.data) {
+		// 	setError('Event Name already exists for this brand! Please enter another event name');
+		// 	return;
+		// }
 
         if (new Date(event.startTime) >= new Date(event.endTime)) {
             setError('End time must be after start time.');
@@ -71,6 +73,7 @@ function AddEventComponent({brandID}) {
         console.log('Event data before submit:', event);
 
         const formData = new FormData();
+        formData.append('brandId', brandID);
         formData.append('name', event.name);
         formData.append('image', event.image);
         formData.append('voucherCount', event.voucherCount);
@@ -79,7 +82,7 @@ function AddEventComponent({brandID}) {
         formData.append('gameType', event.gameType); 
 
         try {
-            await EventService.createEvent(formData, brandID);
+            await EventService.createEvent(formData);
             setMessage("Event created successfully!");
             navigate('/');
         } catch (err) {
