@@ -14,6 +14,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,6 +30,7 @@ public class VoucherController {
     private final VoucherDeleteService voucherDeleteService;
 
     @PostMapping
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'BRAND')")
     public ResponseEntity<Long> createVoucherForEvent(@ModelAttribute final VoucherCreateRequest voucherCreateRequest) {
         log.info("VoucherController | createVoucherForEvent");
         final VoucherEntity createdVoucher = voucherCreateService.createVoucherForEvent(voucherCreateRequest);
@@ -37,6 +39,7 @@ public class VoucherController {
     }
 
     @GetMapping("/brand/{brandId}")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'BRAND', 'USER')")
     public ResponseEntity<Page<VoucherEntity>> getVouchersByBrand(
             @PathVariable Long brandId,
             @RequestParam int pageNumber,
@@ -57,6 +60,7 @@ public class VoucherController {
     }
 
     @GetMapping("/{voucherId}")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'BRAND', 'USER')")
     public ResponseEntity<VoucherEntity> getVoucherByVoucherId(@PathVariable Long voucherId) {
         log.info("VoucherController | getVoucherByVoucherId");
 
@@ -65,6 +69,7 @@ public class VoucherController {
     }
 
     @GetMapping("/event/{eventId}")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'BRAND', 'USER')")
     public ResponseEntity<Page<VoucherEntity>> getVoucherByEventId(
             @PathVariable Long eventId,
             @RequestParam int pageNumber,
@@ -85,6 +90,7 @@ public class VoucherController {
     }
 
     @PutMapping("/{voucherId}")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'BRAND')")
     public ResponseEntity<VoucherEntity> updateVoucher(@PathVariable Long voucherId, @ModelAttribute final VoucherUpdateRequest voucherUpdateRequest) {
         log.info("VoucherController | updateVoucher");
 
@@ -94,6 +100,7 @@ public class VoucherController {
     }
 
     @DeleteMapping("/{voucherId}")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'BRAND')")
     public ResponseEntity<Void> deleteVoucher(@PathVariable Long voucherId) {
         log.info("VoucherController | deleteVoucher");
 

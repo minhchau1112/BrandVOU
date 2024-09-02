@@ -12,7 +12,7 @@ function VoucherEdit() {
     const navigate = useNavigate();
     const [voucher, setVoucher] = useState({
         code: '',
-        qrCode: null,
+        qrcode: null,
         image: null,
         value: '',
         description: '',
@@ -103,7 +103,9 @@ function VoucherEdit() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-    
+
+        console.log("voucher: ", voucher);
+
         const formData = new FormData();
     
         formData.append('code', voucher.code);
@@ -114,11 +116,11 @@ function VoucherEdit() {
         formData.append('eventId', selectedEvent);
         formData.append('count', voucher.count);
 
-        if (typeof voucher.qrCode === 'string') {
-            const file = await createFileFromUrl(voucher.qrCode);
+        if (typeof voucher.qrcode === 'string') {
+            const file = await createFileFromUrl(voucher.qrcode);
             formData.append('QRCode', file);
         } else {
-            formData.append('QRCode', voucher.qrCode);
+            formData.append('QRCode', voucher.qrcode);
         }
 
         if (typeof voucher.image === 'string') {
@@ -128,14 +130,10 @@ function VoucherEdit() {
             formData.append('image', voucher.image);
         }
 
-        // if (voucher.qrCode instanceof File) {
-        //     formData.append('qrCode', voucher.qrCode);
-        // }
-        //
-        // if (voucher.image instanceof File) {
-        //     formData.append('image', voucher.image);
-        // }
-    
+        for (let [key, value] of formData.entries()) {
+            console.log(key, value);
+        }
+
         try {
             await VoucherService.updateVoucher(formData, id);
             setMessage('Voucher updated successfully!');

@@ -36,7 +36,8 @@ public class VoucherUpdateServiceImpl implements VoucherUpdateService {
                 .findById(voucherId)
                 .orElseThrow(() -> new VoucherNotFoundException("With give voucherID = " + voucherId));
 
-        final EventEntity eventEntity = eventReadService.getEventById(voucherEntityToBeUpdate.getEvent().getId());
+        log.info("EVENT ID: " + voucherUpdateRequest.getEventId());
+        final EventEntity eventEntity = eventReadService.getEventById(voucherUpdateRequest.getEventId());
 
         String qrCodeUrl = null;
         MultipartFile qrCode = voucherUpdateRequest.getQRCode();

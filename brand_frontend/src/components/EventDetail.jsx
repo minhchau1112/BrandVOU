@@ -115,15 +115,6 @@ function EventDetail() {
         navigate(`/vouchers/view-detail/${voucherId}`);
     };
 
-    const handleEditVoucher = async (voucherId) => {
-        navigate(`/vouchers/edit/${voucherId}`);
-    };
-
-    const handleDeleteVoucher = (voucherId) => {
-        setVoucherToDelete(voucherId);
-        setShowDeleteModal(true);
-    };
-
     const handleEdit = () => {
         navigate(`/events/edit/${id}`);
     };
@@ -286,21 +277,11 @@ function EventDetail() {
                                     <StyledTableCell>{voucher.status}</StyledTableCell>
                                     <StyledTableCell>{voucher.event.name}</StyledTableCell>
                                     <StyledTableCell>
-                                        <div className="icon-container d-flex" style={{ gap: '10px' }}>
+                                        <div className="icon-container justify-content-center d-flex" style={{ gap: '10px' }}>
                                             <i
                                                 className="bi bi-eye"
                                                 style={{ color: 'blue', cursor: 'pointer' }}
                                                 onClick={() => handleViewDetailVoucher(voucher.id)}
-                                            ></i>
-                                            <i
-                                                className="bi bi-pencil"
-                                                style={{ color: 'green', cursor: 'pointer' }}
-                                                onClick={() => handleEditVoucher(voucher.id)}
-                                            ></i>
-                                            <i
-                                                className="bi bi-trash3"
-                                                style={{ color: 'red', cursor: 'pointer' }}
-                                                onClick={() => handleDeleteVoucher(voucher.id)}
                                             ></i>
                                         </div>
                                     </StyledTableCell>
