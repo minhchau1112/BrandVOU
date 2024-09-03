@@ -34,10 +34,6 @@ public interface EventCreateRequestToEventEntityMapper extends BaseMapper<EventC
         return file != null ? file.getOriginalFilename() : null;
     }
 
-    @Override
-    @Mapping(target = "image", source = "image", qualifiedByName = "mapMultipartFileToString")
-    EventEntity map(EventCreateRequest source);
-
     static EventCreateRequestToEventEntityMapper initialize() {
         return Mappers.getMapper(EventCreateRequestToEventEntityMapper.class);
     }
