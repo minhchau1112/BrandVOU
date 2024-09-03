@@ -5,15 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6bb27ad0-fb00-4a05-8d33-0c9167e99d74" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/brand_backend/src/main/java/com/example/brand_backend/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/brand_backend/src/main/java/com/example/brand_backend/config/SecurityConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/brand_backend/src/main/java/com/example/brand_backend/config/WebConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/brand_backend/src/main/java/com/example/brand_backend/config/WebConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/brand_backend/src/main/java/com/example/brand_backend/controller/AuthController.java" beforeDir="false" afterPath="$PROJECT_DIR$/brand_backend/src/main/java/com/example/brand_backend/controller/AuthController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/brand_backend/src/main/java/com/example/brand_backend/repository/BrandRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/brand_backend/src/main/java/com/example/brand_backend/repository/BrandRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/brand_frontend/src/components/BrandNavbar.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/brand_frontend/src/components/BrandNavbar.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/brand_frontend/src/components/LoginComponent.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/brand_frontend/src/components/LoginComponent.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/brand_frontend/src/components/RegisterComponent.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/brand_frontend/src/components/RegisterComponent.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/brand_frontend/src/services/AuthService.js" beforeDir="false" afterPath="$PROJECT_DIR$/brand_frontend/src/services/AuthService.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -49,6 +41,9 @@
     &quot;accountId&quot;: &quot;a8306807-508a-4140-9c15-563db466d649&quot;
   }
 }</component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 7
 }</component>
@@ -65,11 +60,13 @@
     "RequestMappingsPanelOrder1": "1",
     "RequestMappingsPanelWidth0": "75",
     "RequestMappingsPanelWidth1": "75",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "Spring Boot.BrandBackendApplication.executor": "Run",
-    "git-widget-placeholder": "dolphintest",
+    "WebServerToolWindowFactoryState": "false",
+    "git-widget-placeholder": "MinhChau__Fix",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/sonsu/Desktop/KienTruc",
+    "last_opened_file_path": "D:/code/testKTPM3/BrandVOU",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -130,6 +127,7 @@
       <workItem from="1724384942791" duration="858000" />
       <workItem from="1724424356079" duration="1635000" />
       <workItem from="1724483084721" duration="8668000" />
+      <workItem from="1725293412455" duration="111000" />
     </task>
     <servers />
   </component>

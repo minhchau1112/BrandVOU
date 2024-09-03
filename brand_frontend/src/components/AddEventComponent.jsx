@@ -49,6 +49,10 @@ function AddEventComponent({brandID}) {
         setEvent({ ...event, gameType: gameTypes });
     };
 
+    const handleBack = () => {
+        navigate(-1);
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -158,10 +162,17 @@ function AddEventComponent({brandID}) {
                                 required
                             />
                         </Form.Group>
-                        
-                        <Button variant="primary" type="submit" className='mt-3'>
-                            Submit
-                        </Button>
+
+                        <div className="d-flex justify-content-start mt-4" style={{gap: '12px'}}>
+                            <Button variant="secondary" onClick={handleBack}>
+                                <i className="bi bi-arrow-left mr-2"></i> Back
+                            </Button>
+
+                            <Button variant="primary" type="submit">
+                                Save Event
+                            </Button>
+                        </div>
+
                     </Form>
                 </Col>
                 <Col md={6}>
