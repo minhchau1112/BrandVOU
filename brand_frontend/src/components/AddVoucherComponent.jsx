@@ -76,6 +76,10 @@ function AddVoucherComponent({ brandID }) {
         setSelectedEvent(selectedOption ? selectedOption.value : null);
     };
 
+    const handleBack = () => {
+        navigate(-1);
+    };
+    
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -261,9 +265,15 @@ function AddVoucherComponent({ brandID }) {
 
 						</div>
 
-                        <Button variant="primary" type="submit" className="mt-4">
-                            Save Voucher
-                        </Button>
+                        <div className="d-flex justify-content-start mt-4" style={{gap: '12px'}}>
+                            <Button variant="secondary" onClick={handleBack}>
+                                <i className="bi bi-arrow-left mr-2"></i> Back
+                            </Button>
+
+                            <Button variant="primary" type="submit">
+                                Save Voucher
+                            </Button>
+                        </div>
                     </Form>
                 </Col>
             </Row>

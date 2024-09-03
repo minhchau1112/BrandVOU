@@ -28,8 +28,6 @@ public interface EventUpdateRequestToEventEntityMapper extends BaseMapper<EventU
     }
     @Named("mapMultipartFileToString")
     default String mapMultipartFileToString(MultipartFile file) {
-        // This method should return the file name, or perform any necessary conversion
-        // In this example, it simply returns null, assuming the URL will be set elsewhere
         return file != null ? file.getOriginalFilename() : null;
     }
 

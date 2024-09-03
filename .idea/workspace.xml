@@ -5,18 +5,43 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6bb27ad0-fb00-4a05-8d33-0c9167e99d74" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/reportservice/.env" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/reportservice/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/reportservice/.mvn/wrapper/maven-wrapper.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/reportservice/mvnw" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/reportservice/mvnw.cmd" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/reportservice/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/reportservice/src/main/java/com/example/reportservice/ReportserviceApplication.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/reportservice/src/main/java/com/example/reportservice/client/EventServiceClient.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/reportservice/src/main/java/com/example/reportservice/client/UserServiceClient.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/reportservice/src/main/java/com/example/reportservice/config/FeignClientConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/reportservice/src/main/java/com/example/reportservice/config/SecurityConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/reportservice/src/main/java/com/example/reportservice/filter/AuthTokenFilter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/reportservice/src/main/java/com/example/reportservice/model/auth/ConfigurationParameter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/reportservice/src/main/java/com/example/reportservice/model/auth/JwtRecord.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/reportservice/src/main/java/com/example/reportservice/model/auth/Token.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/reportservice/src/main/java/com/example/reportservice/model/common/CustomError.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/reportservice/src/main/java/com/example/reportservice/model/common/mapper/BaseMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/reportservice/src/main/java/com/example/reportservice/model/entity/AccountEntity.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/reportservice/src/main/java/com/example/reportservice/model/entity/BrandEntity.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/reportservice/src/main/java/com/example/reportservice/security/AuthEntryPointJwt.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/reportservice/src/main/java/com/example/reportservice/serializer/LocalDateTimeSerializer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/reportservice/src/main/java/com/example/reportservice/serializer/UsernamePasswordAuthenticationTokenDeserializer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/reportservice/src/main/java/com/example/reportservice/serializer/UsernamePasswordAuthenticationTokenMixin.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/reportservice/src/main/java/com/example/reportservice/utils/JwtRecordConverter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/reportservice/src/main/resources/application.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/reportservice/src/test/java/com/example/reportservice/ReportserviceApplicationTests.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/accountservice/.env" beforeDir="false" afterPath="$PROJECT_DIR$/accountservice/.env" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/accountservice/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/accountservice/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/brand_backend/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/brand_backend/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eventservice/.env" beforeDir="false" afterPath="$PROJECT_DIR$/eventservice/.env" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eventservice/src/main/java/com/example/eventservice/model/event/mapper/EventCreateRequestToEventEntityMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/eventservice/src/main/java/com/example/eventservice/model/event/mapper/EventCreateRequestToEventEntityMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apigateway/src/main/java/com/example/apigateway/config/GatewayConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/apigateway/src/main/java/com/example/apigateway/config/GatewayConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/brand_frontend/src/components/AddEventComponent.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/brand_frontend/src/components/AddEventComponent.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/brand_frontend/src/components/AddVoucherComponent.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/brand_frontend/src/components/AddVoucherComponent.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/eventservice/src/main/java/com/example/eventservice/config/TokenConfigurationParameter.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/eventservice/src/main/java/com/example/eventservice/model/auth/enums/TokenClaims.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/eventservice/src/main/java/com/example/eventservice/model/common/CustomPaging.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/eventservice/src/main/java/com/example/eventservice/model/common/dto/request/CustomPagingRequest.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/eventservice/src/main/java/com/example/eventservice/model/event/mapper/EventUpdateRequestToEventEntityMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/eventservice/src/main/java/com/example/eventservice/model/event/mapper/EventUpdateRequestToEventEntityMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eventservice/src/main/java/com/example/eventservice/model/voucher/mapper/VoucherUpdateRequestToVoucherEntityMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/eventservice/src/main/java/com/example/eventservice/model/voucher/mapper/VoucherUpdateRequestToVoucherEntityMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eventservice/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/eventservice/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/eventservice/src/main/java/com/example/eventservice/utils/KeyConverter.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -82,7 +107,7 @@
     "Spring Boot.BrandBackendApplication.executor": "Run",
     "Spring Boot.EurekaserverApplication.executor": "Run",
     "Spring Boot.EventserviceApplication.executor": "Run",
-    "git-widget-placeholder": "dolphin",
+    "git-widget-placeholder": "Merging dolphin",
     "jdk.selected.JAVA_MODULE": "22",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Users/sonsu/Desktop/KienTruc/VOU/eventservice",
