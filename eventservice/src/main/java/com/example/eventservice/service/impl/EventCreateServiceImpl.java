@@ -10,6 +10,7 @@ import com.example.eventservice.model.event.entity.EventEntity;
 import com.example.eventservice.model.event.mapper.EventCreateRequestToEventEntityMapper;
 import com.example.eventservice.repository.EventRepository;
 import com.example.eventservice.service.EventCreateService;
+import com.example.eventservice.service.EventGamesCreateService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
@@ -28,12 +29,15 @@ public class EventCreateServiceImpl implements EventCreateService {
     private final EventCreateRequestToEventEntityMapper eventCreateRequestToEventEntityMapper = EventCreateRequestToEventEntityMapper.initialize();
     private final UserServiceClient userServiceClient;
     private final Cloudinary cloudinary;
+    private final EventGamesCreateService eventGamesCreateService;
 
     @Override
     public EventEntity createEventForBrand(EventCreateRequest eventCreateRequest) {
-        checkUniquenessEventName(eventCreateRequest.getName(), eventCreateRequest.getBrandId());
+        if (!checkUniquenessEventName(eventCreateRequest.getName(), eventCreateRequest.getBrandId())) {
+            return null;
+        }
 
-        log.info("createEventForBrand: " + eventCreateRequest);
+        log.info("createEventForBrand: " + eventCreateRequest.getGames());
         // Extract the token from SecurityContextHolder
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String token = (String) authentication.getDetails();
@@ -51,15 +55,27 @@ public class EventCreateServiceImpl implements EventCreateService {
             }
         }
 
-        final EventEntity eventEntity = eventCreateRequestToEventEntityMapper.mapForSaving(eventCreateRequest, brandEntity, imageUrl);
-        EventEntity savedEventEntity = eventRepository.save(eventEntity);
+        String[] gamesId = eventCreateRequest.getGames().split(";");
 
-        return savedEventEntity;
+        if (gamesId.length > 0) {
+            final EventEntity eventEntity = eventCreateRequestToEventEntityMapper.mapForSaving(eventCreateRequest, brandEntity, imageUrl);
+            EventEntity savedEventEntity = eventRepository.save(eventEntity);
+
+            for (String gameId : gamesId) {
+                eventGamesCreateService.createEventGames(savedEventEntity.getId(), Long.parseLong(gameId));
+            }
+
+            return savedEventEntity;
+        }
+
+        return null;
     }
 
-    private void checkUniquenessEventName(final String eventName, final Long brandId) {
+    private boolean checkUniquenessEventName(final String eventName, final Long brandId) {
         if (eventRepository.existsByNameAndBrandId(eventName,  brandId)) {
-            throw new EventAlreadyExistException("There is another event with given name: " + eventName);
+            return false;
+//            throw new EventAlreadyExistException("There is another event with given name: " + eventName);
         }
+        return true;
     }
 }

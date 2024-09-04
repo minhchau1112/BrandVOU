@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import './BrandNavbar.css'; 
 import {useAuth} from "../AuthProvider";
@@ -41,6 +41,14 @@ const BrandNavbar = () => {
                     </NavLink>
                 </li>
                 <li>
+                    <NavLink
+                        to="/items"
+                        className={({ isActive }) => (isActive ? 'active' : '')}
+                    >
+                        Items
+                    </NavLink>
+                </li>
+                <li>
                     <NavLink 
                         to="/budget-statistics" 
                         className={({ isActive }) => (isActive ? 'active' : '')}
@@ -50,7 +58,7 @@ const BrandNavbar = () => {
                 </li>
             </ul>
             <div className="navbar-buttons">
-                {auth.token.accessToken ? (
+                {auth.token.accessToken && auth.token.accessToken !== "" ? (
                     <div className="d-flex align-items-center" style={{ gap: '12px' }}>
                         <span>{auth.brand.name}</span>
                         <button className="logout-btn" onClick={() => auth.logOut(auth.token)}>

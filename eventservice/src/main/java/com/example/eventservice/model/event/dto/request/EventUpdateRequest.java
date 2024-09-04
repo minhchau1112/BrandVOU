@@ -16,5 +16,6 @@ public class EventUpdateRequest {
     private Integer voucherCount;
     private LocalDateTime startTime;
     private LocalDateTime endTime;
-    private String gameType;
+    private String games;
+    private String targetWord;
 }

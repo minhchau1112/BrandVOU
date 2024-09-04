@@ -1,11 +1,14 @@
 package com.example.eventservice.controller;
 
+import com.example.eventservice.exception.EventAlreadyExistException;
 import com.example.eventservice.model.event.dto.request.EventCreateRequest;
 import com.example.eventservice.model.event.dto.request.EventUpdateRequest;
 import com.example.eventservice.model.event.entity.EventEntity;
+import com.example.eventservice.model.item.dto.request.ItemCreateRequest;
 import com.example.eventservice.service.EventCreateService;
 import com.example.eventservice.service.EventReadService;
 import com.example.eventservice.service.EventUpdateService;
+import com.example.eventservice.service.ItemCreateService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,6 +22,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Objects;
 
 @Slf4j
 @RestController
@@ -29,14 +33,29 @@ public class EventController {
     private final EventCreateService eventCreateService;
     private final EventReadService eventReadService;
     private final EventUpdateService eventUpdateService;
+    private final ItemCreateService itemCreateService;
 
     @PostMapping
     @PreAuthorize("hasAnyAuthority('ADMIN', 'BRAND')")
     public ResponseEntity<Long> createEventForBrand(@ModelAttribute final EventCreateRequest eventCreateRequest) {
         log.info("EventController | createEventForBrand");
+
         final EventEntity createdEvent = eventCreateService.createEventForBrand(eventCreateRequest);
 
-        return ResponseEntity.ok(createdEvent.getId());
+        if (createdEvent != null) {
+            String targetWord = createdEvent.getTargetWord();
+
+            if (targetWord != null && !Objects.equals(targetWord, "")) {
+                for (int index = 0; index < targetWord.length(); index++) {
+                    String character = String.valueOf(targetWord.charAt(index));
+                    ItemCreateRequest itemCreateRequest = new ItemCreateRequest(character, null, createdEvent.getId(), "Puzzle Piece");
+                    itemCreateService.createItemForShakeGame(itemCreateRequest);
+                }
+            }
+
+            return ResponseEntity.ok(createdEvent.getId());
+        }
+        return ResponseEntity.ok((long) -1);
     }
 
     @GetMapping("/brand/{brandId}")
@@ -77,6 +96,14 @@ public class EventController {
     @PreAuthorize("hasAnyAuthority('ADMIN', 'BRAND', 'USER')")
     public ResponseEntity<List<EventEntity>> getAllEventsByBrandId(@PathVariable Long brandId) {
         List<EventEntity> eventEntityList = eventReadService.getAllEventsByBrandId(brandId);
+
+        return ResponseEntity.ok(eventEntityList);
+    }
+
+    @GetMapping("/brand/have-target-word/{brandId}")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'BRAND', 'USER')")
+    public ResponseEntity<List<EventEntity>> getAllEventsByBrandIdHaveTargetWord(@PathVariable Long brandId) {
+        List<EventEntity> eventEntityList = eventReadService.findEventsOfBrandHaveTargetWord(brandId);
 
         return ResponseEntity.ok(eventEntityList);
     }

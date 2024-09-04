@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import {
     Container,
@@ -7,11 +7,10 @@ import {
     Form,
     Image,
     Button,
-    Modal,
     Col,
     Row,
     FormControl,
-    InputGroup
+    InputGroup, Pagination
 } from 'react-bootstrap';
 import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
@@ -27,6 +26,11 @@ import EventService from '../services/EventService';
 import VoucherService from '../services/VoucherService';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faSearch} from "@fortawesome/free-solid-svg-icons";
+import EventGamesService from "../services/EventGamesService";
+import GameService from "../services/GameService";
+import Select from "react-select";
+import ItemCard from "./ItemCard";
+import itemService from "../services/ItemService";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -58,22 +62,14 @@ function EventDetail() {
     const [pageNumber, setPageNumber] = useState(0);
     const [pageSize, setPageSize] = useState(10);
     const [totalElements, setTotalElements] = useState(0);
-    const [showDeleteModal, setShowDeleteModal] = useState(false);
-    const [voucherToDelete, setVoucherToDelete] = useState(null);
+    const [games, setGames] = useState([]);
+    const [seletedOptions, setSelectedOptions] = useState([]);
+    const [items, setItems] = useState([]);
+    const [pageNumberItem, setPageNumberItem] = useState(0);
+    const [pageSizeItem] = useState(12);
+    const [totalElementsItem, setTotalElementsItem] = useState(0);
 
-    const fetchEventDetail = async () => {
-        try {
-            const response = await EventService.getEventByEventId(id);
-            console.log("event detail: ", response);
-            setEvent(response.data);
-            setLoading(false);
-        } catch (error) {
-            setError('Error fetching event details.');
-            setLoading(false);
-        }
-    };
-
-    const fetchVouchers = async () => {
+    const fetchVouchers = useCallback(async () => {
         try {
             const response = await VoucherService.getVoucherByEventId(id, searchTerm, pageNumber, pageSize);
             setVouchers(response.data.content);
@@ -83,16 +79,60 @@ function EventDetail() {
             setError('Error fetching vouchers.');
             setLoading(false);
         }
-    };
+    }, [id, searchTerm, pageNumber, pageSize]);
+
+    const fetchItems = useCallback(async () => {
+        try {
+            if (Array.isArray(seletedOptions) && seletedOptions.some(game => game.isItemExchangeAllowed === true)) {
+                const items = await itemService.getItemsByEventId(id, pageNumberItem, pageSizeItem);
+                console.log("items: ", items);
+                setItems(items.data.content);
+                setTotalElementsItem(items.data.totalElements);
+            }
+        } catch (error) {
+            setError('Error fetching item.');
+            setLoading(false);
+        }
+    }, [id, seletedOptions, pageNumberItem, pageSizeItem]);
 
     useEffect(() => {
-        fetchEventDetail();
+        const fetchData = async () => {
+            try {
+                const [gamesResponse, eventResponse] = await Promise.all([
+                    GameService.getAllGames(),
+                    EventService.getEventByEventId(id)
+                ]);
 
+                const gameOptions = gamesResponse.data.map(game => ({
+                    value: game.id,
+                    label: game.name,
+                    isItemExchangeAllowed: game.isItemExchangeAllowed
+                }));
+                setGames(gameOptions);
+
+                const eventData = eventResponse.data;
+                setEvent(eventData);
+
+                const gamesNameString = await EventGamesService.findGameNamesByEventId(eventData.id);
+                const gameNames = gamesNameString.data.split(";");
+
+                const selectedGames = gameOptions.filter(game => gameNames.includes(game.label));
+                setSelectedOptions(selectedGames);
+
+                setLoading(false);
+            } catch (error) {
+                setError('Error fetching data.');
+                setLoading(false);
+            }
+        };
+
+        fetchData();
         fetchVouchers();
-    }, [id, pageNumber, pageSize, searchTerm]);
+        fetchItems();
+    }, [id, fetchVouchers, fetchItems]);
 
     const handleSearch = () => {
-        setPageNumber(0); // Reset to the first page on new search
+        setPageNumber(0);
         fetchVouchers();
     };
 
@@ -111,6 +151,10 @@ function EventDetail() {
         setPageNumber(0);
     };
 
+    const handleChangePageItem = (item, newPage) => {
+        setPageNumberItem(newPage);
+    };
+
     const handleViewDetailVoucher = (voucherId) => {
         navigate(`/vouchers/view-detail/${voucherId}`);
     };
@@ -119,22 +163,12 @@ function EventDetail() {
         navigate(`/events/edit/${id}`);
     };
 
-    const handleDelete = async () => {
-        if (voucherToDelete) {
-            try {
-                await VoucherService.deleteVoucher(voucherToDelete);
-                setVouchers(vouchers.filter(voucher => voucher.id !== voucherToDelete));
-                setShowDeleteModal(false);
-            } catch (error) {
-                setError('Error deleting voucher.');
-            }
-        }
-    };
-
     const handleBack = () => {
         navigate(-1);
     };
-    
+
+    const pageCount = totalElementsItem > 0 ? Math.ceil(totalElementsItem / pageSizeItem) : 1;
+
     if (loading) {
         return <Spinner animation="border" />;
     }
@@ -153,7 +187,7 @@ function EventDetail() {
                             <Form.Label>Event Name</Form.Label>
                             <Form.Control
                                 type="text"
-                                value={event.name}
+                                value={event?.name}
                                 disabled
                             />
                         </Form.Group>
@@ -162,7 +196,7 @@ function EventDetail() {
                             <Form.Label>Number of Vouchers</Form.Label>
                             <Form.Control
                                 type="number"
-                                value={event.voucherCount}
+                                value={event?.voucherCount}
                                 disabled
                             />
                         </Form.Group>
@@ -172,7 +206,7 @@ function EventDetail() {
                                 <Form.Label>Start Time</Form.Label>
                                 <Form.Control
                                     type="datetime-local"
-                                    value={event.startTime}
+                                    value={event?.startTime}
                                     disabled
                                 />
                             </Form.Group>
@@ -181,16 +215,34 @@ function EventDetail() {
                                 <Form.Label>End Time</Form.Label>
                                 <Form.Control
                                     type="datetime-local"
-                                    value={event.endTime}
+                                    value={event?.endTime}
                                     disabled
                                 />
                             </Form.Group>
                         </div>
 
                         <Form.Group>
-                            <Form.Label>Game Type</Form.Label>
-                            <Form.Control type="text" value={event.gameType.replace(';', ', ')} disabled />
+                            <Form.Label>Games</Form.Label>
+                            <Select
+                                isMulti
+                                options={games}
+                                className="basic-multi-select"
+                                classNamePrefix="select"
+                                value={seletedOptions}
+                                isDisabled={true}
+                            />
                         </Form.Group>
+
+                        {Array.isArray(seletedOptions) && seletedOptions.some(game => game.isItemExchangeAllowed === true) && (
+                            <Form.Group>
+                                <Form.Label>Target Word</Form.Label>
+                                <Form.Control
+                                    type="text"
+                                    value={event.targetWord}
+                                    disabled
+                                />
+                            </Form.Group>
+                        )}
 
                         <div className="d-flex justify-content-start mt-4" style={{gap: '12px'}}>
                             <Button variant="secondary" onClick={handleBack}>
@@ -236,7 +288,7 @@ function EventDetail() {
                 </Button>
             </InputGroup>
 
-            <h3 className="mt-3">Vouchers</h3>
+            <h3 className="text-center mt-3">Vouchers</h3>
             {vouchers && vouchers.length > 0 ? (
                 <TableContainer component={Paper}>
                     <Table>
@@ -303,20 +355,38 @@ function EventDetail() {
                 !loading && <Alert variant="info">No vouchers found for this event.</Alert>
             )}
 
-            <Modal show={showDeleteModal} onHide={() => setShowDeleteModal(false)}>
-                <Modal.Header closeButton>
-                    <Modal.Title>Delete Voucher</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>Are you sure you want to delete this voucher?</Modal.Body>
-                <Modal.Footer>
-                    <Button variant="secondary" onClick={() => setShowDeleteModal(false)}>
-                        Cancel
-                    </Button>
-                    <Button variant="danger" onClick={handleDelete}>
-                        Delete
-                    </Button>
-                </Modal.Footer>
-            </Modal>
+            {Array.isArray(seletedOptions) && seletedOptions.some(game => game.isItemExchangeAllowed === true) ? (
+                <div>
+                    <h2 className="text-center">Items List</h2>
+                    <div className="event-list">
+                        {items.length > 0 ? (
+                            items.map(item => (
+                                <ItemCard key={item.id} item={item} />
+                            ))
+                        ) : (
+                            <div>
+                                !loading && <Alert variant="info" className="mt-5">No items found for this event.</Alert>
+                            </div>
+                        )}
+                    </div>
+                    <div className="pagination mt-4">
+                        <Pagination>
+                            <Pagination.Prev onClick={() => handleChangePageItem(pageNumber > 0 ? pageNumber - 1 : 0)} />
+                            {[...Array(pageCount).keys()].map(number => (
+                                <Pagination.Item
+                                    key={number}
+                                    active={number === pageNumberItem}
+                                    onClick={() => handleChangePageItem(number)}
+                                >
+                                    {number + 1}
+                                </Pagination.Item>
+                            ))}
+                            <Pagination.Next onClick={() => handleChangePageItem(pageNumberItem < pageCount - 1 ? pageNumber + 1 : pageCount - 1)} />
+                        </Pagination>
+                    </div>
+                </div>
+            ) : (<div></div>)}
+
         </Container>
     );
 }

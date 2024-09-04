@@ -104,7 +104,13 @@ function AddVoucherComponent({ brandID }) {
         formData.append('eventId', selectedEvent);
 
         try {
-            await VoucherService.createVoucher(formData);
+            let id = await VoucherService.createVoucher(formData);
+
+            if (id.data === -1) {
+                setError('Voucher already exist! There is another voucher with given code')
+                return;
+            }
+
             setMessage('Voucher added successfully!');
             navigate('/vouchers');
         } catch (err) {
@@ -114,7 +120,7 @@ function AddVoucherComponent({ brandID }) {
 
     return (
         <Container>
-			{error && <div className="alert alert-danger">{error}</div>}
+			{error && <div className="alert alert-danger mt-5">{error}</div>}
 			{message && <div className="alert alert-success">{message}</div>}
 
             <Row className="mt-5">

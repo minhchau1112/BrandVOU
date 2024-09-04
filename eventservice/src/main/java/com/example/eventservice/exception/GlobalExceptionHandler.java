@@ -126,4 +126,26 @@ public class GlobalExceptionHandler {
                 .build();
         return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
     }
+
+    @ExceptionHandler(ItemAlreadyExistException.class)
+    public ResponseEntity<CustomError> handleItemAlreadyExistException(final ItemAlreadyExistException ex) {
+        CustomError error = CustomError.builder()
+                .httpStatus(HttpStatus.CONFLICT)
+                .header(CustomError.Header.ALREADY_EXIST.getName())
+                .message(ex.getMessage())
+                .isSuccess(false)
+                .build();
+        return new ResponseEntity<>(error, HttpStatus.CONFLICT);
+    }
+
+    @ExceptionHandler(ItemNotFoundException.class)
+    public ResponseEntity<CustomError> handleItemNotFoundException(final ItemNotFoundException ex) {
+        CustomError error = CustomError.builder()
+                .httpStatus(HttpStatus.NOT_FOUND)
+                .header(CustomError.Header.NOT_FOUND.getName())
+                .message(ex.getMessage())
+                .isSuccess(false)
+                .build();
+        return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+    }
 }
