@@ -10,4 +10,5 @@ public interface EventReadService {
     EventEntity getEventById(final Long eventId);
     Page<EventEntity> getEventsByBrandId(final Long brandId, String search, Pageable pageable);
     List<EventEntity> getAllEventsByBrandId(final Long brandId);
+    List<EventEntity> findEventsOfBrandHaveTargetWord(Long brandId);
 }

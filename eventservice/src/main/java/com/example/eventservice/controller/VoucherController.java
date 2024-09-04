@@ -33,9 +33,14 @@ public class VoucherController {
     @PreAuthorize("hasAnyAuthority('ADMIN', 'BRAND')")
     public ResponseEntity<Long> createVoucherForEvent(@ModelAttribute final VoucherCreateRequest voucherCreateRequest) {
         log.info("VoucherController | createVoucherForEvent");
+
         final VoucherEntity createdVoucher = voucherCreateService.createVoucherForEvent(voucherCreateRequest);
 
-        return ResponseEntity.ok(createdVoucher.getId());
+        if (createdVoucher != null) {
+            return ResponseEntity.ok(createdVoucher.getId());
+        }
+
+        return ResponseEntity.ok((long) -1);
     }
 
     @GetMapping("/brand/{brandId}")

@@ -1,9 +1,10 @@
-import React, { useState, useRef } from 'react';
+import React, {useState, useRef, useEffect} from 'react';
 import { Form, Button, Container, Image, Alert, Row, Col } from 'react-bootstrap';
 import EventService from '../services/EventService';
 import { useNavigate } from 'react-router-dom';
 import Select from 'react-select';
 import {useAuth} from "../AuthProvider";
+import GameService from '../services/GameService';
 
 function AddEventComponent({brandID}) {
     const [event, setEvent] = useState({
@@ -12,21 +13,39 @@ function AddEventComponent({brandID}) {
         voucherCount: 0,
         startTime: '',
         endTime: '',
-        gameType: ''
+        games: '',
+        targetWord: ''
     });
+    const [games, setGames] = useState([]);
+    const [seletedOptions, setSelectedOptions] = useState([]);
     const [previewImage, setPreviewImage] = useState(null);
     const [error, setError] = useState(null);
     const [message, setMessage] = useState(null);
     const navigate = useNavigate();
 
-    const gameOptions = [
-        { value: 'Quiz', label: 'Quiz' },
-        { value: 'ShakeGame', label: 'ShakeGame' }
-    ];
+    useEffect(() => {
+        const fetchGames = async () => {
+            try {
+                const response = await GameService.getAllGames();
+                console.log("games:", response.data);
+                const gameOptions = response.data.map(game => ({
+                    value: game.id,
+                    label: game.name,
+                    isItemExchangeAllowed: game.isItemExchangeAllowed
+                }));
+                setGames(gameOptions);
+            } catch (error) {
+                setError('Error fetching games.');
+            }
+        };
+
+        fetchGames();
+    }, []);
 
     const imageInputRef = useRef(null);
     const auth = useAuth();
     brandID = auth.brand.id;
+
     const handleChange = (e) => {
         const { name, value, type, files } = e.target;
         if (type === 'file') {
@@ -44,9 +63,11 @@ function AddEventComponent({brandID}) {
         } 
     };
 
-    const handleGameTypeChange = (selectedOptions) => {
-        const gameTypes = selectedOptions.map(option => option.value).join(';');
-        setEvent({ ...event, gameType: gameTypes });
+    const handleGamesChange = (selectedOptions) => {
+        console.log("selectedOptions: ", selectedOptions);
+        const games = selectedOptions.map(option => option.value).join(';');
+        setEvent({ ...event, games: games });
+        setSelectedOptions(selectedOptions);
     };
 
     const handleBack = () => {
@@ -76,6 +97,8 @@ function AddEventComponent({brandID}) {
 
         console.log('Event data before submit:', event);
 
+        console.log("brandID: ", typeof brandID);
+
         const formData = new FormData();
         formData.append('brandId', brandID);
         formData.append('name', event.name);
@@ -83,15 +106,25 @@ function AddEventComponent({brandID}) {
         formData.append('voucherCount', event.voucherCount);
         formData.append('startTime', event.startTime);
         formData.append('endTime', event.endTime);
-        formData.append('gameType', event.gameType); 
+        formData.append('games', event.games);
+
+        if (seletedOptions.some(game => game.isItemExchangeAllowed === true)) {
+            formData.append('targetWord', event.targetWord);
+        }
 
         try {
-            await EventService.createEvent(formData);
+            let id = await EventService.createEvent(formData);
+
+            if (id.data === -1) {
+                setError('Event already exist! There is another event with given name')
+                return;
+            }
+
             setMessage("Event created successfully!");
             navigate('/');
         } catch (err) {
             setError('There was an error creating the event. Please try again.');
-        };
+        }
     }
     return (
         <Container className='mt-5'>
@@ -113,7 +146,7 @@ function AddEventComponent({brandID}) {
                             />
                         </Form.Group>
 
-                        <Form.Group controlId="formvoucherCount">
+                        <Form.Group controlId="formvoucherCount" className="mt-1">
                             <Form.Label>Number of Vouchers</Form.Label>
                             <Form.Control 
                                 type="number" 
@@ -150,18 +183,32 @@ function AddEventComponent({brandID}) {
                         </div>
                         
 
-                        <Form.Group controlId="formGameType">
-                            <Form.Label>Game Type</Form.Label>
+                        <Form.Group controlId="formGameType" className="mt-1">
+                            <Form.Label>Games</Form.Label>
+
                             <Select
                                 isMulti
-                                name="gameType"
-                                options={gameOptions}
+                                name="games"
+                                options={games}
                                 className="basic-multi-select"
                                 classNamePrefix="select"
-                                onChange={handleGameTypeChange}
+                                onChange={handleGamesChange}
                                 required
                             />
                         </Form.Group>
+
+                        {seletedOptions.some(game => game.isItemExchangeAllowed === true) && (
+                            <Form.Group controlId="formTargetWord" className="mt-1">
+                                <Form.Label>Target Word</Form.Label>
+                                <Form.Control
+                                    type="text"
+                                    name="targetWord"
+                                    value={event.targetWord}
+                                    onChange={handleChange}
+                                    placeholder="Enter target word for ShakeGame"
+                                />
+                            </Form.Group>
+                        )}
 
                         <div className="d-flex justify-content-start mt-4" style={{gap: '12px'}}>
                             <Button variant="secondary" onClick={handleBack}>

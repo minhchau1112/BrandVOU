@@ -41,5 +41,10 @@ public class EventReadServiceImpl implements EventReadService {
         return eventRepository.findAllByBrandId(brandId);
     }
 
+    @Override
+    public List<EventEntity> findEventsOfBrandHaveTargetWord(Long brandId) {
+        return eventRepository.findEventsOfBrandHaveTargetWord(brandId);
+    }
+
 
 }

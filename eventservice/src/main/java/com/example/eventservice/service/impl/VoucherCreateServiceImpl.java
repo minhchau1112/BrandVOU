@@ -28,7 +28,9 @@ public class VoucherCreateServiceImpl implements VoucherCreateService {
     private final Cloudinary cloudinary;
     @Override
     public VoucherEntity createVoucherForEvent(VoucherCreateRequest voucherCreateRequest) {
-        checkUniquenessCode(voucherCreateRequest.getCode(), voucherCreateRequest.getEventId());
+        if (!checkUniquenessCode(voucherCreateRequest.getCode(), voucherCreateRequest.getEventId())) {
+            return null;
+        }
 
         final EventEntity eventEntity = eventReadService.getEventById(voucherCreateRequest.getEventId());
 
@@ -61,9 +63,11 @@ public class VoucherCreateServiceImpl implements VoucherCreateService {
         return savedVoucherEntity;
     }
 
-    private void checkUniquenessCode(final String code, final Long eventId) {
+    private boolean checkUniquenessCode(final String code, final Long eventId) {
         if (voucherRepository.existsByCodeAndEventId(code,  eventId)) {
-            throw new VoucherAlreadyExistException("There is another voucher with given code");
+            return false;
+//            throw new VoucherAlreadyExistException("There is another voucher with given code");
         }
+        return true;
     }
 }

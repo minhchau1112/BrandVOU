@@ -19,4 +19,7 @@ public interface EventRepository extends JpaRepository<EventEntity, Long> {
     List<EventEntity> findAllByBrandId(Long brandId);
     boolean existsByNameAndBrandId(String name, Long brandId);
     EventEntity findByNameAndBrandId(String name, Long brandId);
+
+    @Query("SELECT e FROM EventEntity e WHERE e.brand.id = :brandId AND e.targetWord IS NOT NULL AND e.targetWord <> ''")
+    List<EventEntity> findEventsOfBrandHaveTargetWord(Long brandId);
 }

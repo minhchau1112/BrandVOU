@@ -34,7 +34,7 @@ public interface VoucherUpdateRequestToVoucherEntityMapper extends BaseMapper<Vo
 
     @Override
     @Mapping(target = "QRCode", source = "QRCode", qualifiedByName = "mapMultipartFileToString")
-    @Mapping(target = "image", source = "image", qualifiedByName = "mapMultipartFileToString") // Explicit mapping for the image field
+    @Mapping(target = "image", source = "image", qualifiedByName = "mapMultipartFileToString")
     VoucherEntity map(VoucherUpdateRequest source);
 
     static VoucherUpdateRequestToVoucherEntityMapper initialize() {

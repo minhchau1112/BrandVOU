@@ -9,8 +9,9 @@ import com.example.eventservice.model.event.dto.request.EventUpdateRequest;
 import com.example.eventservice.model.event.entity.BrandEntity;
 import com.example.eventservice.model.event.entity.EventEntity;
 import com.example.eventservice.model.event.mapper.EventUpdateRequestToEventEntityMapper;
+import com.example.eventservice.model.item.dto.request.ItemCreateRequest;
 import com.example.eventservice.repository.EventRepository;
-import com.example.eventservice.service.EventUpdateService;
+import com.example.eventservice.service.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -27,8 +28,11 @@ public class EventUpdateServiceImpl implements EventUpdateService {
 
     private final EventRepository eventRepository;
     private final EventUpdateRequestToEventEntityMapper eventUpdateRequestToEventEntityMapper = EventUpdateRequestToEventEntityMapper.initialize();
-    private final UserServiceClient userServiceClient;
     private final Cloudinary cloudinary;
+    private final EventGamesCreateService eventGamesCreateService;
+    private final EventGamesDeleteService eventGamesDeleteService;
+    private final ItemDeleteService itemDeleteService;
+    private final ItemCreateService itemCreateService;
 
     @Override
     public EventEntity updateEventById(Long eventId, EventUpdateRequest eventUpdateRequest) {
@@ -38,12 +42,6 @@ public class EventUpdateServiceImpl implements EventUpdateService {
         final EventEntity eventEntityToBeUpdate = eventRepository
                 .findById(eventId)
                 .orElseThrow(() -> new EventNotFoundException("With give eventID = " + eventId));
-
-        // Extract the token from SecurityContextHolder
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String token = (String) authentication.getDetails();
-
-        final BrandEntity brandEntity = userServiceClient.findBrandById(eventUpdateRequest.getBrandId(), "Bearer " + token);
 
         String imageUrl = null;
         MultipartFile image = eventUpdateRequest.getImage();
@@ -55,11 +53,38 @@ public class EventUpdateServiceImpl implements EventUpdateService {
 //                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
             }
         }
-        eventUpdateRequestToEventEntityMapper.mapForUpdating(eventEntityToBeUpdate, brandEntity, eventUpdateRequest, imageUrl);
 
-        EventEntity updatedEventEntity = eventRepository.save(eventEntityToBeUpdate);
+        String targetWordOld = eventEntityToBeUpdate.getTargetWord();
+        if (!Objects.equals(targetWordOld, eventUpdateRequest.getTargetWord())) {
+            itemDeleteService.deleteItemsOfEvent(eventEntityToBeUpdate.getId());
+        }
 
-        return updatedEventEntity;
+        String[] gamesId = eventUpdateRequest.getGames().split(";");
+
+        if (gamesId.length > 0) {
+            eventUpdateRequestToEventEntityMapper.mapForUpdating(eventEntityToBeUpdate, eventUpdateRequest, imageUrl);
+
+            EventEntity updatedEventEntity = eventRepository.save(eventEntityToBeUpdate);
+
+            eventGamesDeleteService.deleteEventsGamesByEventId(updatedEventEntity.getId());
+
+            for (String gameId : gamesId) {
+                eventGamesCreateService.createEventGames(updatedEventEntity.getId(), Long.parseLong(gameId));
+            }
+
+            String targetWord = updatedEventEntity.getTargetWord();
+            if (targetWord != null && !Objects.equals(targetWord, "")) {
+                for (int index = 0; index < targetWord.length(); index++) {
+                    String character = String.valueOf(targetWord.charAt(index));
+                    ItemCreateRequest itemCreateRequest = new ItemCreateRequest(character, null, updatedEventEntity.getId(), "Puzzle Piece");
+                    itemCreateService.createItemForShakeGame(itemCreateRequest);
+                }
+            }
+
+            return updatedEventEntity;
+        }
+
+        return null;
     }
 
     private void checkUniquenessEventName(final String eventName, final Long brandId, final Long eventId) {
