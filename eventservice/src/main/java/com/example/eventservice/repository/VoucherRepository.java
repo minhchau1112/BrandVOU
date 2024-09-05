@@ -22,6 +22,9 @@ public interface VoucherRepository extends JpaRepository<VoucherEntity, Long> {
             @Param("searchTerm") String searchTerm,
             Pageable pageable
     );
+
+
+
     boolean existsByCodeAndEventId(String code, Long eventId);
     VoucherEntity findByCodeAndEventId(String code, Long eventId);
 }

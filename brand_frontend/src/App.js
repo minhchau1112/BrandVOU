@@ -12,6 +12,7 @@ import EventDetail from './components/EventDetail';
 import EventEdit from './components/EventEdit';
 import Login from './components/LoginComponent';
 import Register from './components/RegisterComponent';
+import StatisticsComponent from './components/StatisticsComponent';
 import AuthProvider from  './AuthProvider';
 import PrivateRoute from "./PrivateRoute";
 import { useAuth } from "./AuthProvider";
@@ -33,6 +34,7 @@ function App() {
                             <Route path="/vouchers/edit/:id" element={<VoucherEdit />} />
                             <Route path="/events/view-detail/:id" element={<EventDetail />} />
                             <Route path="/events/edit/:id" element={<EventEdit />} />
+                            <Route path="/reports" element={<StatisticsComponent/>} />
                         </Route>
 
                         <Route path="/login" element={<Login/>} />

@@ -15,7 +15,6 @@ public class GatewayConfig {
 
     private final JwtAuthenticationFilter jwtAuthFilter;
 
-    // Define the list of public endpoints
     private static final List<String> PUBLIC_ENDPOINTS = List.of(
             "/api/v1/authentication/accounts/register",
             "/api/v1/authentication/accounts/login",
@@ -44,5 +43,4 @@ public class GatewayConfig {
                         .uri("lb://reportservice"))
                 .build();
     }
-
 }

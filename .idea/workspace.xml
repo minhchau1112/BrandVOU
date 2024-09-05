@@ -5,43 +5,31 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6bb27ad0-fb00-4a05-8d33-0c9167e99d74" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/reportservice/.env" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/reportservice/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/reportservice/.mvn/wrapper/maven-wrapper.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/reportservice/mvnw" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/reportservice/mvnw.cmd" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/reportservice/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/reportservice/src/main/java/com/example/reportservice/ReportserviceApplication.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/reportservice/src/main/java/com/example/reportservice/client/EventServiceClient.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/reportservice/src/main/java/com/example/reportservice/client/UserServiceClient.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/reportservice/src/main/java/com/example/reportservice/config/FeignClientConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/reportservice/src/main/java/com/example/reportservice/config/SecurityConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/reportservice/src/main/java/com/example/reportservice/filter/AuthTokenFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/reportservice/src/main/java/com/example/reportservice/model/auth/ConfigurationParameter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/reportservice/src/main/java/com/example/reportservice/model/auth/JwtRecord.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/reportservice/src/main/java/com/example/reportservice/model/auth/Token.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/reportservice/src/main/java/com/example/reportservice/model/common/CustomError.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/reportservice/src/main/java/com/example/reportservice/model/common/mapper/BaseMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/reportservice/src/main/java/com/example/reportservice/model/entity/AccountEntity.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/reportservice/src/main/java/com/example/reportservice/model/entity/BrandEntity.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/reportservice/src/main/java/com/example/reportservice/security/AuthEntryPointJwt.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/reportservice/src/main/java/com/example/reportservice/serializer/LocalDateTimeSerializer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/reportservice/src/main/java/com/example/reportservice/serializer/UsernamePasswordAuthenticationTokenDeserializer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/reportservice/src/main/java/com/example/reportservice/serializer/UsernamePasswordAuthenticationTokenMixin.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/reportservice/src/main/java/com/example/reportservice/utils/JwtRecordConverter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/reportservice/src/main/resources/application.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/reportservice/src/test/java/com/example/reportservice/ReportserviceApplicationTests.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/brand_frontend/src/components/StatisticsComponent.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/brand_frontend/src/services/StatisticsService.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/reportservice/src/main/java/com/example/reportservice/controller/StatisticsController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/reportservice/src/main/java/com/example/reportservice/model/statistics/dto/StatisticsResponse.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/reportservice/src/main/java/com/example/reportservice/model/statistics/entity/EventEntity.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/reportservice/src/main/java/com/example/reportservice/model/statistics/entity/StatisticsEntity.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/reportservice/src/main/java/com/example/reportservice/model/statistics/entity/VoucherEntity.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/reportservice/src/main/java/com/example/reportservice/repository/StatisticsRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/reportservice/src/main/java/com/example/reportservice/service/StatisticsService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/apigateway/src/main/java/com/example/apigateway/config/GatewayConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/apigateway/src/main/java/com/example/apigateway/config/GatewayConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/brand_frontend/src/components/AddEventComponent.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/brand_frontend/src/components/AddEventComponent.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/brand_frontend/src/components/AddVoucherComponent.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/brand_frontend/src/components/AddVoucherComponent.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eventservice/src/main/java/com/example/eventservice/config/TokenConfigurationParameter.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/eventservice/src/main/java/com/example/eventservice/model/auth/enums/TokenClaims.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/eventservice/src/main/java/com/example/eventservice/model/common/CustomPaging.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/eventservice/src/main/java/com/example/eventservice/model/common/dto/request/CustomPagingRequest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/eventservice/src/main/java/com/example/eventservice/model/event/mapper/EventUpdateRequestToEventEntityMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/eventservice/src/main/java/com/example/eventservice/model/event/mapper/EventUpdateRequestToEventEntityMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eventservice/src/main/java/com/example/eventservice/utils/KeyConverter.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/brand_frontend/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/brand_frontend/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/brand_frontend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/brand_frontend/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/brand_frontend/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/brand_frontend/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/brand_frontend/src/components/BrandNavbar.css" beforeDir="false" afterPath="$PROJECT_DIR$/brand_frontend/src/components/BrandNavbar.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/brand_frontend/src/components/BrandNavbar.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/brand_frontend/src/components/BrandNavbar.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/eventservice/src/main/java/com/example/eventservice/repository/VoucherRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/eventservice/src/main/java/com/example/eventservice/repository/VoucherRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/reportservice/.env" beforeDir="false" afterPath="$PROJECT_DIR$/reportservice/.env" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/reportservice/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/reportservice/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/reportservice/src/main/java/com/example/reportservice/client/EventServiceClient.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reportservice/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/reportservice/src/main/resources/application.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -51,9 +39,9 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Class" />
         <option value="Interface" />
         <option value="JSX File" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -107,10 +95,12 @@
     "Spring Boot.BrandBackendApplication.executor": "Run",
     "Spring Boot.EurekaserverApplication.executor": "Run",
     "Spring Boot.EventserviceApplication.executor": "Run",
-    "git-widget-placeholder": "Merging dolphin",
+    "Spring Boot.ReportserviceApplication.executor": "Run",
+    "git-widget-placeholder": "dolphin",
+    "ignore.virus.scanning.warn.message": "true",
     "jdk.selected.JAVA_MODULE": "22",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/sonsu/Desktop/KienTruc/VOU/eventservice",
+    "last_opened_file_path": "C:/Users/sonsu/Desktop/KienTruc/VOU/reportservice",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -138,7 +128,7 @@
       </set>
     </option>
   </component>
-  <component name="RunManager" selected="Spring Boot.EventserviceApplication">
+  <component name="RunManager" selected="Spring Boot.ReportserviceApplication">
     <configuration name="BrandBackendApplicationTests" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="brand_backend" />
       <extension name="coverage">
@@ -210,9 +200,24 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="ReportserviceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
+      <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
+      <module name="reportservice" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.example.reportservice.ReportserviceApplication" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.example.reportservice.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <recent_temporary>
       <list>
         <item itemvalue="Spring Boot.EventserviceApplication" />
+        <item itemvalue="Spring Boot.ReportserviceApplication" />
         <item itemvalue="Spring Boot.EurekaserverApplication" />
         <item itemvalue="JUnit.BrandBackendApplicationTests" />
       </list>
@@ -241,6 +246,10 @@
       <workItem from="1724483084721" duration="8668000" />
       <workItem from="1725334481361" duration="612000" />
       <workItem from="1725335105883" duration="2641000" />
+      <workItem from="1725338791748" duration="43000" />
+      <workItem from="1725338842131" duration="668000" />
+      <workItem from="1725454120221" duration="1969000" />
+      <workItem from="1725517225092" duration="12630000" />
     </task>
     <servers />
   </component>
