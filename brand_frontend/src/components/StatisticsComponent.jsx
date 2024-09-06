@@ -20,26 +20,6 @@ const Statistics = () => {
     return (
         <div>
             <h1>Brand Profit Statistics</h1>
-
-            <TableContainer component={Paper}>
-                <Table>
-                    <TableHead>
-                        <TableRow>
-                            <TableCell>Event Name</TableCell>
-                            <TableCell>Profit</TableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {profitData.map((row, index) => (
-                            <TableRow key={index}>
-                                <TableCell>{row.eventName}</TableCell>
-                                <TableCell>{row.value * row.count}</TableCell>
-                            </TableRow>
-                        ))}
-                    </TableBody>
-                </Table>
-            </TableContainer>
-
             <ResponsiveContainer width="100%" height={400}>
                 <LineChart data={profitData}>
                     <CartesianGrid strokeDasharray="3 3" />
