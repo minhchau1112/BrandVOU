@@ -7,7 +7,7 @@ import Select from 'react-select';
 import './AddVoucherComponent.css';
 import { useAuth } from "../AuthProvider";
 
-function AddVoucherComponent({ brandID }) {
+function AddVoucherComponent() {
     const [voucher, setVoucher] = useState({
         code: '',
         qrCode: null,
@@ -29,7 +29,7 @@ function AddVoucherComponent({ brandID }) {
     const qrCodeInputRef = useRef(null);
 
     const auth = useAuth();
-    brandID = auth.brand.id;
+    const brandID = auth.brand.id;
 
     useEffect(() => {
         const fetchEvents = async () => {

@@ -2,7 +2,10 @@ package com.example.eventservice.controller;
 
 import com.example.eventservice.model.voucher.dto.request.VoucherCreateRequest;
 import com.example.eventservice.model.voucher.dto.request.VoucherUpdateRequest;
+import com.example.eventservice.model.voucher.dto.response.StatisticsByVoucherTypeResponse;
+import com.example.eventservice.model.voucher.dto.response.StatisticsTotalResponse;
 import com.example.eventservice.model.voucher.entity.VoucherEntity;
+import com.example.eventservice.repository.VoucherRepository;
 import com.example.eventservice.service.VoucherCreateService;
 import com.example.eventservice.service.VoucherDeleteService;
 import com.example.eventservice.service.VoucherReadService;
@@ -18,6 +21,8 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Slf4j
 @RestController
 @RequestMapping("/api/v1/events/vouchers")
@@ -28,6 +33,7 @@ public class VoucherController {
     private final VoucherReadService voucherReadService;
     private final VoucherUpdateService voucherUpdateService;
     private final VoucherDeleteService voucherDeleteService;
+    private final VoucherRepository voucherRepository;
 
     @PostMapping
     @PreAuthorize("hasAnyAuthority('ADMIN', 'BRAND')")
@@ -110,5 +116,24 @@ public class VoucherController {
         log.info("VoucherController | deleteVoucher");
 
         return voucherDeleteService.deleteVoucher(voucherId);
+    }
+
+    @GetMapping("/statistics-detail/event/{eventId}")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'BRAND')")
+    public ResponseEntity<List<StatisticsByVoucherTypeResponse>> getVoucherStatsDetailByEvent(@PathVariable Long eventId) {
+        log.info("VoucherController | getVoucherStatsDetailByEvent");
+
+        List<StatisticsByVoucherTypeResponse> statistics = voucherReadService.getVoucherStatsDetailByEvent(eventId);
+
+        return ResponseEntity.ok(statistics);
+    }
+    @GetMapping("/statistics-general/event/{eventId}")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'BRAND')")
+    public ResponseEntity<StatisticsTotalResponse> getVoucherStatsGeneralByEvent(@PathVariable Long eventId) {
+        log.info("VoucherController | getVoucherStatsByEvent");
+
+        StatisticsTotalResponse statistics = voucherReadService.getVoucherStatsGeneralByEvent(eventId);
+
+        return ResponseEntity.ok(statistics);
     }
 }

@@ -1,7 +1,7 @@
-import React, {createContext, useContext, useState, useEffect} from 'react';
+import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
 import { useNavigate } from "react-router-dom";
 import AuthService from "./services/AuthService";
-import {HttpStatusCode} from "axios";
+import { HttpStatusCode } from "axios";
 
 const AuthContext = createContext();
 
@@ -12,18 +12,23 @@ const AuthProvider = ({ children }) => {
     const [token, setToken] = useState(storedToken);
     const navigate = useNavigate();
 
-    useEffect(() => {
-        // Set interval to check token expiration
-        const interval = setInterval(() => {
-            if (token.accessToken && Date.now() / 1000 > token.accessTokenExpiresAt - 60) {
-                refreshAccessToken();
+    const logOut = useCallback(async (data) => {
+        const requestBody = JSON.stringify(data);
+        try {
+            const res = await AuthService.logout(requestBody);
+            if (res.status === HttpStatusCode.Ok) {
+                setBrand({ id: "", name: "" });
+                setToken({ accessToken: "", refreshToken: "", accessTokenExpiresAt: "" });
+                localStorage.removeItem("brand");
+                localStorage.removeItem("token");
+                navigate("/login");
             }
-        }, 10000); // Check every 10 seconds
+        } catch (error) {
+            console.log("error: ", error);
+        }
+    }, [navigate]);
 
-        return () => clearInterval(interval); // Clean up the interval on unmount
-    }, [token]);
-
-    const refreshAccessToken = async () => {
+    const refreshAccessToken = useCallback(async () => {
         try {
             const res = await AuthService.refreshToken(token.refreshToken);
             if (res.status === HttpStatusCode.Ok) {
@@ -38,7 +43,18 @@ const AuthProvider = ({ children }) => {
             console.error("Failed to refresh token:", error);
             logOut(token);
         }
-    };
+    }, [token, logOut]);
+
+    useEffect(() => {
+        // Set interval to check token expiration
+        const interval = setInterval(() => {
+            if (token.accessToken && Date.now() / 1000 > token.accessTokenExpiresAt - 60) {
+                refreshAccessToken();
+            }
+        }, 10000); // Check every 10 seconds
+
+        return () => clearInterval(interval); // Clean up the interval on unmount
+    }, [token.accessToken, token.accessTokenExpiresAt, refreshAccessToken]);
 
     const loginAction = async (data) => {
         const requestBody = JSON.stringify(data);
@@ -53,22 +69,6 @@ const AuthProvider = ({ children }) => {
                 localStorage.setItem('brand', JSON.stringify(newBrand));
                 localStorage.setItem('token', JSON.stringify(newToken));
                 navigate('/');
-            }
-        } catch (error) {
-            console.log("error: ", error);
-        }
-    };
-
-    const logOut = async (data) => {
-        const requestBody = JSON.stringify(data);
-        try {
-            const res = await AuthService.logout(requestBody);
-            if (res.status === HttpStatusCode.Ok) {
-                setBrand({ id: "", name: "" });
-                setToken({ accessToken: "", refreshToken: "", accessTokenExpiresAt: "" });
-                localStorage.removeItem("brand");
-                localStorage.removeItem("token");
-                navigate("/login");
             }
         } catch (error) {
             console.log("error: ", error);

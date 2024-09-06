@@ -12,7 +12,6 @@ import {
 } from 'react-bootstrap';
 import ItemService from "../services/ItemService";
 import itemService from "../services/ItemService";
-import VoucherService from "../services/VoucherService";
 
 function ItemEdit() {
     const { id } = useParams();
