@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect, useCallback} from 'react';
 import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -49,12 +49,11 @@ const columns = [
     { id: 'action', label: 'Action', width: 50, align: 'center' },
 ];
 
-function VouchersTable({ brandID }) {
+function VouchersTable() {
     const navigate = useNavigate();
     const [vouchers, setVouchers] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    const [searchQuery, setSearchQuery] = useState('');
     const [filteredVouchers, setFilteredVouchers] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
     const [pageNumber, setPageNumber] = useState(0);
@@ -62,9 +61,9 @@ function VouchersTable({ brandID }) {
     const [totalElements, setTotalElements] = useState(0);
 
     const auth = useAuth();
-    brandID = auth.brand.id;
+    const brandID = auth.brand.id;
 
-    const fetchVouchers = async () => {
+    const fetchVouchers = useCallback(async () => {
         setLoading(true);
         setError(null);
         try {
@@ -77,14 +76,14 @@ function VouchersTable({ brandID }) {
             setError('Error fetching vouchers.');
             setLoading(false);
         }
-    };
+    }, [brandID, searchTerm, pageNumber, pageSize]);
 
     useEffect(() => {
         fetchVouchers();
-    }, [brandID, pageNumber, pageSize, searchTerm]);
+    }, [fetchVouchers]);
 
     const handleSearch = () => {
-        setPageNumber(0); // Reset to the first page on new search
+        setPageNumber(0);
         fetchVouchers();
     };
     

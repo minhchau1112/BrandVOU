@@ -6,7 +6,7 @@ import Select from 'react-select';
 import {useAuth} from "../AuthProvider";
 import GameService from '../services/GameService';
 
-function AddEventComponent({brandID}) {
+function AddEventComponent() {
     const [event, setEvent] = useState({
         name: '',
         image: null,
@@ -44,7 +44,7 @@ function AddEventComponent({brandID}) {
 
     const imageInputRef = useRef(null);
     const auth = useAuth();
-    brandID = auth.brand.id;
+    const brandID = auth.brand.id;
 
     const handleChange = (e) => {
         const { name, value, type, files } = e.target;

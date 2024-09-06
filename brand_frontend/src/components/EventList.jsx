@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect, useCallback} from 'react';
 import EventCard from './EventCard';
 import EventService from '../services/EventService';
 import './EventList.css';
@@ -7,8 +7,7 @@ import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { Pagination, Button, InputGroup, FormControl, Spinner } from 'react-bootstrap';
 import { useAuth } from "../AuthProvider";
 
-const EventList = ({ brandID }) => {
-    const [events, setEvents] = useState([]);
+const EventList = () => {
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(true);
     const [searchTerm, setSearchTerm] = useState('');
@@ -17,16 +16,15 @@ const EventList = ({ brandID }) => {
     const [pageSize, setPageSize] = useState(12);
     const [totalElements, setTotalElements] = useState(0);
     const auth = useAuth();
-    brandID = auth.brand.id;
+    const brandID = auth.brand.id;
 
-    const fetchEvents = async () => {
+    const fetchEvents = useCallback(async () => {
         setLoading(true);
         setError(null);
         try {
             console.log("brandId: ", brandID);
             const response = await EventService.getEventsByBrandId(brandID, searchTerm, pageNumber, pageSize);
             console.log("response: ", response);
-            setEvents(response.data.content);
             setTotalElements(response.data.totalElements);
             setFilteredEvents(response.data.content);
             setLoading(false);
@@ -40,11 +38,11 @@ const EventList = ({ brandID }) => {
             }
             setLoading(false);
         }
-    };
+    }, [brandID, searchTerm, pageNumber, pageSize]);
 
     useEffect(() => {
         fetchEvents();
-    }, [brandID, pageNumber, pageSize, searchTerm]);
+    }, [fetchEvents]);
 
     const handleSearch = () => {
         setPageNumber(0); // Reset to the first page on new search

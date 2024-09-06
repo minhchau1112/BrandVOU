@@ -2,10 +2,10 @@ import React from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import './BrandNavbar.css'; 
 import {useAuth} from "../AuthProvider";
+import Dropdown from 'react-bootstrap/Dropdown';
 
 const BrandNavbar = () => {
     const navigate = useNavigate();
-
     const auth = useAuth();
 
     const handleLogin = () => {
@@ -48,14 +48,20 @@ const BrandNavbar = () => {
                         Items
                     </NavLink>
                 </li>
+
                 <li>
-                    <NavLink 
-                        to="/budget-statistics" 
-                        className={({ isActive }) => (isActive ? 'active' : '')}
-                    >
-                        Budget
-                    </NavLink>
+                    <Dropdown>
+                        <Dropdown.Toggle as="span" style={{ cursor: 'pointer', color: 'black'}}>
+                            Statistic
+                        </Dropdown.Toggle>
+
+                        <Dropdown.Menu>
+                            <Dropdown.Item href="/budget-statistics">Budget Statistic</Dropdown.Item>
+                            <Dropdown.Item href="/voucher-statistics">Voucher Statistic</Dropdown.Item>
+                        </Dropdown.Menu>
+                    </Dropdown>
                 </li>
+
             </ul>
             <div className="navbar-buttons">
                 {auth.token.accessToken && auth.token.accessToken !== "" ? (
