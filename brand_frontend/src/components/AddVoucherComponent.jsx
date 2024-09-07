@@ -7,7 +7,7 @@ import Select from 'react-select';
 import './AddVoucherComponent.css';
 import { useAuth } from "../AuthProvider";
 
-function AddVoucherComponent({ brandID }) {
+function AddVoucherComponent() {
     const [voucher, setVoucher] = useState({
         code: '',
         qrCode: null,
@@ -29,7 +29,7 @@ function AddVoucherComponent({ brandID }) {
     const qrCodeInputRef = useRef(null);
 
     const auth = useAuth();
-    brandID = auth.brand.id;
+    const brandID = auth.brand.id;
 
     useEffect(() => {
         const fetchEvents = async () => {
@@ -104,7 +104,13 @@ function AddVoucherComponent({ brandID }) {
         formData.append('eventId', selectedEvent);
 
         try {
-            await VoucherService.createVoucher(formData);
+            let id = await VoucherService.createVoucher(formData);
+
+            if (id.data === -1) {
+                setError('Voucher already exist! There is another voucher with given code')
+                return;
+            }
+
             setMessage('Voucher added successfully!');
             navigate('/vouchers');
         } catch (err) {
@@ -114,7 +120,7 @@ function AddVoucherComponent({ brandID }) {
 
     return (
         <Container>
-			{error && <div className="alert alert-danger">{error}</div>}
+			{error && <div className="alert alert-danger mt-5">{error}</div>}
 			{message && <div className="alert alert-success">{message}</div>}
 
             <Row className="mt-5">

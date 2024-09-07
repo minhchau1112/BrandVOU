@@ -27,6 +27,15 @@ public interface VoucherUpdateRequestToVoucherEntityMapper extends BaseMapper<Vo
         voucherEntityToBeUpdate.setValue(voucherUpdateRequest.getValue());
         voucherEntityToBeUpdate.setEvent(eventEntity);
     }
+    @Named("mapMultipartFileToString")
+    default String mapMultipartFileToString(MultipartFile file) {
+        return file != null ? file.getOriginalFilename() : null;
+    }
+
+    @Override
+    @Mapping(target = "QRCode", source = "QRCode", qualifiedByName = "mapMultipartFileToString")
+    @Mapping(target = "image", source = "image", qualifiedByName = "mapMultipartFileToString")
+    VoucherEntity map(VoucherUpdateRequest source);
 
     static VoucherUpdateRequestToVoucherEntityMapper initialize() {
         return Mappers.getMapper(VoucherUpdateRequestToVoucherEntityMapper.class);

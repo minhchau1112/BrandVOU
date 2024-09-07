@@ -79,8 +79,28 @@ class VoucherService {
         });
     }
 
-    checkDuplicate(code, eventId) {
-        return axios.get(`${VOUCHER_API_BASE_URL}/check-duplicate?code=${code}&eventId=${eventId}`);
+    getVoucherStatsGeneralByEvent(eventId) {
+        const token = JSON.parse(localStorage.getItem('token'));
+        const accessToken = token.accessToken;
+
+        return axios.get(`${VOUCHER_API_BASE_URL}/statistics-general/event/${eventId}`, {
+            headers: {
+                'Authorization': `Bearer ${accessToken}}`
+            },
+            withCredentials: true
+        });
+    }
+
+    getVoucherStatsDetailByEvent(eventId) {
+        const token = JSON.parse(localStorage.getItem('token'));
+        const accessToken = token.accessToken;
+
+        return axios.get(`${VOUCHER_API_BASE_URL}/statistics-detail/event/${eventId}`, {
+            headers: {
+                'Authorization': `Bearer ${accessToken}}`
+            },
+            withCredentials: true
+        });
     }
 }
 

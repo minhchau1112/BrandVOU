@@ -1,25 +1,21 @@
 import React, { useState } from 'react';
 import { Form, Button, Alert, Row, Col } from 'react-bootstrap';
-import AuthService from '../services/AuthService';
-import { useNavigate } from 'react-router-dom';
-import {HttpStatusCode} from "axios";
 import { useAuth } from '../AuthProvider';
 const Login = () => {
     const [error, setError] = useState('');
-    const navigate = useNavigate();
     const [brand, setBrand] = useState({
         username: '',
         password: '',
     });
-    const [errors, setErrors] = useState({});
+    const [errors] = useState({});
     const auth = useAuth();
     const handleLogin = (e) => {
         e.preventDefault();
-        if (brand.username != "" && brand.password != "") {
+        if (brand.username !== "" && brand.password !== "") {
             auth.loginAction(brand);
             return;
         }
-        alert("Please provide a valid input");
+        setError("Please provide a valid input");
     };
 
     const handleChange = (e) => {

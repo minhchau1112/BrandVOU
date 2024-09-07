@@ -1,0 +1,62 @@
+.pie-chart-container {
+    width: 300px;
+    height: 300px;
+    margin: 0 auto;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+}
+
+.sales-card {
+    width: 300px;
+    height: 170px;
+    background: linear-gradient(135deg, #FFC371, #FF5F6D);
+    border-radius: 15px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    color: white;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
+    position: relative;
+}
+
+.purple-background-gradient {
+    background: linear-gradient(to right, #da8cff, #9a55ff);
+}
+
+.success-background-gradient {
+    background: linear-gradient(to right, #84d9d2, #07cdae);
+}
+
+.info-background-gradient {
+    background: linear-gradient(to right, #90caf9, #047edf 99%);
+}
+
+.title {
+    font-size: 22px;
+    font-weight: bold;
+}
+
+.amount {
+    font-size: 40px;
+    font-weight: bold;
+}
+
+.description {
+    font-size: 16px;
+    margin-top: 10px;
+}
+
+.icon {
+    position: absolute;
+    bottom: -20px;
+    left: 20px;
+}
+
+.icon svg {
+    stroke: white;
+    width: 30px;
+    height: 30px;
+}

@@ -3,6 +3,7 @@ package com.example.eventservice.model.voucher.mapper;
 import com.example.eventservice.model.common.mapper.BaseMapper;
 import com.example.eventservice.model.event.entity.EventEntity;
 import com.example.eventservice.model.voucher.dto.request.VoucherCreateRequest;
+import com.example.eventservice.model.voucher.dto.request.VoucherUpdateRequest;
 import com.example.eventservice.model.voucher.entity.VoucherEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -37,9 +38,7 @@ public interface VoucherCreateRequestToVoucherEntityMapper extends BaseMapper<Vo
     @Override
     @Mapping(target = "QRCode", source = "QRCode", qualifiedByName = "mapMultipartFileToString")
     @Mapping(target = "image", source = "image", qualifiedByName = "mapMultipartFileToString")
-    default VoucherEntity map(VoucherCreateRequest source) {
-        return null;
-    }
+    VoucherEntity map(VoucherCreateRequest source);
 
     static VoucherCreateRequestToVoucherEntityMapper initialize() {
         return Mappers.getMapper(VoucherCreateRequestToVoucherEntityMapper.class);

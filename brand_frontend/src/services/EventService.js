@@ -65,6 +65,18 @@ class EventService {
             withCredentials: true
         });
     }
+
+    getEventsOfBrandHaveTargetWord(brandId) {
+        const token = JSON.parse(localStorage.getItem('token'));
+        const accessToken = token.accessToken;
+
+        return axios.get(`${EVENT_API_BASE_URL}/brand/have-target-word/${brandId}`, {
+            headers: {
+                'Authorization': `Bearer ${accessToken}}`
+            },
+            withCredentials: true
+        });
+    }
 }
 
 const eventServiceInstance = new EventService();

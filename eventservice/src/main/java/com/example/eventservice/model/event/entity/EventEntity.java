@@ -29,6 +29,6 @@ public class EventEntity {
     private LocalDateTime startTime;
     @Column(name = "endTime")
     private LocalDateTime endTime;
-    @Column(name = "gameType")
-    private String gameType;
+    @Column(name = "targetWord")
+    private String targetWord;
 }

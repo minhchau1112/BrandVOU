@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import './BrandNavbar.css'; 
 import {useAuth} from "../AuthProvider";
+import Dropdown from 'react-bootstrap/Dropdown';
 
 const BrandNavbar = () => {
     const navigate = useNavigate();
@@ -50,42 +51,37 @@ const BrandNavbar = () => {
                 </li>
                 <li>
                     <NavLink
-                        to="/budget-statistics"
-                        className={({isActive}) => (isActive ? 'active' : '')}
+                        to="/items"
+                        className={({ isActive }) => (isActive ? 'active' : '')}
                     >
-                        Budget
+                        Items
                     </NavLink>
                 </li>
+
+                <li>
+                    <Dropdown>
+                        <Dropdown.Toggle as="span" style={{ cursor: 'pointer', color: 'black'}}>
+                            Statistic
+                        </Dropdown.Toggle>
+
+                        <Dropdown.Menu>
+                            <Dropdown.Item href="/budget-statistics">Budget Statistic</Dropdown.Item>
+                            <Dropdown.Item href="/voucher-statistics">Voucher Statistic</Dropdown.Item>
+                        </Dropdown.Menu>
+                    </Dropdown>
+                </li>
+
             </ul>
             <div className="navbar-buttons">
-                {auth.token.accessToken ? (
-                    <div className="user-dropdown-container" style={{position: 'relative'}}>
-                        <div
-                            className="d-flex align-items-center"
-                            style={{gap: '12px', cursor: 'pointer'}}
-                            onClick={toggleDropdown} // Nhấn vào để mở dropdown
-                        >
-                            <span>{auth.brand.name}</span>
-                            <i className={`arrow-icon ${dropdownOpen ? 'open' : ''}`}></i>
-                        </div>
-                        {dropdownOpen && (
-                            <div className="user-dropdown-menu">
-                                <ul>
-                                    <li onClick={() => navigate('/profile')}>
-                                        Profile
-                                    </li>
-                                    <li onClick={handleNaviStatistics}>
-                                        Statistics
-                                    </li>
-                                    <li onClick={() => auth.logOut(auth.token)}>
-                                        Logout
-                                    </li>
-                                </ul>
-                            </div>
-                        )}
+                {auth.token.accessToken && auth.token.accessToken !== "" ? (
+                    <div className="d-flex align-items-center" style={{ gap: '12px' }}>
+                        <span>{auth.brand.name}</span>
+                        <button className="logout-btn" onClick={() => auth.logOut(auth.token)}>
+                            Logout
+                        </button>
                     </div>
                 ) : (
-                    <div className="d-flex" style={{gap: '12px'}}>
+                    <div className="d-flex" style={{ gap: '12px' }}>
                         <button className="login-btn" onClick={handleLogin}>Login</button>
                         <button className="signup-btn" onClick={handleRegister}>Register</button>
                     </div>

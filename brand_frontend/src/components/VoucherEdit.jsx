@@ -54,7 +54,7 @@ function VoucherEdit() {
         };
 
         fetchVoucherDetails();
-    }, [id]);
+    }, [id, auth.brand.id]);
 
     const handleChange = (e) => {
         const { name, value, type, files } = e.target;

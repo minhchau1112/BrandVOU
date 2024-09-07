@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import {
     Form,
@@ -11,7 +11,7 @@ import {
     Col,
     Modal,
     InputGroup,
-    FormControl
+    FormControl, Pagination
 } from 'react-bootstrap';
 import Select from 'react-select';
 import EventService from '../services/EventService';
@@ -29,6 +29,10 @@ import { tableCellClasses } from '@mui/material/TableCell';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { useAuth } from "../AuthProvider";
+import EventGamesService from "../services/EventGamesService";
+import GameService from "../services/GameService";
+import ItemCard from "./ItemCard";
+import itemService from "../services/ItemService";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -57,9 +61,12 @@ function EditEvent() {
         image: null,
         startTime: '',
         endTime: '',
-        gameType: '',
-        voucherCount: 0
+        voucherCount: 0,
+        targetWord: '',
+        games: ''
     });
+    const [seletedOptions, setSelectedOptions] = useState([]);
+    const [games, setGames] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [previewImage, setPreviewImage] = useState(null);
@@ -70,38 +77,14 @@ function EditEvent() {
     const [totalElements, setTotalElements] = useState(0);
     const [showDeleteModal, setShowDeleteModal] = useState(false);
     const [voucherToDelete, setVoucherToDelete] = useState(null);
-
-    const gameOptions = [
-        { value: 'Quiz', label: 'Quiz' },
-        { value: 'ShakeGame', label: 'ShakeGame' }
-    ];
+    const [items, setItems] = useState([]);
+    const [pageNumberItem, setPageNumberItem] = useState(0);
+    const [pageSizeItem] = useState(12);
+    const [totalElementsItem, setTotalElementsItem] = useState(0);
 
     const auth = useAuth();
-    const fetchEventDetail = async () => {
-        try {
-            const response = await EventService.getEventByEventId(id);
-            const eventData = response.data;
 
-            const selectedGameTypes = eventData.gameType
-                ? eventData.gameType.split(';').map(type => ({
-                    value: type,
-                    label: type
-                }))
-                : [];
-
-            setEvent({
-                ...eventData,
-                gameType: selectedGameTypes
-            });
-            setPreviewImage(eventData.image);
-            setLoading(false);
-        } catch (error) {
-            setError('Error fetching event details.');
-            setLoading(false);
-        }
-    };
-
-    const fetchVouchers = async () => {
+    const fetchVouchers = useCallback(async () => {
         try {
             const response = await VoucherService.getVoucherByEventId(id, searchTerm, pageNumber, pageSize);
             console.log('voucher: ', response);
@@ -112,16 +95,62 @@ function EditEvent() {
             setError('Error fetching vouchers.');
             setLoading(false);
         }
-    };
+    }, [id, searchTerm, pageNumber, pageSize]);
+
+    const fetchItems = useCallback(async () => {
+        try {
+            if (Array.isArray(seletedOptions) && seletedOptions.some(game => game.isItemExchangeAllowed === true)) {
+                const items = await itemService.getItemsByEventId(id, pageNumberItem, pageSizeItem);
+                console.log("items: ", items);
+                setItems(items.data.content);
+                setTotalElementsItem(items.data.totalElements);
+            }
+        } catch (error) {
+            setError('Error fetching item.');
+            setLoading(false);
+        }
+    }, [id, seletedOptions, pageNumberItem, pageSizeItem]);
 
     useEffect(() => {
-        fetchEventDetail();
+        const fetchData = async () => {
+            try {
+                const [gamesResponse, eventResponse] = await Promise.all([
+                    GameService.getAllGames(),
+                    EventService.getEventByEventId(id)
+                ]);
 
+                const gameOptions = gamesResponse.data.map(game => ({
+                    value: game.id,
+                    label: game.name,
+                    isItemExchangeAllowed: game.isItemExchangeAllowed
+                }));
+                setGames(gameOptions);
+
+                const eventData = eventResponse.data;
+                setEvent(eventData);
+
+                const gamesNameString = await EventGamesService.findGameNamesByEventId(eventData.id);
+                const gameNames = gamesNameString.data.split(";");
+
+                const selectedGames = gameOptions.filter(game => gameNames.includes(game.label));
+                setSelectedOptions(selectedGames);
+
+                setPreviewImage(eventData.image);
+
+                setLoading(false);
+            } catch (error) {
+                setError('Error fetching data.');
+                setLoading(false);
+            }
+        };
+
+        fetchData();
         fetchVouchers();
-    }, [id, pageNumber, pageSize, searchTerm]);
+        fetchItems();
+    }, [id, fetchVouchers, fetchItems]);
 
     const handleSearch = () => {
-        setPageNumber(0); // Reset to the first page on new search
+        setPageNumber(0);
         fetchVouchers();
     };
 
@@ -149,7 +178,10 @@ function EditEvent() {
     };
 
     const handleGameTypeChange = (selectedOptions) => {
-        setEvent({ ...event, gameType: selectedOptions });
+        console.log("selectedOptions: ", selectedOptions);
+        const games = selectedOptions.map(option => option.value).join(';');
+        setEvent({ ...event, games: games });
+        setSelectedOptions(selectedOptions);
     };
 
     const handleViewDetailVoucher = (voucherId) => {
@@ -214,7 +246,11 @@ function EditEvent() {
             formData.append('voucherCount', event.voucherCount);
             formData.append('startTime', event.startTime);
             formData.append('endTime', event.endTime);
-            formData.append('gameType', event.gameType.map(option => option.value).join(';'));
+            formData.append('games', event.games);
+
+            if (seletedOptions.some(game => game.isItemExchangeAllowed === true)) {
+                formData.append('targetWord', event.targetWord);
+            }
 
             await EventService.updateEvent(id, formData);
             navigate(`/events/view-detail/${id}`);
@@ -232,6 +268,10 @@ function EditEvent() {
         setPageNumber(0);
     };
 
+    const handleChangePageItem = (item, newPage) => {
+        setPageNumberItem(newPage);
+    };
+
     const columns = [
         { id: 'index', label: '#', width: 50 },
         { id: 'code', label: 'Code', width: 100 },
@@ -245,6 +285,8 @@ function EditEvent() {
         { id: 'eventName', label: 'Event Name', width: 100 },
         { id: 'action', label: 'Action', width: 50, align: 'center' },
     ];
+
+    const pageCount = totalElementsItem > 0 ? Math.ceil(totalElementsItem / pageSizeItem) : 1;
 
     if (loading) {
         return <Spinner animation="border" />;
@@ -309,18 +351,31 @@ function EditEvent() {
                         </div>
 
                         <Form.Group controlId="formGameType">
-                            <Form.Label>Game Type</Form.Label>
+                            <Form.Label>Games</Form.Label>
                             <Select
                                 isMulti
-                                name="gameType"
-                                options={gameOptions}
+                                name="games"
+                                options={games}
                                 className="basic-multi-select"
                                 classNamePrefix="select"
-                                value={event.gameType}
+                                value={seletedOptions}
                                 onChange={handleGameTypeChange}
                                 required
                             />
                         </Form.Group>
+
+                        {Array.isArray(seletedOptions) && seletedOptions.some(game => game.isItemExchangeAllowed === true) && (
+                            <Form.Group controlId="formTargetWord">
+                                <Form.Label>Target Word</Form.Label>
+                                <Form.Control
+                                    type="text"
+                                    name="targetWord"
+                                    value={event.targetWord}
+                                    onChange={handleChange}
+                                    required
+                                />
+                            </Form.Group>
+                        )}
 
                         <div className="d-flex justify-content-start mt-4" style={{gap: '12px'}}>
                             <Button variant="secondary" onClick={handleBack}>
@@ -377,7 +432,7 @@ function EditEvent() {
                 </Button>
             </InputGroup>
 
-            <h3 className="mt-3">Vouchers</h3>
+            <h3 className="text-center mt-3">Vouchers</h3>
             {vouchers && vouchers.length > 0 ? (
                 <TableContainer component={Paper}>
                 <Table>
@@ -475,6 +530,38 @@ function EditEvent() {
                     </Button>
                 </Modal.Footer>
             </Modal>
+
+            {Array.isArray(seletedOptions) && seletedOptions.some(game => game.isItemExchangeAllowed === true) ? (
+                <div>
+                    <h2 className="text-center">Items List</h2>
+                    <div className="event-list">
+                        {items.length > 0 ? (
+                            items.map(item => (
+                                <ItemCard key={item.id} item={item} />
+                            ))
+                        ) : (
+                            <div>
+                                !loading && <Alert variant="info" className="mt-5">No items found for this event.</Alert>
+                            </div>
+                        )}
+                    </div>
+                    <div className="pagination mt-4">
+                        <Pagination>
+                            <Pagination.Prev onClick={() => handleChangePageItem(pageNumber > 0 ? pageNumber - 1 : 0)} />
+                            {[...Array(pageCount).keys()].map(number => (
+                                <Pagination.Item
+                                    key={number}
+                                    active={number === pageNumberItem}
+                                    onClick={() => handleChangePageItem(number)}
+                                >
+                                    {number + 1}
+                                </Pagination.Item>
+                            ))}
+                            <Pagination.Next onClick={() => handleChangePageItem(pageNumberItem < pageCount - 1 ? pageNumber + 1 : pageCount - 1)} />
+                        </Pagination>
+                    </div>
+                </div>
+            ) : (<div></div>)}
         </Container>
     );
 }
