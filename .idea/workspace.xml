@@ -6,8 +6,12 @@
   <component name="ChangeListManager">
     <list default="true" id="6bb27ad0-fb00-4a05-8d33-0c9167e99d74" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apigateway/src/main/java/com/example/apigateway/config/GatewayConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/apigateway/src/main/java/com/example/apigateway/config/GatewayConfig.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/brand_frontend/src/components/StatisticsComponent.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/brand_frontend/src/components/StatisticsComponent.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/brand_frontend/src/services/StatisticsService.js" beforeDir="false" afterPath="$PROJECT_DIR$/brand_frontend/src/services/StatisticsService.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/reportservice/src/main/java/com/example/reportservice/controller/StatisticsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/reportservice/src/main/java/com/example/reportservice/controller/StatisticsController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/reportservice/src/main/java/com/example/reportservice/repository/StatisticsRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/reportservice/src/main/java/com/example/reportservice/repository/StatisticsRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/reportservice/src/main/java/com/example/reportservice/service/StatisticsService.java" beforeDir="false" afterPath="$PROJECT_DIR$/reportservice/src/main/java/com/example/reportservice/service/StatisticsService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -229,6 +233,8 @@
       <workItem from="1725454120221" duration="1969000" />
       <workItem from="1725517225092" duration="13630000" />
       <workItem from="1725590599649" duration="2266000" />
+      <workItem from="1725596261083" duration="410000" />
+      <workItem from="1725605546326" duration="4620000" />
     </task>
     <servers />
   </component>

@@ -10,10 +10,16 @@ import java.util.List;
 
 @Repository
 public interface StatisticsRepository extends JpaRepository<VoucherEntity, Long> {
-    @Query("SELECT SUM(v.value * v.count) AS totalProfit, e.name AS eventName " +
+    @Query("SELECT SUM(v.value * v.count) AS totalBudget, e.name AS eventName " +
             "FROM VoucherEntity v JOIN v.event e " +
             "WHERE e.brand.id = :brandID " +
             "GROUP BY e.name")
-    List<Object[]> findVoucherProfitsByBrandId(@Param("brandID") Long brandID);
+    List<Object[]> findVoucherBudgetByBrandId(@Param("brandID") Long brandID);
+
+    @Query("SELECT SUM(v.count) AS participantCount, e.name AS eventName " +
+            "FROM VoucherEntity v JOIN v.event e " +
+            "WHERE e.brand.id = :brandID " +
+            "GROUP BY e.name")
+    List<Object[]> findParticipantCountByBrandId(@Param("brandID") Long brandID);
 }
 

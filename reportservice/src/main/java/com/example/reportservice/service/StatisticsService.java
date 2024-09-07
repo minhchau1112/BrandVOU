@@ -15,17 +15,30 @@ public class StatisticsService {
     @Autowired
     private StatisticsRepository statisticsRepository;
 
-    public List<Map<String, Object>> getProfitByBrandId(Long brandID) {
-        List<Object[]> results = statisticsRepository.findVoucherProfitsByBrandId(brandID);
+    public List<Map<String, Object>> getBudgetByBrandId(Long brandID) {
+        List<Object[]> results = statisticsRepository.findVoucherBudgetByBrandId(brandID);
 
-        List<Map<String, Object>> profitData = new ArrayList<>();
+        List<Map<String, Object>> budgetData = new ArrayList<>();
         for (Object[] result : results) {
             Map<String, Object> data = new HashMap<>();
-            data.put("profit", result[0]);
+            data.put("budget", result[0]);
             data.put("eventName", result[1]);
-            profitData.add(data);
+            budgetData.add(data);
         }
-        return profitData;
+        return budgetData;
+    }
+
+    public List<Map<String, Object>> getParticipantCountByBrandId(Long brandID) {
+        List<Object[]> results = statisticsRepository.findParticipantCountByBrandId(brandID);
+
+        List<Map<String, Object>> participantData = new ArrayList<>();
+        for (Object[] result : results) {
+            Map<String, Object> data = new HashMap<>();
+            data.put("participantCount", result[0]);
+            data.put("eventName", result[1]);
+            participantData.add(data);
+        }
+        return participantData;
     }
 }
 

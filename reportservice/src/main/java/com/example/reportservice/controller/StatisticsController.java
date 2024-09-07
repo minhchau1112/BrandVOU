@@ -21,8 +21,14 @@ public class StatisticsController {
 
     @GetMapping("/reports")
     public ResponseEntity<List<Map<String, Object>>> getStatistics(@RequestParam("brandID") Long brandID) {
-        List<Map<String, Object>> statistics = statisticsService.getProfitByBrandId(brandID);
+        List<Map<String, Object>> statistics = statisticsService.getBudgetByBrandId(brandID);
         return new ResponseEntity<>(statistics, HttpStatus.OK);
+    }
+
+    @GetMapping("/participants")
+    public ResponseEntity<List<Map<String, Object>>> getParticipants(@RequestParam("brandID") Long brandID) {
+        List<Map<String, Object>> participants = statisticsService.getParticipantCountByBrandId(brandID);
+        return new ResponseEntity<>(participants, HttpStatus.OK);
     }
 }
 

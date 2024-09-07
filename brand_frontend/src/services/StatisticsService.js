@@ -17,3 +17,20 @@ export const getStatistics = (brandID) => {
             throw error;
         });
 };
+
+export const getParticipants = (brandID) => {
+    const token = JSON.parse(localStorage.getItem('token'));
+    const accessToken = token.accessToken;
+    return axios.get(`${API_URL}/participants`, {
+        params: { brandID },
+        headers: {
+            'Authorization': `Bearer ${accessToken}`
+        }
+    })
+        .then(response => response.data)
+        .catch(error => {
+            console.error('Error fetching participant data:', error);
+            throw error;
+        });
+};
+
