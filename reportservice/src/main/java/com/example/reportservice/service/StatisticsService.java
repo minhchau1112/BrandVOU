@@ -27,18 +27,5 @@ public class StatisticsService {
         }
         return budgetData;
     }
-
-    public List<Map<String, Object>> getParticipantCountByBrandId(Long brandID) {
-        List<Object[]> results = statisticsRepository.findParticipantCountByBrandId(brandID);
-
-        List<Map<String, Object>> participantData = new ArrayList<>();
-        for (Object[] result : results) {
-            Map<String, Object> data = new HashMap<>();
-            data.put("participantCount", result[0]);
-            data.put("eventName", result[1]);
-            participantData.add(data);
-        }
-        return participantData;
-    }
 }
 

@@ -53,11 +53,11 @@ class EventService {
         });
     }
 
-    updateEvent(eventId, event) {
+    updateEvent(eventID, event) {
         const token = JSON.parse(localStorage.getItem('token'));
         const accessToken = token.accessToken;
 
-        return axios.put(`${EVENT_API_BASE_URL}/${eventId}`, event, {
+        return axios.put(`${EVENT_API_BASE_URL}/${eventID}`, event, {
             headers: {
                 'Content-Type': 'multipart/form-data',
                 'Authorization': `Bearer ${accessToken}}`
@@ -66,11 +66,11 @@ class EventService {
         });
     }
 
-    getEventsOfBrandHaveTargetWord(brandId) {
+    getEventsOfBrandHaveTargetWord(brandID) {
         const token = JSON.parse(localStorage.getItem('token'));
         const accessToken = token.accessToken;
 
-        return axios.get(`${EVENT_API_BASE_URL}/brand/have-target-word/${brandId}`, {
+        return axios.get(`${EVENT_API_BASE_URL}/brand/have-target-word/${brandID}`, {
             headers: {
                 'Authorization': `Bearer ${accessToken}}`
             },

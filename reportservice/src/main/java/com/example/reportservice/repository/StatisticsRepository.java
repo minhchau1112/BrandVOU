@@ -15,11 +15,5 @@ public interface StatisticsRepository extends JpaRepository<VoucherEntity, Long>
             "WHERE e.brand.id = :brandID " +
             "GROUP BY e.name")
     List<Object[]> findVoucherBudgetByBrandId(@Param("brandID") Long brandID);
-
-    @Query("SELECT SUM(v.count) AS participantCount, e.name AS eventName " +
-            "FROM VoucherEntity v JOIN v.event e " +
-            "WHERE e.brand.id = :brandID " +
-            "GROUP BY e.name")
-    List<Object[]> findParticipantCountByBrandId(@Param("brandID") Long brandID);
 }
 

@@ -20,7 +20,6 @@ public interface EventCreateRequestToEventEntityMapper extends BaseMapper<EventC
                 .name(eventCreateRequest.getName())
                 .image(imageUrl)
                 .voucherCount(eventCreateRequest.getVoucherCount())
-                .gameType(eventCreateRequest.getGameType())
                 .startTime(eventCreateRequest.getStartTime())
                 .endTime(eventCreateRequest.getEndTime())
                 .targetWord(eventCreateRequest.getTargetWord())

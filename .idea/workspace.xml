@@ -5,10 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6bb27ad0-fb00-4a05-8d33-0c9167e99d74" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/brand_frontend/src/components/BudgetStatistics.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/apigateway/src/main/java/com/example/apigateway/config/GatewayConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/apigateway/src/main/java/com/example/apigateway/config/GatewayConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/brand_frontend/src/components/StatisticsComponent.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/brand_frontend/src/components/StatisticsComponent.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/brand_frontend/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/brand_frontend/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/brand_frontend/src/components/StatisticsComponent.jsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/brand_frontend/src/services/EventService.js" beforeDir="false" afterPath="$PROJECT_DIR$/brand_frontend/src/services/EventService.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/brand_frontend/src/services/StatisticsService.js" beforeDir="false" afterPath="$PROJECT_DIR$/brand_frontend/src/services/StatisticsService.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/brand_frontend/src/services/VoucherService.js" beforeDir="false" afterPath="$PROJECT_DIR$/brand_frontend/src/services/VoucherService.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/eventservice/src/main/java/com/example/eventservice/model/event/mapper/EventCreateRequestToEventEntityMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/eventservice/src/main/java/com/example/eventservice/model/event/mapper/EventCreateRequestToEventEntityMapper.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/reportservice/src/main/java/com/example/reportservice/controller/StatisticsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/reportservice/src/main/java/com/example/reportservice/controller/StatisticsController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/reportservice/src/main/java/com/example/reportservice/repository/StatisticsRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/reportservice/src/main/java/com/example/reportservice/repository/StatisticsRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/reportservice/src/main/java/com/example/reportservice/service/StatisticsService.java" beforeDir="false" afterPath="$PROJECT_DIR$/reportservice/src/main/java/com/example/reportservice/service/StatisticsService.java" afterDir="false" />
@@ -235,6 +240,9 @@
       <workItem from="1725590599649" duration="2266000" />
       <workItem from="1725596261083" duration="410000" />
       <workItem from="1725605546326" duration="4620000" />
+      <workItem from="1725689712235" duration="1967000" />
+      <workItem from="1725725680538" duration="1095000" />
+      <workItem from="1725758239042" duration="526000" />
     </task>
     <servers />
   </component>
