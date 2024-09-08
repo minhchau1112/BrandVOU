@@ -15,7 +15,6 @@ public class GatewayConfig {
 
     private final JwtAuthenticationFilter jwtAuthFilter;
 
-    // Define the list of public endpoints
     private static final List<String> PUBLIC_ENDPOINTS = List.of(
             "/api/v1/authentication/accounts/register",
             "/api/v1/authentication/accounts/login",
@@ -38,11 +37,10 @@ public class GatewayConfig {
                         .filters(f -> f.filter(jwtAuthFilter.apply(new JwtAuthenticationFilter.Config()
                                 .setPublicEndpoints(PUBLIC_ENDPOINTS))))
                         .uri("lb://accountservice"))
-                .route("reportservice", r -> r.path("/api/v1/reports/**")
+                .route("reportservice", r -> r.path("/api/v1/budget-statistics/**")
                         .filters(f -> f.filter(jwtAuthFilter.apply(new JwtAuthenticationFilter.Config()
                                 .setPublicEndpoints(PUBLIC_ENDPOINTS))))
                         .uri("lb://reportservice"))
                 .build();
     }
-
 }
