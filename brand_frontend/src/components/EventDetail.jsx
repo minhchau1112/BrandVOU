@@ -230,14 +230,6 @@ function EventDetail() {
         setRows(newRows);
     };
 
-    const handleAddRowQuizQuestion = () => {
-        setRows([...rows, { question: '', correctAnswer: '', wrongAnswer1: '', wrongAnswer2: '', wrongAnswer3: '' }]);
-    };
-
-    const handleDeleteRowQuizQuestion = (rowIndex) => {
-        const newRows = rows.filter((_, index) => index !== rowIndex);
-        setRows(newRows);
-    };
     const pageCount = totalElementsItem > 0 ? Math.ceil(totalElementsItem / pageSizeItem) : 1;
 
     if (loading) {

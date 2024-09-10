@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import './BrandNavbar.css'; 
 import {useAuth} from "../AuthProvider";
@@ -6,6 +6,7 @@ import Dropdown from 'react-bootstrap/Dropdown';
 
 const BrandNavbar = () => {
     const navigate = useNavigate();
+    const [dropdownOpen, setDropdownOpen] = useState(false);
     const auth = useAuth();
 
     const handleLogin = () => {
@@ -16,6 +17,14 @@ const BrandNavbar = () => {
         navigate('/register');
     }
 
+    const handleNaviStatistics = () => {
+        navigate('/reports');
+    }
+
+    const toggleDropdown = () => {
+        setDropdownOpen(prevState => !prevState); // Toggle trạng thái mở/đóng dropdown
+    }
+
     return (
         <nav className="navbar">
             <div className="navbar-logo">
@@ -24,18 +33,18 @@ const BrandNavbar = () => {
             </div>
             <ul className="navbar-links">
                 <li>
-                    <NavLink 
-                        exact="true" 
-                        to="/" 
-                        className={({ isActive }) => (isActive ? 'active' : '')}
+                    <NavLink
+                        exact="true"
+                        to="/"
+                        className={({isActive}) => (isActive ? 'active' : '')}
                     >
                         Home
                     </NavLink>
                 </li>
                 <li>
-                    <NavLink 
-                        to="/vouchers" 
-                        className={({ isActive }) => (isActive ? 'active' : '')}
+                    <NavLink
+                        to="/vouchers"
+                        className={({isActive}) => (isActive ? 'active' : '')}
                     >
                         Vouchers
                     </NavLink>

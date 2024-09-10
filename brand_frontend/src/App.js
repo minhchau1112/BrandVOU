@@ -12,11 +12,12 @@ import EventDetail from './components/EventDetail';
 import EventEdit from './components/EventEdit';
 import Login from './components/LoginComponent';
 import Register from './components/RegisterComponent';
-import AuthProvider from  './AuthProvider';
-import PrivateRoute from "./PrivateRoute";
+import BudgetStatistics from './components/BudgetStatistics';
 import ItemList from "./components/ItemList";
 import VoucherStatistics from "./components/VoucherStatistics";
-import QuestionForm from "./components/QuestionForm";
+
+import AuthProvider from  './AuthProvider';
+import PrivateRoute from "./PrivateRoute";
 
 function App() {
     return (
@@ -36,8 +37,8 @@ function App() {
                             <Route path="/events/view-detail/:id" element={<EventDetail />} />
                             <Route path="/events/edit/:id" element={<EventEdit />} />
                             <Route path="/items" element={<ItemList />} />
+                            <Route path="/budget-statistics" element={<BudgetStatistics/>} />
                             <Route path="/voucher-statistics" element={<VoucherStatistics />} />
-                            <Route path="/question-form" element={<QuestionForm />} />
                         </Route>
 
                         <Route path="/login" element={<Login/>} />
