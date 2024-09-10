@@ -13,7 +13,7 @@ const ItemList = ({ brandID }) => {
     const [searchTerm, setSearchTerm] = useState('');
     const [filteredItems, setFilteredItems] = useState([]);
     const [pageNumber, setPageNumber] = useState(0);
-    const [pageSize, setPageSize] = useState(12);
+    const [pageSize, setPageSize] = useState(24);
     const [totalElements, setTotalElements] = useState(0);
     const auth = useAuth();
     brandID = auth.brand.id;
@@ -78,15 +78,13 @@ const ItemList = ({ brandID }) => {
                     <div className="d-flex align-items-center" style={{gap: '12px'}}>
                         <div>Limit</div>
                         <FormControl as="select" value={pageSize} onChange={handleChangeRowsPerPage}>
-                            <option value={12}>12</option>
                             <option value={24}>24</option>
                             <option value={48}>48</option>
+                            <option value={96}>96</option>
                         </FormControl>
                     </div>
                 </div>
-                <Button className="btn btn-primary mt-3" onClick={() => window.location.href = `/add-item`}>
-                    Add item
-                </Button>
+
             </div>
             {loading && <Spinner animation="border" />}
             {error && <div className="error-message">{error}</div>}

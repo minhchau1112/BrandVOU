@@ -4,7 +4,7 @@ const VOUCHER_API_BASE_URL = "http://localhost:1110/api/v1/events/vouchers";
 
 class VoucherService {
     createVoucher(voucher) {
-        const token = JSON.parse(localStorage.getItem('token'));
+        const token = JSON.parse(sessionStorage.getItem('token'));
         const accessToken = token.accessToken;
 
         return axios.post(`${VOUCHER_API_BASE_URL}`, voucher, {
@@ -17,7 +17,7 @@ class VoucherService {
     }
 
     getVoucherByBrandId(brandId, searchTerm, page = 0, size = 10) {
-        const token = JSON.parse(localStorage.getItem('token'));
+        const token = JSON.parse(sessionStorage.getItem('token'));
         const accessToken = token.accessToken;
 
         return axios.get(`${VOUCHER_API_BASE_URL}/brand/${brandId}?pageNumber=${page}&pageSize=${size}&searchTerm=${searchTerm}`, {
@@ -30,7 +30,7 @@ class VoucherService {
     }
 
     getVoucherByVoucherId(voucherId) {
-        const token = JSON.parse(localStorage.getItem('token'));
+        const token = JSON.parse(sessionStorage.getItem('token'));
         const accessToken = token.accessToken;
 
         return axios.get(`${VOUCHER_API_BASE_URL}/${voucherId}`, {
@@ -42,7 +42,7 @@ class VoucherService {
     }
 
     getVoucherByEventId(eventId, searchTerm, page = 0, size = 10) {
-        const token = JSON.parse(localStorage.getItem('token'));
+        const token = JSON.parse(sessionStorage.getItem('token'));
         const accessToken = token.accessToken;
 
         return axios.get(`${VOUCHER_API_BASE_URL}/event/${eventId}?pageNumber=${page}&pageSize=${size}&searchTerm=${searchTerm}`, {
@@ -55,7 +55,7 @@ class VoucherService {
     }
 
     updateVoucher(voucher, voucherId) {
-        const token = JSON.parse(localStorage.getItem('token'));
+        const token = JSON.parse(sessionStorage.getItem('token'));
         const accessToken = token.accessToken;
 
         return axios.put(`${VOUCHER_API_BASE_URL}/${voucherId}`, voucher, {
@@ -68,7 +68,7 @@ class VoucherService {
     }
 
     deleteVoucher(voucherId) {
-        const token = JSON.parse(localStorage.getItem('token'));
+        const token = JSON.parse(sessionStorage.getItem('token'));
         const accessToken = token.accessToken;
 
         return axios.delete(`${VOUCHER_API_BASE_URL}/${voucherId}`, {
@@ -80,7 +80,7 @@ class VoucherService {
     }
 
     getVoucherStatsGeneralByEvent(eventId) {
-        const token = JSON.parse(localStorage.getItem('token'));
+        const token = JSON.parse(sessionStorage.getItem('token'));
         const accessToken = token.accessToken;
 
         return axios.get(`${VOUCHER_API_BASE_URL}/statistics-general/event/${eventId}`, {
@@ -92,7 +92,7 @@ class VoucherService {
     }
 
     getVoucherStatsDetailByEvent(eventId) {
-        const token = JSON.parse(localStorage.getItem('token'));
+        const token = JSON.parse(sessionStorage.getItem('token'));
         const accessToken = token.accessToken;
 
         return axios.get(`${VOUCHER_API_BASE_URL}/statistics-detail/event/${eventId}`, {

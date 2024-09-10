@@ -1,6 +1,7 @@
 import React from 'react';
 import {NavLink, useNavigate} from 'react-router-dom';
-import './EventCard.css';
+import './ItemCard.css';
+import ThreeDText from "./ThreeDText";
 
 const ItemCard = ({ item }) => {
     const navigate = useNavigate();
@@ -9,15 +10,16 @@ const ItemCard = ({ item }) => {
         navigate(`/items/view-detail/${item.id}`);
     };
 
-    const handleNavLinkClick = (event) => {
-        event.stopPropagation();
+    const handleNavLinkClick = (item) => {
+        item.stopPropagation();
     };
 
     return (
-        <div className="event-card" onClick={handleCardClick}>
-            <img src={item.image} alt={item.name} className="event-image" />
+        <div className="item-card" onClick={handleCardClick} style={{width: "100px !important"}}>
+            <div className="d-flex justify-content-around">
+                <ThreeDText text={item.name} size="text-6xl" />
+            </div>
             <div className='d-flex flex-column justify-content-start'>
-                <h3>{item.name}</h3>
                 <p>Event:
                     <NavLink
                         to={`/events/view-detail/${item.event.id}`}

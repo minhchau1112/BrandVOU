@@ -4,6 +4,8 @@ import com.example.eventservice.model.common.mapper.BaseMapper;
 import com.example.eventservice.model.event.dto.request.EventCreateRequest;
 import com.example.eventservice.model.event.entity.BrandEntity;
 import com.example.eventservice.model.event.entity.EventEntity;
+import com.example.eventservice.model.voucher.dto.request.VoucherCreateRequest;
+import com.example.eventservice.model.voucher.entity.VoucherEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
@@ -26,6 +28,15 @@ public interface EventCreateRequestToEventEntityMapper extends BaseMapper<EventC
                 .brand(brand)
                 .build();
     }
+
+    @Named("mapMultipartFileToString")
+    default String mapMultipartFileToString(MultipartFile file) {
+        return file != null ? file.getOriginalFilename() : null;
+    }
+
+    @Override
+    @Mapping(target = "image", source = "image", qualifiedByName = "mapMultipartFileToString")
+    EventEntity map(EventCreateRequest source);
 
     static EventCreateRequestToEventEntityMapper initialize() {
         return Mappers.getMapper(EventCreateRequestToEventEntityMapper.class);

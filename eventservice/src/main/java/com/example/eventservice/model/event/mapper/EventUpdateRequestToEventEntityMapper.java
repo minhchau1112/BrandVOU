@@ -26,6 +26,15 @@ public interface EventUpdateRequestToEventEntityMapper extends BaseMapper<EventU
         eventEntityToBeUpdate.setTargetWord(eventUpdateRequest.getTargetWord());
     }
 
+    @Named("mapMultipartFileToString")
+    default String mapMultipartFileToString(MultipartFile file) {
+        return file != null ? file.getOriginalFilename() : null;
+    }
+
+    @Override
+    @Mapping(target = "image", source = "image", qualifiedByName = "mapMultipartFileToString")
+    EventEntity map(EventUpdateRequest source);
+
     static EventUpdateRequestToEventEntityMapper initialize() {
         return Mappers.getMapper(EventUpdateRequestToEventEntityMapper.class);
     }
