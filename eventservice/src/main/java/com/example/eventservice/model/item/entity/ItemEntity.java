@@ -18,9 +18,6 @@ public class ItemEntity {
 
     private String name;
 
-    private String image;
-
-    private String type;
     @ManyToOne
     @JoinColumn(name = "eventid", nullable = false)
     private EventEntity event;

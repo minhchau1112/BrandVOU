@@ -4,7 +4,7 @@ const EVENT_API_BASE_URL = "http://localhost:1110/api/v1/events";
 
 class EventService {
     createEvent(event) {
-        const token = JSON.parse(localStorage.getItem('token'));
+        const token = JSON.parse(sessionStorage.getItem('token'));
         const accessToken = token.accessToken;
 
         console.log("accessToken", accessToken);
@@ -18,7 +18,7 @@ class EventService {
         });
     }
     getAllEventsByBrandId(brandID) {
-        const token = JSON.parse(localStorage.getItem('token'));
+        const token = JSON.parse(sessionStorage.getItem('token'));
         const accessToken = token.accessToken;
 
         return axios.get(`${EVENT_API_BASE_URL}/brand/all/${brandID}`, {
@@ -29,7 +29,7 @@ class EventService {
         });
     }
     getEventsByBrandId(brandID, searchTerm, pageNumber, pageSize) {
-        const token = JSON.parse(localStorage.getItem('token'));
+        const token = JSON.parse(sessionStorage.getItem('token'));
         const accessToken = token.accessToken;
 
         return axios.get(`${EVENT_API_BASE_URL}/brand/${brandID}?pageNumber=${pageNumber}&pageSize=${pageSize}&searchTerm=${searchTerm}`, {
@@ -42,7 +42,7 @@ class EventService {
     }
 
     getEventByEventId(eventID) {
-        const token = JSON.parse(localStorage.getItem('token'));
+        const token = JSON.parse(sessionStorage.getItem('token'));
         const accessToken = token.accessToken;
 
         return axios.get(`${EVENT_API_BASE_URL}/${eventID}`, {
@@ -53,11 +53,11 @@ class EventService {
         });
     }
 
-    updateEvent(eventID, event) {
-        const token = JSON.parse(localStorage.getItem('token'));
+    updateEvent(eventId, event) {
+        const token = JSON.parse(sessionStorage.getItem('token'));
         const accessToken = token.accessToken;
 
-        return axios.put(`${EVENT_API_BASE_URL}/${eventID}`, event, {
+        return axios.put(`${EVENT_API_BASE_URL}/${eventId}`, event, {
             headers: {
                 'Content-Type': 'multipart/form-data',
                 'Authorization': `Bearer ${accessToken}}`
@@ -66,11 +66,11 @@ class EventService {
         });
     }
 
-    getEventsOfBrandHaveTargetWord(brandID) {
-        const token = JSON.parse(localStorage.getItem('token'));
+    getEventsOfBrandHaveTargetWord(brandId) {
+        const token = JSON.parse(sessionStorage.getItem('token'));
         const accessToken = token.accessToken;
 
-        return axios.get(`${EVENT_API_BASE_URL}/brand/have-target-word/${brandID}`, {
+        return axios.get(`${EVENT_API_BASE_URL}/brand/have-target-word/${brandId}`, {
             headers: {
                 'Authorization': `Bearer ${accessToken}}`
             },

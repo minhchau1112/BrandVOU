@@ -46,5 +46,8 @@ public class EventReadServiceImpl implements EventReadService {
         return eventRepository.findEventsOfBrandHaveTargetWord(brandId);
     }
 
-
+    @Override
+    public Page<Object[]> findEventsWithNotificationStatus(Long playerId, String searchTerm, Pageable pageable) {
+        return eventRepository.findEventsWithNotificationStatus(playerId, searchTerm, pageable);
+    }
 }

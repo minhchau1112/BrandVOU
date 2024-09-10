@@ -3,7 +3,6 @@ import { useParams, useNavigate } from 'react-router-dom';
 import {
     Form,
     Container,
-    Button,
     Spinner,
     Alert,
     Image,
@@ -33,6 +32,11 @@ import EventGamesService from "../services/EventGamesService";
 import GameService from "../services/GameService";
 import ItemCard from "./ItemCard";
 import itemService from "../services/ItemService";
+import quizService from "../services/QuizSerivce";
+import TextField from "@mui/material/TextField";
+import IconButton from "@mui/material/IconButton";
+import DeleteIcon from "@mui/icons-material/Delete";
+import Button from '@mui/material/Button';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -52,6 +56,16 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
         border: 0,
     },
 }));
+
+const columnsQuiz = [
+    { id: 'index', label: '#', minWidth: 50 },
+    { id: 'question', label: 'Question', minWidth: 170 },
+    { id: 'correctAnswer', label: 'Correct Answer', minWidth: 170 },
+    { id: 'wrongAnswer1', label: 'Wrong Answer 1', minWidth: 170 },
+    { id: 'wrongAnswer2', label: 'Wrong Answer 2', minWidth: 170 },
+    { id: 'wrongAnswer3', label: 'Wrong Answer 3', minWidth: 170 },
+    { id: 'actions', label: 'Actions', minWidth: 100 },
+];
 
 function EditEvent() {
     const { id } = useParams();
@@ -82,6 +96,10 @@ function EditEvent() {
     const [pageSizeItem] = useState(12);
     const [totalElementsItem, setTotalElementsItem] = useState(0);
 
+    const [rows, setRows] = useState([{ question: '', correctAnswer: '', wrongAnswer1: '', wrongAnswer2: '', wrongAnswer3: '' }]);
+    const [page, setPage] = useState(0);
+    const [rowsPerPage, setRowsPerPage] = useState(10);
+
     const auth = useAuth();
 
     const fetchVouchers = useCallback(async () => {
@@ -111,7 +129,31 @@ function EditEvent() {
         }
     }, [id, seletedOptions, pageNumberItem, pageSizeItem]);
 
+    const fetchQuiz = useCallback(async () => {
+        try {
+            if (Array.isArray(seletedOptions)) {
+                const allowedGames = seletedOptions.filter(game => game.isItemExchangeAllowed === false);
+                console.log("allowedGames: ", allowedGames);
+
+                if (allowedGames.length > 0) {
+                    console.log("allowedGames: ", allowedGames);
+
+                    const quizs = await quizService.getRowQuizQuestionResponse(id, allowedGames[0].value);
+
+                    console.log("quizs: ", quizs);
+
+                    setRows(quizs.data);
+                }
+            }
+        } catch (error) {
+            setError('Error fetching item.');
+        } finally {
+            setLoading(false);
+        }
+    }, [id, seletedOptions]);
+
     useEffect(() => {
+        setLoading(true);
         const fetchData = async () => {
             try {
                 const [gamesResponse, eventResponse] = await Promise.all([
@@ -126,6 +168,8 @@ function EditEvent() {
                 }));
                 setGames(gameOptions);
 
+                console.log("eventResponse: ", eventResponse.data);
+
                 const eventData = eventResponse.data;
                 setEvent(eventData);
 
@@ -136,8 +180,6 @@ function EditEvent() {
                 setSelectedOptions(selectedGames);
 
                 setPreviewImage(eventData.image);
-
-                setLoading(false);
             } catch (error) {
                 setError('Error fetching data.');
                 setLoading(false);
@@ -145,9 +187,19 @@ function EditEvent() {
         };
 
         fetchData();
+    }, [id]);
+
+    useEffect(() => {
         fetchVouchers();
+    }, [fetchVouchers]);
+
+    useEffect(() => {
         fetchItems();
-    }, [id, fetchVouchers, fetchItems]);
+    }, [fetchItems]);
+
+    useEffect(() => {
+        fetchQuiz();
+    }, [fetchQuiz]);
 
     const handleSearch = () => {
         setPageNumber(0);
@@ -213,6 +265,30 @@ function EditEvent() {
         }
     };
 
+    const handleChangePageQuizQuestion = (event, newPage) => {
+        setPage(newPage);
+    };
+
+    const handleChangeRowsPerPageQuizQuestion = (event) => {
+        setRowsPerPage(+event.target.value);
+        setPage(0);
+    };
+
+    const handleInputChangeQuizQuestion = (index, field, value) => {
+        const newRows = [...rows];
+        newRows[index][field] = value;
+        setRows(newRows);
+    };
+
+    const handleAddRowQuizQuestion = () => {
+        setRows([...rows, { question: '', correctAnswer: '', wrongAnswer1: '', wrongAnswer2: '', wrongAnswer3: '' }]);
+    };
+
+    const handleDeleteRowQuizQuestion = (rowIndex) => {
+        const newRows = rows.filter((_, index) => index !== rowIndex);
+        setRows(newRows);
+    };
+
     async function createFileFromUrl(imageUrl) {
         try {
             const response = await fetch(imageUrl);
@@ -231,6 +307,7 @@ function EditEvent() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+
         try {
             const formData = new FormData();
             formData.append('brandId', auth.brand.id);
@@ -246,11 +323,19 @@ function EditEvent() {
             formData.append('voucherCount', event.voucherCount);
             formData.append('startTime', event.startTime);
             formData.append('endTime', event.endTime);
-            formData.append('games', event.games);
+
+            const games = seletedOptions.map(option => option.value).join(';');
+            console.log("game: " + games);
+
+            formData.append('games', games);
 
             if (seletedOptions.some(game => game.isItemExchangeAllowed === true)) {
                 formData.append('targetWord', event.targetWord);
             }
+
+            formData.append('questions', JSON.stringify(rows));
+
+            console.log("formData: ", formData.get("questions"));
 
             await EventService.updateEvent(id, formData);
             navigate(`/events/view-detail/${id}`);
@@ -299,9 +384,9 @@ function EditEvent() {
     return (
         <Container className="mt-5">
             <h2 className="text-center">Edit Event</h2>
-            <Row className="mt-5">
+            <Form onSubmit={handleSubmit}>
+                <Row className="mt-5">
                 <Col md={6}>
-                    <Form onSubmit={handleSubmit}>
                         <Form.Group controlId="formEventName">
                             <Form.Label>Event Name</Form.Label>
                             <Form.Control
@@ -376,21 +461,10 @@ function EditEvent() {
                                 />
                             </Form.Group>
                         )}
-
-                        <div className="d-flex justify-content-start mt-4" style={{gap: '12px'}}>
-                            <Button variant="secondary" onClick={handleBack}>
-                                <i className="bi bi-arrow-left mr-2"></i> Back
-                            </Button>
-
-                            <Button variant="primary" type="submit">
-                                Save Changes
-                            </Button>
-                        </div>
-                    </Form>
                 </Col>
                 <Col md={6}>
                     <div
-                        style={{ width: '100%', height: '320px', backgroundColor: '#F0F0F0', cursor: 'pointer', position: 'relative', overflow: 'hidden' }}
+                        style={{ width: '100%', height: '312px', backgroundColor: '#F0F0F0', cursor: 'pointer', position: 'relative', overflow: 'hidden' }}
                         className="image-container mb-3"
                         onClick={() => document.querySelector('input[name="image"]').click()}
                     >
@@ -409,7 +483,7 @@ function EditEvent() {
                             <div className="overlay-text">Add Image +</div>
                         </div>
                     </div>
-                    <Form.Group controlId="formFile" className="d-none">
+                    <Form.Group controlId="formFile">
                         <Form.Control
                             type="file"
                             name="image"
@@ -420,7 +494,7 @@ function EditEvent() {
                 </Col>
             </Row>
 
-            <InputGroup className="search-bar mt-5">
+                <InputGroup className="search-bar mt-5">
                 <FormControl
                     placeholder="Search voucher by code ..."
                     value={searchTerm}
@@ -432,9 +506,9 @@ function EditEvent() {
                 </Button>
             </InputGroup>
 
-            <h3 className="text-center mt-3">Vouchers</h3>
-            {vouchers && vouchers.length > 0 ? (
-                <TableContainer component={Paper}>
+                <h3 className="text-center mt-3">Vouchers</h3>
+                {vouchers && vouchers.length > 0 ? (
+                    <TableContainer component={Paper}>
                 <Table>
                     <TableHead>
                         <TableRow>
@@ -512,11 +586,11 @@ function EditEvent() {
                     onRowsPerPageChange={handleChangeRowsPerPage}
                 />
             </TableContainer>
-            ): (
-                !loading && <Alert variant="info">No vouchers found for this event.</Alert>
-            )}
+                ): (
+                    !loading && <Alert variant="info">No vouchers found for this event.</Alert>
+                )}
 
-            <Modal show={showDeleteModal} onHide={() => setShowDeleteModal(false)}>
+                <Modal show={showDeleteModal} onHide={() => setShowDeleteModal(false)}>
                 <Modal.Header closeButton>
                     <Modal.Title>Confirm Delete</Modal.Title>
                 </Modal.Header>
@@ -531,37 +605,109 @@ function EditEvent() {
                 </Modal.Footer>
             </Modal>
 
-            {Array.isArray(seletedOptions) && seletedOptions.some(game => game.isItemExchangeAllowed === true) ? (
-                <div>
-                    <h2 className="text-center">Items List</h2>
-                    <div className="event-list">
-                        {items.length > 0 ? (
-                            items.map(item => (
-                                <ItemCard key={item.id} item={item} />
-                            ))
-                        ) : (
-                            <div>
-                                !loading && <Alert variant="info" className="mt-5">No items found for this event.</Alert>
-                            </div>
-                        )}
+                {Array.isArray(seletedOptions) && seletedOptions.some(game => game.isItemExchangeAllowed === true) ? (
+                    <div>
+                        <h2 className="text-center">Items List</h2>
+                        <div className="event-list">
+                            {items.length > 0 ? (
+                                items.map(item => (
+                                    <ItemCard key={item.id} item={item} />
+                                ))
+                            ) : (
+                                <div>
+                                    <Alert variant="info" className="mt-5">No items found for this event.</Alert>
+                                </div>
+                            )}
+                        </div>
+                        <div className="pagination mt-4">
+                            <Pagination>
+                                <Pagination.Prev onClick={() => handleChangePageItem(pageNumber > 0 ? pageNumber - 1 : 0)} />
+                                {[...Array(pageCount).keys()].map(number => (
+                                    <Pagination.Item
+                                        key={number}
+                                        active={number === pageNumberItem}
+                                        onClick={() => handleChangePageItem(number)}
+                                    >
+                                        {number + 1}
+                                    </Pagination.Item>
+                                ))}
+                                <Pagination.Next onClick={() => handleChangePageItem(pageNumberItem < pageCount - 1 ? pageNumber + 1 : pageCount - 1)} />
+                            </Pagination>
+                        </div>
                     </div>
-                    <div className="pagination mt-4">
-                        <Pagination>
-                            <Pagination.Prev onClick={() => handleChangePageItem(pageNumber > 0 ? pageNumber - 1 : 0)} />
-                            {[...Array(pageCount).keys()].map(number => (
-                                <Pagination.Item
-                                    key={number}
-                                    active={number === pageNumberItem}
-                                    onClick={() => handleChangePageItem(number)}
-                                >
-                                    {number + 1}
-                                </Pagination.Item>
-                            ))}
-                            <Pagination.Next onClick={() => handleChangePageItem(pageNumberItem < pageCount - 1 ? pageNumber + 1 : pageCount - 1)} />
-                        </Pagination>
-                    </div>
+                ) : (<div></div>)}
+
+                {Array.isArray(seletedOptions) && seletedOptions.some(game => game.isItemExchangeAllowed === false) ? (
+                    <Paper className="mt-4" sx={{ width: '100%', overflow: 'hidden', padding: 2 }}>
+                        <h3>List Question for Quiz Game</h3>
+                        <TableContainer sx={{ maxHeight: 440 }}>
+                            <Table stickyHeader aria-label="sticky table">
+                                <TableHead>
+                                    <TableRow>
+                                        {columnsQuiz.map((column) => (
+                                            <TableCell
+                                                key={column.id}
+                                                style={{ minWidth: column.minWidth }}
+                                            >
+                                                {column.label}
+                                            </TableCell>
+                                        ))}
+                                    </TableRow>
+                                </TableHead>
+                                <TableBody>
+                                    {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row, rowIndex) => (
+                                        <TableRow hover role="checkbox" tabIndex={-1} key={rowIndex}>
+                                            {/* Serial number column */}
+                                            <TableCell>{rowIndex + 1 + page * rowsPerPage}</TableCell>
+                                            {columnsQuiz.slice(1, -1).map((column) => (
+                                                <TableCell key={column.id}>
+                                                    <TextField
+                                                        fullWidth
+                                                        variant="outlined"
+                                                        value={row[column.id]}
+                                                        onChange={(e) => handleInputChangeQuizQuestion(rowIndex, column.id, e.target.value)}
+                                                    />
+                                                </TableCell>
+                                            ))}
+                                            {/* Actions column for delete button */}
+                                            <TableCell>
+                                                <IconButton
+                                                    style={{ color: 'red' }}
+                                                    onClick={() => handleDeleteRowQuizQuestion(rowIndex)}
+                                                >
+                                                    <DeleteIcon />
+                                                </IconButton>
+                                            </TableCell>
+                                        </TableRow>
+                                    ))}
+                                </TableBody>
+                            </Table>
+                        </TableContainer>
+                        <TablePagination
+                            rowsPerPageOptions={[10, 25, 100]}
+                            component="div"
+                            count={rows.length}
+                            rowsPerPage={rowsPerPage}
+                            page={page}
+                            onPageChange={handleChangePageQuizQuestion}
+                            onRowsPerPageChange={handleChangeRowsPerPageQuizQuestion}
+                        />
+                        <Button variant="contained" color="secondary" onClick={handleAddRowQuizQuestion} sx={{ marginTop: 2 }}>
+                            Add Row +
+                        </Button>
+                    </Paper>
+                ) : (<div></div>)}
+
+                <div className="d-flex justify-content-start mt-4 mb-5" style={{gap: '12px'}}>
+                    <Button variant="contained" color="inherit" onClick={handleBack}>
+                        <i className="bi bi-arrow-left mr-2"></i> Back
+                    </Button>
+
+                    <Button variant="contained" color="primary" type="submit">
+                        Save Changes
+                    </Button>
                 </div>
-            ) : (<div></div>)}
+            </Form>
         </Container>
     );
 }

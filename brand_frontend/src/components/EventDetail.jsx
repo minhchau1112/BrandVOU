@@ -6,7 +6,6 @@ import {
     Spinner,
     Form,
     Image,
-    Button,
     Col,
     Row,
     FormControl,
@@ -31,6 +30,9 @@ import GameService from "../services/GameService";
 import Select from "react-select";
 import ItemCard from "./ItemCard";
 import itemService from "../services/ItemService";
+import TextField from "@mui/material/TextField";
+import quizService from "../services/QuizSerivce";
+import Button from '@mui/material/Button';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -51,6 +53,15 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
     },
 }));
 
+const columns = [
+    { id: 'index', label: '#', minWidth: 50 },
+    { id: 'question', label: 'Question', minWidth: 190 },
+    { id: 'correctAnswer', label: 'Correct Answer', minWidth: 190 },
+    { id: 'wrongAnswer1', label: 'Wrong Answer 1', minWidth: 190 },
+    { id: 'wrongAnswer2', label: 'Wrong Answer 2', minWidth: 190 },
+    { id: 'wrongAnswer3', label: 'Wrong Answer 3', minWidth: 190 },
+];
+
 function EventDetail() {
     const { id } = useParams();
     const navigate = useNavigate();
@@ -68,6 +79,10 @@ function EventDetail() {
     const [pageNumberItem, setPageNumberItem] = useState(0);
     const [pageSizeItem] = useState(12);
     const [totalElementsItem, setTotalElementsItem] = useState(0);
+
+    const [rows, setRows] = useState([{ question: '', correctAnswer: '', wrongAnswer1: '', wrongAnswer2: '', wrongAnswer3: '' }]);
+    const [page, setPage] = useState(0);
+    const [rowsPerPage, setRowsPerPage] = useState(10);
 
     const fetchVouchers = useCallback(async () => {
         try {
@@ -95,8 +110,32 @@ function EventDetail() {
         }
     }, [id, seletedOptions, pageNumberItem, pageSizeItem]);
 
+    const fetchQuiz = useCallback(async () => {
+        try {
+            if (Array.isArray(seletedOptions)) {
+                const allowedGames = seletedOptions.filter(game => game.isItemExchangeAllowed === false);
+                console.log("allowedGames: ", allowedGames);
+
+                if (allowedGames.length > 0) {
+                    console.log("allowedGames: ", allowedGames);
+
+                    const quizs = await quizService.getRowQuizQuestionResponse(id, allowedGames[0].value);
+
+                    console.log("quizs: ", quizs);
+
+                    setRows(quizs.data);
+                }
+            }
+        } catch (error) {
+            setError('Error fetching item.');
+        } finally {
+            setLoading(false);
+        }
+    }, [id, seletedOptions]);
+
     useEffect(() => {
         const fetchData = async () => {
+            setLoading(true);
             try {
                 const [gamesResponse, eventResponse] = await Promise.all([
                     GameService.getAllGames(),
@@ -118,18 +157,27 @@ function EventDetail() {
 
                 const selectedGames = gameOptions.filter(game => gameNames.includes(game.label));
                 setSelectedOptions(selectedGames);
-
                 setLoading(false);
             } catch (error) {
                 setError('Error fetching data.');
+            } finally {
                 setLoading(false);
             }
         };
-
         fetchData();
+    }, [id]);
+
+    useEffect(() => {
         fetchVouchers();
+    }, [fetchVouchers]);
+
+    useEffect(() => {
         fetchItems();
-    }, [id, fetchVouchers, fetchItems]);
+    }, [fetchItems]);
+
+    useEffect(() => {
+        fetchQuiz();
+    }, [fetchQuiz]);
 
     const handleSearch = () => {
         setPageNumber(0);
@@ -165,6 +213,21 @@ function EventDetail() {
 
     const handleBack = () => {
         navigate(-1);
+    };
+
+    const handleChangePageQuizQuestion = (event, newPage) => {
+        setPage(newPage);
+    };
+
+    const handleChangeRowsPerPageQuizQuestion = (event) => {
+        setRowsPerPage(+event.target.value);
+        setPage(0);
+    };
+
+    const handleInputChangeQuizQuestion = (index, field, value) => {
+        const newRows = [...rows];
+        newRows[index][field] = value;
+        setRows(newRows);
     };
 
     const pageCount = totalElementsItem > 0 ? Math.ceil(totalElementsItem / pageSizeItem) : 1;
@@ -243,16 +306,6 @@ function EventDetail() {
                                 />
                             </Form.Group>
                         )}
-
-                        <div className="d-flex justify-content-start mt-4" style={{gap: '12px'}}>
-                            <Button variant="secondary" onClick={handleBack}>
-                                <i className="bi bi-arrow-left mr-2"></i> Back
-                            </Button>
-
-                            <Button variant="primary" onClick={handleEdit}>
-                                <i className="bi bi-pencil mr-2"></i> Edit
-                            </Button>
-                        </div>
                     </Form>
                 </Col>
                 <Col md={6}>
@@ -365,7 +418,7 @@ function EventDetail() {
                             ))
                         ) : (
                             <div>
-                                !loading && <Alert variant="info" className="mt-5">No items found for this event.</Alert>
+                                <Alert variant="info" className="mt-5">No items found for this event.</Alert>
                             </div>
                         )}
                     </div>
@@ -387,6 +440,65 @@ function EventDetail() {
                 </div>
             ) : (<div></div>)}
 
+            {Array.isArray(seletedOptions) && seletedOptions.some(game => game.isItemExchangeAllowed === false) ? (
+                <Paper className="mt-4" sx={{ width: '100%', overflow: 'hidden', padding: 2 }}>
+                    <h3>List Question for Quiz Game</h3>
+                    <TableContainer sx={{ maxHeight: 440 }}>
+                        <Table stickyHeader aria-label="sticky table">
+                            <TableHead>
+                                <TableRow>
+                                    {columns.map((column) => (
+                                        <TableCell
+                                            key={column.id}
+                                            style={{ minWidth: column.minWidth }}
+                                        >
+                                            {column.label}
+                                        </TableCell>
+                                    ))}
+                                </TableRow>
+                            </TableHead>
+                            <TableBody>
+                                {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row, rowIndex) => (
+                                    <TableRow hover role="checkbox" tabIndex={-1} key={rowIndex}>
+                                        {/* Serial number column */}
+                                        <TableCell>{rowIndex + 1 + page * rowsPerPage}</TableCell>
+                                        {columns.slice(1, 6).map((column) => (
+                                            <TableCell key={column.id}>
+                                                <TextField
+                                                    fullWidth
+                                                    variant="outlined"
+                                                    value={row[column.id]}
+                                                    onChange={(e) => handleInputChangeQuizQuestion(rowIndex, column.id, e.target.value)}
+                                                />
+                                            </TableCell>
+                                        ))}
+                                    </TableRow>
+                                ))}
+                            </TableBody>
+
+                        </Table>
+                    </TableContainer>
+                    <TablePagination
+                        rowsPerPageOptions={[10, 25, 100]}
+                        component="div"
+                        count={rows.length}
+                        rowsPerPage={rowsPerPage}
+                        page={page}
+                        onPageChange={handleChangePageQuizQuestion}
+                        onRowsPerPageChange={handleChangeRowsPerPageQuizQuestion}
+                    />
+                </Paper>
+            ) : (<div></div>)}
+
+            <div className="d-flex justify-content-start mt-4 mb-5" style={{gap: '12px'}}>
+                <Button variant="contained" color="inherit" onClick={handleBack}>
+                    <i className="bi bi-arrow-left mr-2"></i> Back
+                </Button>
+
+                <Button variant="contained" color="primary" onClick={handleEdit}>
+                    <i className="bi bi-pencil mr-2"></i> Edit
+                </Button>
+            </div>
         </Container>
     );
 }

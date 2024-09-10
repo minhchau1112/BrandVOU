@@ -14,10 +14,8 @@ import Login from './components/LoginComponent';
 import Register from './components/RegisterComponent';
 import BudgetStatistics from './components/BudgetStatistics';
 import ItemList from "./components/ItemList";
-import ItemDetail from "./components/ItemDetail";
-import ItemEdit from "./components/ItemEdit";
-import AddItemComponent from "./components/AddItemComponent";
 import VoucherStatistics from "./components/VoucherStatistics";
+
 import AuthProvider from  './AuthProvider';
 import PrivateRoute from "./PrivateRoute";
 
@@ -39,9 +37,6 @@ function App() {
                             <Route path="/events/view-detail/:id" element={<EventDetail />} />
                             <Route path="/events/edit/:id" element={<EventEdit />} />
                             <Route path="/items" element={<ItemList />} />
-                            <Route path="/add-item" element={<AddItemComponent />} />
-                            <Route path="/items/view-detail/:id" element={<ItemDetail />} />
-                            <Route path="/items/edit/:id" element={<ItemEdit />} />
                             <Route path="/budget-statistics" element={<BudgetStatistics/>} />
                             <Route path="/voucher-statistics" element={<VoucherStatistics />} />
                         </Route>

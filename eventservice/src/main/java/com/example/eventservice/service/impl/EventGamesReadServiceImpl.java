@@ -1,5 +1,6 @@
 package com.example.eventservice.service.impl;
 
+import com.example.eventservice.model.event.entity.EventGamesEntity;
 import com.example.eventservice.repository.EventGamesRepository;
 import com.example.eventservice.service.EventGamesReadService;
 import lombok.RequiredArgsConstructor;
@@ -17,4 +18,10 @@ public class EventGamesReadServiceImpl implements EventGamesReadService {
         String gamesName = String.join(";", gamesNameList);
         return gamesName;
     }
+
+    @Override
+    public List<EventGamesEntity> findEventGamesEntityByEventIdAndType(Long eventId, String type) {
+        return eventGamesRepository.findEventGamesEntityByEventIdAndType(eventId, type);
+    }
+
 }

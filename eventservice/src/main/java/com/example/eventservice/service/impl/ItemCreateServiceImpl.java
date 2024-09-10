@@ -35,18 +35,7 @@ public class ItemCreateServiceImpl implements ItemCreateService {
         if (isContinue) {
             Optional<EventEntity> event = eventRepository.findById(itemCreateRequest.getEventId());
 
-            String imageUrl = null;
-            MultipartFile image = itemCreateRequest.getImage();
-            if (image != null && !image.isEmpty()) {
-                try {
-                    Map<String, Object> uploadResult = cloudinary.uploader().upload(image.getBytes(), ObjectUtils.emptyMap());
-                    imageUrl = (String) uploadResult.get("secure_url");
-                } catch (IOException e) {
-//                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
-                }
-            }
-
-            final ItemEntity itemEntity = itemCreateRequestToItemEntityMapper.mapForSaving(itemCreateRequest, imageUrl);
+            final ItemEntity itemEntity = itemCreateRequestToItemEntityMapper.mapForSaving(itemCreateRequest);
             itemEntity.setEvent(event.get());
 
             ItemEntity savedItemEntity = itemRepository.save(itemEntity);

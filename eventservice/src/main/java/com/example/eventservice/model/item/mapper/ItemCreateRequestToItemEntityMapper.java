@@ -10,12 +10,10 @@ import org.mapstruct.factory.Mappers;
 @Mapper
 public interface ItemCreateRequestToItemEntityMapper extends BaseMapper<ItemCreateRequest, ItemEntity> {
     @Named("mapForSaving")
-    default ItemEntity mapForSaving(final ItemCreateRequest itemCreateRequest, String imageUrl) {
+    default ItemEntity mapForSaving(final ItemCreateRequest itemCreateRequest) {
 
         return ItemEntity.builder()
                 .name(itemCreateRequest.getName())
-                .type(itemCreateRequest.getType())
-                .image(imageUrl)
                 .build();
     }
 

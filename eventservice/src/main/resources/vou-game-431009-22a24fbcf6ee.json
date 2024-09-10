@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "vou-game-431009",
+  "private_key_id": "22a24fbcf6ee9df1dbac07230a33918acd47f6d3",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvwIBADANBgkqhkiG9w0BAQEFAASCBKkwggSlAgEAAoIBAQDrMYbDdElxi+1N\nX5rM9aBRGXWyrNayjldtel+wx8IUz7EW/66LVopNiXZaOvlGpyvNaK81OHoLhKKW\n3bnFdGA0ppNmsmUxIFRGgVKSNd0Xiznc0GGnM8a3nMfiSHQuPJ2EwNOz1QxGeBdr\nkuFnHin4qc8+EiRI1RAiLnwQ3PJ0lPtZsCTTUDLrAAt2Dn0KqHGT7O3VsYgorayK\nkYinXRWzCK65SrSEeysd2lwnzuGbmuElwle9wZjwX1ecWEuKN6JRc1KRRvOr/Ogc\nDScbSCrrnWVoI/F55MMg2GAbJmHDMcX6BAkI4iutzst4/+KBw4PbxLsFsgzy9HpR\n5oj4DFHrAgMBAAECggEADtuXrSWUfsCLNRFlPEAHjWW8xwKxEX0wO99Kx/iddgJA\nTQIS2Jbf+hrXbH3SHUrx/Cj6II+UYHh4a0e9In4LKLF5PhN5Anmf8Cu7AO5udeC6\nvufs1+9d11/ncCJAemK2MnYIBSQpXMm5GQnqzfdKSX0PmiAXjm5RmivEvdJC2/mT\nkAINdoxL96T0sxecZhweRiub7t/jYnVOTwmJ7at2LS5tMOCGv8DpxymIzSL/5V0Q\nlXlqvltGqkGBrkoaGrzLdzXYDfY0q2smK/x4GFo1N/8NinsTwvEjH8KFmuTeZLdW\noFg7SMcwpWMEp9CfpwQFtR05uGHjtmbKnDfnWhp4CQKBgQD35Hj09JjFgzcrwKxo\niy2q8QUxctmjHe0GZS3cLbLxjPYML70Nxog1FdbuWRiO+jbwobWZ//X77AIUhZsF\n0RO74gPOTNchirusiQB8uP4UIK9SMSlECG3GulFniHLPcNT2QFOUbyiMx+N/6Zaz\nbZEIzgYtOQqO36VtiF3oJq68PwKBgQDy4rqiQGSk+tRqXO7airOKvLAva3MCqBOO\nSJdHydRx5UlwzefhgH+eCZND18CRRZ0zYKwL4vcJcLi1hSb7xXOMBD27qiMSoL/Q\nVDIa7qIK/xC/h5t7oXHyY8sJO8vB2nCIaBhpcX682gzXeTaH67dekQMuib94HxQ6\nUFfnQ3fvVQKBgQDydvCwd8Yt+qguDWkVYHyspM51jWa+m3jJNpHiuHg8t6m6Rb9f\nB/8WHWR7AX556tduCl28YZXScQef1wbIa7YnoWwjjxklX7MtkVt+otsyCL4zYI6C\nUtQ8+uTApb/WkwBaVJTrrMY23RTyeiHDIronqIx2E0L2eF4wgp+HgL6MtQKBgQCL\nsnhh5eN9OH+ABZ+jtu75Nvmm7Igj2QQWbA4GzkEQmS4aYXOjMcM05JD9DlTFuWJn\nMI0D8TDhDyJN1R3M5Y5F1BKlo3+0sRxh+GsxLlupM3cwkhCNlRfysA8RaoERKFBd\nRHH2A78/Y7LLI/6HQr4e+Az6cWPc9RMvTxKgAyAyWQKBgQCL4aVXgeZTKy7dfW+y\nZfXTVNArqfliIqHojcYEQwQLZ1RGgDOcXn/Akzlfz39F3bcoiw99YefMWAcbC4sM\ny8NeauRl6Zju/qMKjx/c/fn/F7PlNXcyoFumY1Pf53lJftBCu66GPXn1/MePDdMY\nn2pTvh6DFHGQJW9No02TWiDwwQ==\n-----END PRIVATE KEY-----\n",
+  "client_email": "vou-923@vou-game-431009.iam.gserviceaccount.com",
+  "client_id": "105768038159335578907",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/vou-923%40vou-game-431009.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}
