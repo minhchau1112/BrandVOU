@@ -3,7 +3,7 @@ import axios from 'axios';
 const API_URL = "http://localhost:1110/api/v1";
 
 export const getStatistics = (brandID) => {
-    const token = JSON.parse(localStorage.getItem('token'));
+    const token = JSON.parse(sessionStorage.getItem('token'));
     const accessToken = token.accessToken; // Lấy token từ localStorage
     return axios.get(`${API_URL}/budget-statistics`, {
         params: { brandID },

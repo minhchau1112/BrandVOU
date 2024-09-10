@@ -41,6 +41,15 @@ public class GatewayConfig {
                         .filters(f -> f.filter(jwtAuthFilter.apply(new JwtAuthenticationFilter.Config()
                                 .setPublicEndpoints(PUBLIC_ENDPOINTS))))
                         .uri("lb://reportservice"))
+                .route("AdminVOU", r -> r.path("/api/admin/users/**")
+                        .filters(f -> f.filter(jwtAuthFilter.apply(new JwtAuthenticationFilter.Config()
+                                .setPublicEndpoints(PUBLIC_ENDPOINTS))))
+                        .uri("lb://AdminVOU"))
+                .route("admingameservice", r -> r.path("/api/admin/games/**")
+                        .filters(f -> f.filter(jwtAuthFilter.apply(new JwtAuthenticationFilter.Config()
+                                .setPublicEndpoints(PUBLIC_ENDPOINTS))))
+                        .uri("lb://admingameservice"))
                 .build();
+
     }
 }
