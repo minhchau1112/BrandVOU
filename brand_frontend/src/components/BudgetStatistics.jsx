@@ -11,7 +11,7 @@ const BudgetStatistics = () => {
     const [participantData, setParticipantData] = useState([]);
 
     useEffect(() => {
-        const brand = JSON.parse(localStorage.getItem('brand'));
+        const brand = JSON.parse(sessionStorage.getItem('brand'));
         const brandID = brand?.id;
 
         if (brandID) {

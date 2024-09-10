@@ -5,12 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6bb27ad0-fb00-4a05-8d33-0c9167e99d74" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/brand_frontend/src/services/StatisticsService.js" beforeDir="false" afterPath="$PROJECT_DIR$/brand_frontend/src/services/StatisticsService.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/accountservice/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/accountservice/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/brand_frontend/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/brand_frontend/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/brand_frontend/src/components/AddEventComponent.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/brand_frontend/src/components/AddEventComponent.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/brand_frontend/src/components/BudgetStatistics.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/brand_frontend/src/components/BudgetStatistics.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/reportservice/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/reportservice/src/main/resources/application.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -75,6 +75,8 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "JUnit.BrandBackendApplicationTests.executor": "Run",
+    "Notification.DisplayName-DoNotAsk-Database detector": "Database detector",
+    "Notification.DoNotAsk-Database detector": "true",
     "RequestMappingsPanelOrder0": "0",
     "RequestMappingsPanelOrder1": "1",
     "RequestMappingsPanelWidth0": "75",
@@ -255,7 +257,8 @@
       <workItem from="1725973889624" duration="39000" />
       <workItem from="1725976934130" duration="731000" />
       <workItem from="1725977685283" duration="318000" />
-      <workItem from="1725978151712" duration="342000" />
+      <workItem from="1725978151712" duration="713000" />
+      <workItem from="1725978890734" duration="1822000" />
     </task>
     <servers />
   </component>
