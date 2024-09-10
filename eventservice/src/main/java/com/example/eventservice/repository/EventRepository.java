@@ -22,4 +22,14 @@ public interface EventRepository extends JpaRepository<EventEntity, Long> {
 
     @Query("SELECT e FROM EventEntity e WHERE e.brand.id = :brandId AND e.targetWord IS NOT NULL AND e.targetWord <> ''")
     List<EventEntity> findEventsOfBrandHaveTargetWord(Long brandId);
+
+    @Query("SELECT e, " +
+            "CASE WHEN n.id IS NOT NULL THEN true ELSE false END AS notificationSent " +
+            "FROM EventEntity e " +
+            "LEFT JOIN NotificationEntity n ON e.id = n.event.id AND n.player.id = :playerId " +
+            "WHERE e.startTime >= CURRENT_TIMESTAMP " +
+            "OR (e.startTime <= CURRENT_TIMESTAMP AND e.endTime >= CURRENT_TIMESTAMP)" +
+            "AND LOWER(e.name) LIKE LOWER(CONCAT('%', :searchTerm, '%'))" +
+            "ORDER BY e.startTime ASC, e.name ASC")
+    Page<Object[]> findEventsWithNotificationStatus(@Param("playerId") Long playerId, @Param("searchTerm") String searchTerm, Pageable pageable);
 }

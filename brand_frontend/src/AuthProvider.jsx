@@ -6,8 +6,8 @@ import { HttpStatusCode } from "axios";
 const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
-    const storedBrand = JSON.parse(localStorage.getItem("brand")) || { id: "", name: "" };
-    const storedToken = JSON.parse(localStorage.getItem("token")) || { accessToken: "", refreshToken: "", accessTokenExpiresAt: "" };
+    const storedBrand = JSON.parse(sessionStorage.getItem("brand")) || { id: "", name: "" };
+    const storedToken = JSON.parse(sessionStorage.getItem("token")) || { accessToken: "", refreshToken: "", accessTokenExpiresAt: "" };
     const [brand, setBrand] = useState(storedBrand);
     const [token, setToken] = useState(storedToken);
     const navigate = useNavigate();
@@ -19,8 +19,8 @@ const AuthProvider = ({ children }) => {
             if (res.status === HttpStatusCode.Ok) {
                 setBrand({ id: "", name: "" });
                 setToken({ accessToken: "", refreshToken: "", accessTokenExpiresAt: "" });
-                localStorage.removeItem("brand");
-                localStorage.removeItem("token");
+                sessionStorage.removeItem("brand");
+                sessionStorage.removeItem("token");
                 navigate("/login");
             }
         } catch (error) {
@@ -35,7 +35,7 @@ const AuthProvider = ({ children }) => {
                 const { accessToken, accessTokenExpiresAt, refreshToken } = res.data;
                 const newToken = { accessToken, accessTokenExpiresAt, refreshToken };
                 setToken(newToken);
-                localStorage.setItem('token', JSON.stringify(newToken));
+                sessionStorage.setItem('token', JSON.stringify(newToken));
             } else {
                 logOut(token); // If refresh fails, log the user out
             }
@@ -66,8 +66,8 @@ const AuthProvider = ({ children }) => {
                 const newToken = { accessToken, refreshToken, accessTokenExpiresAt };
                 setBrand(newBrand);
                 setToken(newToken);
-                localStorage.setItem('brand', JSON.stringify(newBrand));
-                localStorage.setItem('token', JSON.stringify(newToken));
+                sessionStorage.setItem('brand', JSON.stringify(newBrand));
+                sessionStorage.setItem('token', JSON.stringify(newToken));
                 navigate('/');
             }
         } catch (error) {

@@ -4,7 +4,7 @@ const ITEM_API_BASE_URL = "http://localhost:1110/api/v1/events/items";
 
 class ItemService {
     createItem(item) {
-        const token = JSON.parse(localStorage.getItem('token'));
+        const token = JSON.parse(sessionStorage.getItem('token'));
         const accessToken = token.accessToken;
 
         return axios.post(`${ITEM_API_BASE_URL}`, item,{
@@ -15,7 +15,7 @@ class ItemService {
         });
     }
     getItemsByBrandId(brandId, searchTerm, page = 0, size = 10) {
-        const token = JSON.parse(localStorage.getItem('token'));
+        const token = JSON.parse(sessionStorage.getItem('token'));
         const accessToken = token.accessToken;
 
         return axios.get(`${ITEM_API_BASE_URL}/brand/${brandId}?pageNumber=${page}&pageSize=${size}&searchTerm=${searchTerm}`, {
@@ -27,7 +27,7 @@ class ItemService {
     }
 
     updateItem(itemId, item) {
-        const token = JSON.parse(localStorage.getItem('token'));
+        const token = JSON.parse(sessionStorage.getItem('token'));
         const accessToken = token.accessToken;
 
         return axios.put(`${ITEM_API_BASE_URL}/${itemId}`, item,{
@@ -40,7 +40,7 @@ class ItemService {
     }
 
     getItemByItemId(itemId) {
-        const token = JSON.parse(localStorage.getItem('token'));
+        const token = JSON.parse(sessionStorage.getItem('token'));
         const accessToken = token.accessToken;
 
         return axios.get(`${ITEM_API_BASE_URL}/${itemId}`,{
@@ -52,7 +52,7 @@ class ItemService {
     }
 
     getItemsByEventId(eventId, page = 0, size = 10) {
-        const token = JSON.parse(localStorage.getItem('token'));
+        const token = JSON.parse(sessionStorage.getItem('token'));
         const accessToken = token.accessToken;
 
         return axios.get(`${ITEM_API_BASE_URL}/event/${eventId}?pageNumber=${page}&pageSize=${size}`, {
@@ -64,7 +64,7 @@ class ItemService {
     }
 
     deleteItem(itemId) {
-        const token = JSON.parse(localStorage.getItem('token'));
+        const token = JSON.parse(sessionStorage.getItem('token'));
         const accessToken = token.accessToken;
 
         return axios.delete(`${ITEM_API_BASE_URL}/${itemId}`, {

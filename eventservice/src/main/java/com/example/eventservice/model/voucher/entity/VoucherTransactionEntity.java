@@ -1,6 +1,6 @@
 package com.example.eventservice.model.voucher.entity;
 
-import com.example.eventservice.model.event.entity.AccountEntity;
+import com.example.eventservice.model.event.entity.UserEntity;
 import jakarta.persistence.*;
 import lombok.*;
 

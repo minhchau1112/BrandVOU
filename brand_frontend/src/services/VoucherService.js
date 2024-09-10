@@ -4,7 +4,7 @@ const VOUCHER_API_BASE_URL = "http://localhost:1110/api/v1/events/vouchers";
 
 class VoucherService {
     createVoucher(voucher) {
-        const token = JSON.parse(localStorage.getItem('token'));
+        const token = JSON.parse(sessionStorage.getItem('token'));
         const accessToken = token.accessToken;
 
         return axios.post(`${VOUCHER_API_BASE_URL}`, voucher, {
@@ -16,11 +16,11 @@ class VoucherService {
         });
     }
 
-    getVoucherByBrandId(brandID, searchTerm, page = 0, size = 10) {
-        const token = JSON.parse(localStorage.getItem('token'));
+    getVoucherByBrandId(brandId, searchTerm, page = 0, size = 10) {
+        const token = JSON.parse(sessionStorage.getItem('token'));
         const accessToken = token.accessToken;
 
-        return axios.get(`${VOUCHER_API_BASE_URL}/brand/${brandID}?pageNumber=${page}&pageSize=${size}&searchTerm=${searchTerm}`, {
+        return axios.get(`${VOUCHER_API_BASE_URL}/brand/${brandId}?pageNumber=${page}&pageSize=${size}&searchTerm=${searchTerm}`, {
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${accessToken}}`
@@ -29,11 +29,11 @@ class VoucherService {
         });
     }
 
-    getVoucherByVoucherId(voucherID) {
-        const token = JSON.parse(localStorage.getItem('token'));
+    getVoucherByVoucherId(voucherId) {
+        const token = JSON.parse(sessionStorage.getItem('token'));
         const accessToken = token.accessToken;
 
-        return axios.get(`${VOUCHER_API_BASE_URL}/${voucherID}`, {
+        return axios.get(`${VOUCHER_API_BASE_URL}/${voucherId}`, {
             headers: {
                 'Authorization': `Bearer ${accessToken}}`
             },
@@ -41,11 +41,11 @@ class VoucherService {
         });
     }
 
-    getVoucherByEventId(eventID, searchTerm, page = 0, size = 10) {
-        const token = JSON.parse(localStorage.getItem('token'));
+    getVoucherByEventId(eventId, searchTerm, page = 0, size = 10) {
+        const token = JSON.parse(sessionStorage.getItem('token'));
         const accessToken = token.accessToken;
 
-        return axios.get(`${VOUCHER_API_BASE_URL}/event/${eventID}?pageNumber=${page}&pageSize=${size}&searchTerm=${searchTerm}`, {
+        return axios.get(`${VOUCHER_API_BASE_URL}/event/${eventId}?pageNumber=${page}&pageSize=${size}&searchTerm=${searchTerm}`, {
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${accessToken}}`
@@ -54,11 +54,11 @@ class VoucherService {
         });
     }
 
-    updateVoucher(voucher, voucherID) {
-        const token = JSON.parse(localStorage.getItem('token'));
+    updateVoucher(voucher, voucherId) {
+        const token = JSON.parse(sessionStorage.getItem('token'));
         const accessToken = token.accessToken;
 
-        return axios.put(`${VOUCHER_API_BASE_URL}/${voucherID}`, voucher, {
+        return axios.put(`${VOUCHER_API_BASE_URL}/${voucherId}`, voucher, {
             headers: {
                 'Content-Type': 'multipart/form-data',
                 'Authorization': `Bearer ${accessToken}}`
@@ -67,11 +67,11 @@ class VoucherService {
         });
     }
 
-    deleteVoucher(voucherID) {
-        const token = JSON.parse(localStorage.getItem('token'));
+    deleteVoucher(voucherId) {
+        const token = JSON.parse(sessionStorage.getItem('token'));
         const accessToken = token.accessToken;
 
-        return axios.delete(`${VOUCHER_API_BASE_URL}/${voucherID}`, {
+        return axios.delete(`${VOUCHER_API_BASE_URL}/${voucherId}`, {
             headers: {
                 'Authorization': `Bearer ${accessToken}}`
             },
@@ -79,11 +79,11 @@ class VoucherService {
         });
     }
 
-    getVoucherStatsGeneralByEvent(eventID) {
-        const token = JSON.parse(localStorage.getItem('token'));
+    getVoucherStatsGeneralByEvent(eventId) {
+        const token = JSON.parse(sessionStorage.getItem('token'));
         const accessToken = token.accessToken;
 
-        return axios.get(`${VOUCHER_API_BASE_URL}/statistics-general/event/${eventID}`, {
+        return axios.get(`${VOUCHER_API_BASE_URL}/statistics-general/event/${eventId}`, {
             headers: {
                 'Authorization': `Bearer ${accessToken}}`
             },
@@ -91,11 +91,11 @@ class VoucherService {
         });
     }
 
-    getVoucherStatsDetailByEvent(eventID) {
-        const token = JSON.parse(localStorage.getItem('token'));
+    getVoucherStatsDetailByEvent(eventId) {
+        const token = JSON.parse(sessionStorage.getItem('token'));
         const accessToken = token.accessToken;
 
-        return axios.get(`${VOUCHER_API_BASE_URL}/statistics-detail/event/${eventID}`, {
+        return axios.get(`${VOUCHER_API_BASE_URL}/statistics-detail/event/${eventId}`, {
             headers: {
                 'Authorization': `Bearer ${accessToken}}`
             },

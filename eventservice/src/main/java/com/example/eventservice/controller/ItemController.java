@@ -6,7 +6,6 @@ import com.example.eventservice.model.item.entity.ItemEntity;
 import com.example.eventservice.service.ItemCreateService;
 import com.example.eventservice.service.ItemDeleteService;
 import com.example.eventservice.service.ItemReadService;
-import com.example.eventservice.service.ItemUpdateService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -26,7 +25,6 @@ import org.springframework.web.bind.annotation.*;
 public class ItemController {
     private final ItemCreateService itemCreateService;
     private final ItemReadService itemReadService;
-    private final ItemUpdateService itemUpdateService;
     private final ItemDeleteService itemDeleteService;
 
     @PostMapping
@@ -91,16 +89,6 @@ public class ItemController {
         ItemEntity event = itemReadService.getItemById(itemId);
 
         return ResponseEntity.ok(event);
-    }
-
-    @PutMapping("/{itemId}")
-    @PreAuthorize("hasAnyAuthority('ADMIN', 'BRAND')")
-    public ResponseEntity<ItemEntity> updateEvent(@PathVariable Long itemId, @ModelAttribute final ItemUpdateRequest itemUpdateRequest) {
-        log.info("ItemController | updateEvent");
-
-        ItemEntity itemEntity = itemUpdateService.updateItemById(itemId, itemUpdateRequest);
-
-        return ResponseEntity.ok(itemEntity);
     }
 
     @DeleteMapping("/all/{eventId}")
