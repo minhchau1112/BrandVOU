@@ -5,18 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6bb27ad0-fb00-4a05-8d33-0c9167e99d74" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/brand_frontend/src/components/BudgetStatistics.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apigateway/src/main/java/com/example/apigateway/config/GatewayConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/apigateway/src/main/java/com/example/apigateway/config/GatewayConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/brand_frontend/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/brand_frontend/src/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/brand_frontend/src/components/StatisticsComponent.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/brand_frontend/src/services/EventService.js" beforeDir="false" afterPath="$PROJECT_DIR$/brand_frontend/src/services/EventService.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/brand_frontend/src/services/StatisticsService.js" beforeDir="false" afterPath="$PROJECT_DIR$/brand_frontend/src/services/StatisticsService.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/brand_frontend/src/services/VoucherService.js" beforeDir="false" afterPath="$PROJECT_DIR$/brand_frontend/src/services/VoucherService.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eventservice/src/main/java/com/example/eventservice/model/event/mapper/EventCreateRequestToEventEntityMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/eventservice/src/main/java/com/example/eventservice/model/event/mapper/EventCreateRequestToEventEntityMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/reportservice/src/main/java/com/example/reportservice/controller/StatisticsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/reportservice/src/main/java/com/example/reportservice/controller/StatisticsController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/reportservice/src/main/java/com/example/reportservice/repository/StatisticsRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/reportservice/src/main/java/com/example/reportservice/repository/StatisticsRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/reportservice/src/main/java/com/example/reportservice/service/StatisticsService.java" beforeDir="false" afterPath="$PROJECT_DIR$/reportservice/src/main/java/com/example/reportservice/service/StatisticsService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/accountservice/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/accountservice/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/brand_frontend/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/brand_frontend/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/brand_frontend/src/components/AddEventComponent.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/brand_frontend/src/components/AddEventComponent.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/brand_frontend/src/components/BudgetStatistics.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/brand_frontend/src/components/BudgetStatistics.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/reportservice/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/reportservice/src/main/resources/application.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -56,6 +50,16 @@
   <component name="KubernetesApiProvider">{
   &quot;isMigrated&quot;: true
 }</component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="mavenHomeTypeForPersistence" value="WRAPPER" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="PackageJsonUpdateNotifier">
+    <dismissed value="$PROJECT_DIR$/brand_frontend/package.json" />
+  </component>
   <component name="ProblemsViewState">
     <option name="selectedTabId" value="ProjectErrors" />
   </component>
@@ -68,40 +72,42 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;JUnit.BrandBackendApplicationTests.executor&quot;: &quot;Run&quot;,
-    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
-    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
-    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
-    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;Spring Boot.AccountserviceApplication.executor&quot;: &quot;Run&quot;,
-    &quot;Spring Boot.ApigatewayApplication.executor&quot;: &quot;Run&quot;,
-    &quot;Spring Boot.AuthserviceApplication.executor&quot;: &quot;Run&quot;,
-    &quot;Spring Boot.BrandBackendApplication.executor&quot;: &quot;Run&quot;,
-    &quot;Spring Boot.EurekaserverApplication.executor&quot;: &quot;Run&quot;,
-    &quot;Spring Boot.EventserviceApplication.executor&quot;: &quot;Run&quot;,
-    &quot;Spring Boot.ReportserviceApplication.executor&quot;: &quot;Run&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;dolphin&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;jdk.selected.JAVA_MODULE&quot;: &quot;22&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/sonsu/Desktop/KienTruc/VOU/reportservice&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;run.configurations.included.in.services&quot;: &quot;true&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settings.project.maven.importing&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;D:\\IntelliJ IDEA 2024.2.0.2\\plugins\\javascript-plugin\\jsLanguageServicesImpl\\external&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "JUnit.BrandBackendApplicationTests.executor": "Run",
+    "Notification.DisplayName-DoNotAsk-Database detector": "Database detector",
+    "Notification.DoNotAsk-Database detector": "true",
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "Spring Boot.AccountserviceApplication.executor": "Run",
+    "Spring Boot.ApigatewayApplication.executor": "Run",
+    "Spring Boot.AuthserviceApplication.executor": "Run",
+    "Spring Boot.BrandBackendApplication.executor": "Run",
+    "Spring Boot.EurekaserverApplication.executor": "Run",
+    "Spring Boot.EventserviceApplication.executor": "Run",
+    "Spring Boot.ReportserviceApplication.executor": "Run",
+    "git-widget-placeholder": "dolphin",
+    "ignore.virus.scanning.warn.message": "true",
+    "jdk.selected.JAVA_MODULE": "22",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/sonsu/Desktop/KienTruc/VOU/reportservice",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "run.configurations.included.in.services": "true",
+    "settings.editor.selected.configurable": "settings.sync",
+    "ts.external.directory.path": "D:\\IntelliJ IDEA 2024.2.0.2\\plugins\\javascript-plugin\\jsLanguageServicesImpl\\external",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="ReactorSettings">
     <option name="notificationShown" value="true" />
   </component>
@@ -153,13 +159,6 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="BrandBackendApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
-      <module name="brand_backend" />
-      <option name="SPRING_BOOT_MAIN_CLASS" value="com.example.brand_backend.BrandBackendApplication" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="EurekaserverApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
       <module name="eurekaserver" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="com.example.eurekaserver.EurekaserverApplication" />
@@ -201,6 +200,15 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <list>
+      <item itemvalue="JUnit.BrandBackendApplicationTests" />
+      <item itemvalue="Spring Boot.ApigatewayApplication" />
+      <item itemvalue="Spring Boot.AccountserviceApplication" />
+      <item itemvalue="Spring Boot.AuthserviceApplication" />
+      <item itemvalue="Spring Boot.EurekaserverApplication" />
+      <item itemvalue="Spring Boot.EventserviceApplication" />
+      <item itemvalue="Spring Boot.ReportserviceApplication" />
+    </list>
     <recent_temporary>
       <list>
         <item itemvalue="Spring Boot.ReportserviceApplication" />
@@ -213,8 +221,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-9823dce3aa75-b114ca120d71-intellij.indexing.shared.core-IU-242.20224.419" />
-        <option value="bundled-js-predefined-d6986cc7102b-410509235cf1-JavaScript-IU-242.20224.419" />
+        <option value="bundled-jdk-9823dce3aa75-b114ca120d71-intellij.indexing.shared.core-IU-242.21829.142" />
+        <option value="bundled-js-predefined-d6986cc7102b-7c0b70fcd90d-JavaScript-IU-242.21829.142" />
       </set>
     </attachedChunks>
   </component>
@@ -243,10 +251,29 @@
       <workItem from="1725689712235" duration="1967000" />
       <workItem from="1725725680538" duration="1095000" />
       <workItem from="1725758239042" duration="526000" />
+      <workItem from="1725868799942" duration="70000" />
+      <workItem from="1725972122418" duration="1263000" />
+      <workItem from="1725973797601" duration="77000" />
+      <workItem from="1725973889624" duration="39000" />
+      <workItem from="1725976934130" duration="731000" />
+      <workItem from="1725977685283" duration="318000" />
+      <workItem from="1725978151712" duration="713000" />
+      <workItem from="1725978890734" duration="1822000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
 </project>
