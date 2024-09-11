@@ -82,7 +82,7 @@
     "Spring Boot.EurekaserverApplication.executor": "Run",
     "Spring Boot.EventserviceApplication.executor": "Run",
     "Spring Boot.ReportserviceApplication.executor": "Run",
-    "git-widget-placeholder": "dolphin",
+    "git-widget-placeholder": "main",
     "ignore.virus.scanning.warn.message": "true",
     "jdk.selected.JAVA_MODULE": "22",
     "kotlin-language-version-configured": "true",
