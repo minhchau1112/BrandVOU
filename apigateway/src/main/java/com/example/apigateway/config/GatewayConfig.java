@@ -19,7 +19,8 @@ public class GatewayConfig {
             "/api/v1/authentication/accounts/register",
             "/api/v1/authentication/accounts/login",
             "/api/v1/authentication/accounts/refresh-token",
-            "/api/v1/authentication/accounts/logout"
+            "/api/v1/authentication/accounts/logout",
+            "/api/v1/accounts/get"
     );
 
     @Bean
@@ -53,6 +54,10 @@ public class GatewayConfig {
                         .filters(f -> f.filter(jwtAuthFilter.apply(new JwtAuthenticationFilter.Config()
                                 .setPublicEndpoints(PUBLIC_ENDPOINTS))))
                         .uri("lb://admingameservice"))
+                .route("app", r -> r.path("/api/games/**")
+                        .filters(f -> f.filter(jwtAuthFilter.apply(new JwtAuthenticationFilter.Config()
+                                .setPublicEndpoints(PUBLIC_ENDPOINTS))))
+                        .uri("lb://app"))
                 .build();
 
     }

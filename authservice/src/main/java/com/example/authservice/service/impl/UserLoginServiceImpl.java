@@ -12,9 +12,9 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class UserLoginServiceImpl implements UserLoginService {
     private final UserServiceClient userServiceClient;
+
     @Override
     public ResponseEntity<LoginResponse> login(LoginRequest loginRequest) {
         return userServiceClient.loginUser(loginRequest);
     }
-
 }

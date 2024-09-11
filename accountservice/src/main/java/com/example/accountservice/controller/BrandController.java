@@ -2,6 +2,7 @@ package com.example.accountservice.controller;
 
 import com.example.accountservice.model.account.Token;
 import com.example.accountservice.model.account.dto.request.LoginRequest;
+import com.example.accountservice.model.account.dto.request.UpdateBrandRequest;
 import com.example.accountservice.model.account.dto.response.LoginResponse;
 import com.example.accountservice.model.account.entity.AccountEntity;
 import com.example.accountservice.model.brand.dto.request.RegisterBrandRequest;
@@ -66,5 +67,12 @@ public class BrandController {
         log.info("BrandController | findBrandById");
         BrandEntity brand = brandLoginService.findBrandById(brandId);
         return ResponseEntity.ok(brand);
+    }
+
+    @PutMapping("/update-brand")
+    public ResponseEntity<?> updateBrand(@RequestBody @Validated final UpdateBrandRequest updateBrandRequest) {
+        log.info("BrandController | registerBrand");
+        ResponseEntity<?> brand = registerBrandService.updateInfoBrand(updateBrandRequest);
+        return brand;
     }
 }

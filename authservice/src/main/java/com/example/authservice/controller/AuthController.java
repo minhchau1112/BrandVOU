@@ -12,12 +12,14 @@ import com.example.authservice.service.RegisterService;
 import com.example.authservice.service.UserLoginService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+@Slf4j
 @RestController
 @RequestMapping("/api/v1/authentication/accounts")
 @RequiredArgsConstructor
@@ -39,6 +41,7 @@ public class AuthController {
 
     @PostMapping("/login")
     public ResponseEntity<LoginResponse> loginUser(@RequestBody @Valid final LoginRequest loginRequest) {
+        log.info("AuthController | loginUser | username = " + loginRequest.getUsername() + " | password = " + loginRequest.getPassword());
         return userLoginService.login(loginRequest);
     }
 

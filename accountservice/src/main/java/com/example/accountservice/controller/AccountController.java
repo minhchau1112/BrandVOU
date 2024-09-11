@@ -87,4 +87,10 @@ public class AccountController {
         return ResponseEntity.ok(authentication);
     }
 
+    @GetMapping("/get")
+    public AccountEntity getAccountByUsername(@RequestParam final String username) {
+        log.info("UserController | getAccountByUsername");
+
+        return userLoginService.loadUserByUsername(username);
+    }
 }
