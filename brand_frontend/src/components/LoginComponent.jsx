@@ -71,8 +71,8 @@ const Login = () => {
 
                                     <div className="mt-5 text-center">
                                         Not a brand?
-                                        <a href="/signup" style={{ cursor: 'pointer', color: '#007bff', textDecoration: 'underline' }}>
-                                            Sign Up Now
+                                        <a href="/register" style={{ cursor: 'pointer', color: '#007bff', textDecoration: 'underline' }}>
+                                             Sign Up Now
                                         </a>
                                     </div>
                                 </div>
