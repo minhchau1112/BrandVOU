@@ -20,7 +20,8 @@ public class GatewayConfig {
             "/api/v1/authentication/accounts/login",
             "/api/v1/authentication/accounts/refresh-token",
             "/api/v1/authentication/accounts/logout",
-            "/api/v1/accounts/get"
+            "/api/v1/accounts/get",
+            "/api/games/users"
     );
 
     @Bean
