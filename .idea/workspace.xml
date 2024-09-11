@@ -4,14 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6bb27ad0-fb00-4a05-8d33-0c9167e99d74" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/accountservice/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/accountservice/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/brand_frontend/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/brand_frontend/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/brand_frontend/src/components/AddEventComponent.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/brand_frontend/src/components/AddEventComponent.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/brand_frontend/src/components/BudgetStatistics.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/brand_frontend/src/components/BudgetStatistics.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/reportservice/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/reportservice/src/main/resources/application.properties" afterDir="false" />
-    </list>
+    <list default="true" id="6bb27ad0-fb00-4a05-8d33-0c9167e99d74" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -89,7 +82,7 @@
     "Spring Boot.EurekaserverApplication.executor": "Run",
     "Spring Boot.EventserviceApplication.executor": "Run",
     "Spring Boot.ReportserviceApplication.executor": "Run",
-    "git-widget-placeholder": "dolphin",
+    "git-widget-placeholder": "main",
     "ignore.virus.scanning.warn.message": "true",
     "jdk.selected.JAVA_MODULE": "22",
     "kotlin-language-version-configured": "true",
