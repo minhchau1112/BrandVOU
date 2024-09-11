@@ -33,5 +33,4 @@ public interface UserServiceClient {
     // Log the user out by invalidating the token, calling the /logout endpoint.
     @PostMapping("/logout")
     ResponseEntity<Void> logout(@RequestBody @Valid final TokenInvalidateRequest tokenInvalidateRequest);
-
 }

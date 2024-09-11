@@ -16,7 +16,7 @@ public class RegisterBrandRequest {
     @Size(min = 8, message = "Minimum username length is 7 characters.")
     private String username;
 
-    @NotBlank(message = "Phone number can't be blank.")
+    @NotBlank(message = "Password number can't be blank.")
     @Size(min = 8)
     private String password;
 
@@ -24,7 +24,6 @@ public class RegisterBrandRequest {
     @Email(message = "Please enter valid e-mail address")
     @Size(min = 7, message = "Minimum e-mail length is 7 characters.")
     private String email;
-
 
     @NotBlank(message = "Phone number can't be blank.")
     @Size(min = 11, max = 20)
