@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import './BrandNavbar.css'; 
 import {useAuth} from "../AuthProvider";
@@ -6,7 +6,6 @@ import Dropdown from 'react-bootstrap/Dropdown';
 
 const BrandNavbar = () => {
     const navigate = useNavigate();
-    const [dropdownOpen, setDropdownOpen] = useState(false);
     const auth = useAuth();
 
     const handleLogin = () => {
@@ -15,14 +14,6 @@ const BrandNavbar = () => {
 
     const handleRegister = () => {
         navigate('/register');
-    }
-
-    const handleNaviStatistics = () => {
-        navigate('/reports');
-    }
-
-    const toggleDropdown = () => {
-        setDropdownOpen(prevState => !prevState); // Toggle trạng thái mở/đóng dropdown
     }
 
     return (
